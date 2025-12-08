@@ -124,7 +124,7 @@ ADRs document significant technical decisions:
 ## Links
 
 - [Documentation](https://diamondlightsource.github.io/smartem-decisions/)
-- [Project Board](https://github.com/orgs/DiamondLightSource/projects/33/views/1)
+- [Project Board](https://github.com/orgs/DiamondLightSource/projects/51/views/1)
 - [SmartEM Backend](https://github.com/DiamondLightSource/smartem-decisions)
 
 ## Licence

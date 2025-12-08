@@ -6,7 +6,7 @@ The core backend service providing HTTP API, database operations, and message qu
 
 ```bash
 # create env and launch service stack locally:
-./tools/dev-k8s.sh up
+./tools/k8s/dev-k8s.sh up
 
 # launch RabbitMQ worker (consumer)
 python -m smartem_backend.consumer              # ERROR level (default)

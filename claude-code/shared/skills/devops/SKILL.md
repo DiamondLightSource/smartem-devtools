@@ -25,10 +25,10 @@ Kubernetes deployment, container management, and CI/CD operations for the SmartE
 cd repos/DiamondLightSource/smartem-decisions
 
 # Start local k3s cluster with all services
-./tools/dev-k8s.sh up
+./tools/k8s/dev-k8s.sh up
 
 # Stop and cleanup
-./tools/dev-k8s.sh down
+./tools/k8s/dev-k8s.sh down
 
 # Check cluster status
 kubectl get pods -n smartem-decisions

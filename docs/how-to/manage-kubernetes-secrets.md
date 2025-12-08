@@ -62,13 +62,13 @@ The project includes a convenient script that handles the entire sealed secret g
 
 ```bash
 # Generate secrets for development (auto-generated passwords)
-./tools/generate-sealed-secrets.sh development
+./tools/k8s/generate-sealed-secrets.sh development
 
 # Generate secrets for production (interactive prompts)
-./tools/generate-sealed-secrets.sh production
+./tools/k8s/generate-sealed-secrets.sh production
 
 # Generate secrets for all environments
-./tools/generate-sealed-secrets.sh all
+./tools/k8s/generate-sealed-secrets.sh all
 ```
 
 ## Environment-Specific Workflows
@@ -78,7 +78,7 @@ The project includes a convenient script that handles the entire sealed secret g
 Development environments use automatically generated secure passwords for convenience:
 
 ```bash
-./tools/generate-sealed-secrets.sh development
+./tools/k8s/generate-sealed-secrets.sh development
 ```
 
 This will:
@@ -92,7 +92,7 @@ This will:
 Production and staging environments require interactive credential input for security:
 
 ```bash
-./tools/generate-sealed-secrets.sh production
+./tools/k8s/generate-sealed-secrets.sh production
 ```
 
 You'll be prompted to provide:
@@ -147,7 +147,7 @@ Regular secret rotation is essential for security. Follow these steps to rotate 
 
 ```bash
 # Use the generation script with new credentials
-./tools/generate-sealed-secrets.sh production
+./tools/k8s/generate-sealed-secrets.sh production
 ```
 
 ### 2. Apply Updated Secrets
@@ -274,7 +274,7 @@ For issues with the generation script:
 
 ```bash
 # Run with verbose output
-bash -x ./tools/generate-sealed-secrets.sh development
+bash -x ./tools/k8s/generate-sealed-secrets.sh development
 
 # Check prerequisites manually
 kubectl cluster-info
@@ -326,7 +326,7 @@ For complex applications requiring multiple secret sources:
 
 ```bash
 # Database secrets
-./tools/generate-sealed-secrets.sh production
+./tools/k8s/generate-sealed-secrets.sh production
 
 # Additional API secrets
 kubectl create secret generic api-secrets \
@@ -355,7 +355,7 @@ rm plain-secret.yaml
 ## Files and Structure
 
 ```
-├── tools/generate-sealed-secrets.sh         # Main secret generation script
+├── tools/k8s/generate-sealed-secrets.sh         # Main secret generation script
 ├── k8s/environments/
 │   ├── development/
 │   │   ├── secrets.yaml                     # Development sealed secrets

@@ -34,7 +34,7 @@
       "Bash(psql:*)",
       "Bash(pg_dump:*)",
       "Bash(pg_restore:*)",
-      "Bash(./tools/dev-k8s.sh:*)",
+      "Bash(./tools/k8s/dev-k8s.sh:*)",
       "Bash(./tools/*)",
       "WebFetch(domain:github.com)",
       "WebFetch(domain:diamondlightsource.github.io)",

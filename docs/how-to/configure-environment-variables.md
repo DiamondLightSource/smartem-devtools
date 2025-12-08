@@ -59,7 +59,7 @@ HTTP_API_PORT=8000
 **Use Case**: Deploying SmartEM to local K8s cluster (k3s) for development.
 
 **When to Use**:
-- Running `./tools/dev-k8s.sh up`
+- Running `./tools/k8s/dev-k8s.sh up`
 - Setting up local development cluster with all services
 
 **Setup**:
@@ -89,7 +89,7 @@ RABBITMQ_PASSWORD=password
 ```
 
 **Used By**:
-- `./tools/dev-k8s.sh` script to create K8s Secrets and ConfigMaps
+- `./tools/k8s/dev-k8s.sh` script to create K8s Secrets and ConfigMaps
 
 ### 3. Kubernetes Staging: `.env.k8s.staging`
 
@@ -109,7 +109,7 @@ cp .env.example.k8s.staging .env.k8s.staging
 
 **Used By**:
 - CI/CD pipelines for staging deployments
-- `DEPLOY_ENV=staging ./tools/dev-k8s.sh up` (if adapted for remote clusters)
+- `DEPLOY_ENV=staging ./tools/k8s/dev-k8s.sh up` (if adapted for remote clusters)
 
 ### 4. Kubernetes Production: `.env.k8s.production`
 
@@ -167,7 +167,7 @@ cp .env.example.k8s.development .env.k8s.development
 nano .env.k8s.development
 
 # 3. Start K8s cluster (creates infrastructure)
-./tools/dev-k8s.sh up
+./tools/k8s/dev-k8s.sh up
 
 # 4. .env is already configured to connect to K8s NodePorts
 # No changes needed unless you want custom ports
@@ -236,7 +236,7 @@ When running in Kubernetes:
 
 ```bash
 # 1. Start K8s cluster
-./tools/dev-k8s.sh up
+./tools/k8s/dev-k8s.sh up
 
 # 2. Use .env (already configured for NodePorts)
 cat .env
@@ -261,7 +261,7 @@ cp .env.example.k8s.development .env.k8s.development
 # Edit with your credentials
 
 # 2. Deploy
-./tools/dev-k8s.sh up
+./tools/k8s/dev-k8s.sh up
 
 # 3. All services run in pods
 kubectl get pods -n smartem-decisions
@@ -280,7 +280,7 @@ kubectl get pods -n smartem-decisions
 test -f .env || cp .env.example .env
 
 # 2. Start K8s cluster
-./tools/dev-k8s.sh up
+./tools/k8s/dev-k8s.sh up
 
 # 3. Run E2E test (script loads .env automatically)
 ./tools/run-e2e-test.sh

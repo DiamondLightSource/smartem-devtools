@@ -46,7 +46,7 @@ be safely committed to version control whilst maintaining security.
 
 Implementation will include:
 - Installation of sealed-secrets controller in each Kubernetes environment
-- Integration with existing deployment workflow via tools/generate-sealed-secrets.sh script
+- Integration with existing deployment workflow via tools/k8s/generate-sealed-secrets.sh script
 - Documentation in docs/how-to/manage-kubernetes-secrets.md for team procedures
 - Environment-specific encryption keys for development, staging, and production clusters
 
