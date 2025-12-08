@@ -22,7 +22,7 @@ Kubernetes deployment, container management, and CI/CD operations for the SmartE
 ### Local Development Cluster
 
 ```bash
-cd DiamondLightSource/smartem-decisions
+cd repos/DiamondLightSource/smartem-decisions
 
 # Start local k3s cluster with all services
 ./tools/dev-k8s.sh up
@@ -57,7 +57,7 @@ k8s/
 ### Build Images
 
 ```bash
-cd DiamondLightSource/smartem-decisions
+cd repos/DiamondLightSource/smartem-decisions
 
 # Build backend image
 docker build -t smartem-backend:dev .
@@ -178,7 +178,7 @@ gh run rerun <run-id> --failed --repo DiamondLightSource/smartem-decisions
 ### Local CI Simulation
 
 ```bash
-cd DiamondLightSource/smartem-decisions
+cd repos/DiamondLightSource/smartem-decisions
 
 # Run what CI runs
 pip install -e .[all]

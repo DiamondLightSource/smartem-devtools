@@ -44,7 +44,7 @@ PostgreSQL database administration and Alembic migration management for the Smar
 
 ```bash
 # Current migration status
-cd DiamondLightSource/smartem-decisions
+cd repos/DiamondLightSource/smartem-decisions
 python -m alembic current
 
 # Migration history

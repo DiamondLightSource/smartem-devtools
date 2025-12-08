@@ -86,8 +86,8 @@ ARIA_CLIENT_SECRET=client_secret
 
 ### Required (FragmentScreen)
 
-- **fandanGO-core**: Plugin framework (`FragmentScreen/fandanGO-core`)
-- **fandanGO-aria**: ARIA integration (`FragmentScreen/fandanGO-aria`)
+- **fandanGO-core**: Plugin framework (`repos/FragmentScreen/fandanGO-core`)
+- **fandanGO-aria**: ARIA integration (`repos/FragmentScreen/fandanGO-aria`)
 
 ### SmartEM Integration
 
@@ -120,9 +120,9 @@ SmartEM API (DLS) ──► fandanGO-cryoem-dls ──► ARIA (FragmentScreen)
 ## Peer Reference
 
 Similar facility plugins for reference patterns:
-- `FragmentScreen/fandanGO-cryoem-cnb` - CNB-CSIC Madrid (uses Scipion JSON)
-- `FragmentScreen/fandanGO-nmr-cerm` - CERM Florence NMR
-- `FragmentScreen/fandanGO-nmr-guf` - GUF Frankfurt NMR
+- `repos/FragmentScreen/fandanGO-cryoem-cnb` - CNB-CSIC Madrid (uses Scipion JSON)
+- `repos/FragmentScreen/fandanGO-nmr-cerm` - CERM Florence NMR
+- `repos/FragmentScreen/fandanGO-nmr-guf` - GUF Frankfurt NMR
 
 Key difference: DLS plugin uses live REST API queries; CNB uses pre-generated JSON files.
 
@@ -164,7 +164,7 @@ python -c "from aria.client import AriaClient; print('OK')"
 
 ## Claude Workflow
 
-1. Check peer plugins in `FragmentScreen/` for patterns when implementing new features
+1. Check peer plugins in `repos/FragmentScreen/` for patterns when implementing new features
 2. Ensure SmartEM API client changes align with smartem-decisions backend
 3. Test metadata extraction with real acquisition UUIDs when possible
 4. Follow FandanGO plugin conventions for new actions

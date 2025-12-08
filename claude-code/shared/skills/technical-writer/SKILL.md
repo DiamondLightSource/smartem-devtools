@@ -38,7 +38,7 @@ Documentation creation and maintenance following British English conventions and
 ### Location
 
 ```
-DiamondLightSource/smartem-decisions/docs/explanations/decisions/
+repos/DiamondLightSource/smartem-decisions/docs/explanations/decisions/
 ```
 
 ### Naming Convention
@@ -50,7 +50,7 @@ NNNN-short-descriptive-title.md
 Where NNNN is the next sequential number. Check existing files:
 
 ```bash
-ls DiamondLightSource/smartem-decisions/docs/explanations/decisions/ | tail -1
+ls repos/DiamondLightSource/smartem-decisions/docs/explanations/decisions/ | tail -1
 ```
 
 ### ADR Template
@@ -113,12 +113,12 @@ We will use RabbitMQ as the message broker for all inter-service communication.
 
 ```bash
 # Check next number
-NEXT=$(ls DiamondLightSource/smartem-decisions/docs/explanations/decisions/*.md | wc -l)
+NEXT=$(ls repos/DiamondLightSource/smartem-decisions/docs/explanations/decisions/*.md | wc -l)
 NEXT=$((NEXT + 1))
 PADDED=$(printf "%04d" $NEXT)
 
 # Create file
-cat > "DiamondLightSource/smartem-decisions/docs/explanations/decisions/${PADDED}-your-title.md" << 'EOF'
+cat > "repos/DiamondLightSource/smartem-decisions/docs/explanations/decisions/${PADDED}-your-title.md" << 'EOF'
 # N. Title
 
 ## Status
@@ -190,7 +190,7 @@ Licence information.
 ### Build Commands
 
 ```bash
-cd DiamondLightSource/smartem-decisions
+cd repos/DiamondLightSource/smartem-decisions
 
 # Full build
 sphinx-build -E docs build/html

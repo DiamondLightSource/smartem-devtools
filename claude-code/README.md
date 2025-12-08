@@ -63,10 +63,10 @@ Use `shared/` for cross-cutting concerns and workspace-level configuration.
 
 | claude-config path | Original location |
 |--------------------|-------------------|
-| `smartem-decisions/agents/` | `DiamondLightSource/smartem-decisions/.claude/agents/` |
-| `smartem-decisions/settings.json` | `DiamondLightSource/smartem-decisions/.claude/settings.json` |
-| `smartem-decisions/REPO-GUIDELINES.md` | `DiamondLightSource/smartem-decisions/CLAUDE.md` |
-| `smartem-frontend/skills/playwright-skill/` | `DiamondLightSource/smartem-frontend/.claude/skills/playwright-skill/` |
+| `smartem-decisions/agents/` | `repos/DiamondLightSource/smartem-decisions/.claude/agents/` |
+| `smartem-decisions/settings.json` | `repos/DiamondLightSource/smartem-decisions/.claude/settings.json` |
+| `smartem-decisions/REPO-GUIDELINES.md` | `repos/DiamondLightSource/smartem-decisions/CLAUDE.md` |
+| `smartem-frontend/skills/playwright-skill/` | `repos/DiamondLightSource/smartem-frontend/.claude/skills/playwright-skill/` |
 
 ## Available Skills
 
