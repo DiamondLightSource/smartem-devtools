@@ -45,6 +45,12 @@
       "formatter": {
         "enabled": false
       }
+    },
+    {
+      "includes": ["**/*.css"],
+      "linter": {
+        "enabled": false
+      }
     }
   ]
 }
