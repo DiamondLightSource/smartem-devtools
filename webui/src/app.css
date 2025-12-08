@@ -1,0 +1,12 @@
+@import './fonts.css';
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'JetBrains Mono', monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #030712;
+  }
+}

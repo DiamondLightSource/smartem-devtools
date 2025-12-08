@@ -1,0 +1,48 @@
+{
+  "name": "smartem-dev-webui",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "prebuild": "npx tsx scripts/prebuild.ts",
+    "dev": "npm run prebuild && vite",
+    "build": "npm run prebuild && tsc && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "router:generate": "tsr generate",
+    "router:check": "tsr check",
+    "lint": "biome lint ./src",
+    "lint:fix": "biome lint --write ./src",
+    "format": "biome format --write ./src && prettier --write './**/*.{yml,yaml,md}'",
+    "format:biome": "biome format --write ./src",
+    "format:prettier": "prettier --write './**/*.{yml,yaml,md}'",
+    "format:check": "biome format ./src && prettier --check './**/*.{yml,yaml,md}'",
+    "check": "biome check ./src",
+    "check:fix": "biome check --write ./src"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^7.0.2",
+    "@mui/material": "^7.0.2",
+    "@tanstack/react-router": "^1.135.0",
+    "@tanstack/router-devtools": "^1.135.0",
+    "@tanstack/router-vite-plugin": "^1.135.0",
+    "@vitejs/plugin-react": "^5.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.5",
+    "@tailwindcss/vite": "^4.0.0",
+    "@tanstack/router-cli": "^1.135.2",
+    "@types/node": "^20",
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.1",
+    "lefthook": "^1.13.6",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.7.2",
+    "vite": "^7.1.11",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}
