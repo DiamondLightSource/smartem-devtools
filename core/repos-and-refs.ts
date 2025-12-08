@@ -72,6 +72,161 @@ const diamondLightSourceRepos: Repository[] = [
   },
 ]
 
+const gitlabAriaPHPRepos: Repository[] = [
+  {
+    name: 'data-deposition-api',
+    description: 'ARIA GraphQL/REST API for metadata deposition (primary)',
+    urls: {
+      https: 'https://gitlab.com/aria-php/data-deposition-api.git',
+      ssh: 'git@gitlab.com:aria-php/data-deposition-api.git',
+    },
+  },
+  {
+    name: 'aria-graphql-client',
+    description: 'PHP library for communicating with ARIA GraphQL API',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-graphql-client.git',
+      ssh: 'git@gitlab.com:aria-php/aria-graphql-client.git',
+    },
+  },
+  {
+    name: 'aria-elasticsearch-client',
+    description: 'Elasticsearch client for ARIA search records',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-elasticsearch-client.git',
+      ssh: 'git@gitlab.com:aria-php/aria-elasticsearch-client.git',
+    },
+  },
+  {
+    name: 'aria-rest',
+    description: 'REST API framework for defining versioned APIs',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-rest.git',
+      ssh: 'git@gitlab.com:aria-php/aria-rest.git',
+    },
+  },
+  {
+    name: 'aria-storage-interface',
+    description: 'Storage provider interface',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-storage-interface.git',
+      ssh: 'git@gitlab.com:aria-php/aria-storage-interface.git',
+    },
+  },
+  {
+    name: 'aria-webhooks',
+    description: 'Standard webhook payload format for ARIA platform',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-webhooks.git',
+      ssh: 'git@gitlab.com:aria-php/aria-webhooks.git',
+    },
+  },
+  {
+    name: 'aria-incoming-email',
+    description: 'Incoming email message routing',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-incoming-email.git',
+      ssh: 'git@gitlab.com:aria-php/aria-incoming-email.git',
+    },
+  },
+  {
+    name: 'aria-mailer',
+    description: 'Email wrapper (PHPMailer + Swiftmailer)',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-mailer.git',
+      ssh: 'git@gitlab.com:aria-php/aria-mailer.git',
+    },
+  },
+  {
+    name: 'aria-mailgun-webhooks',
+    description: 'Mailgun webhook event parser',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-mailgun-webhooks.git',
+      ssh: 'git@gitlab.com:aria-php/aria-mailgun-webhooks.git',
+    },
+  },
+  {
+    name: 'aria-invite-users',
+    description: 'User invitation framework',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-invite-users.git',
+      ssh: 'git@gitlab.com:aria-php/aria-invite-users.git',
+    },
+  },
+  {
+    name: 'aria-data-subscription',
+    description: 'Data source subscription framework for feeds',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-data-subscription.git',
+      ssh: 'git@gitlab.com:aria-php/aria-data-subscription.git',
+    },
+  },
+  {
+    name: 'aria-stats',
+    description: 'Performance statistics monitoring',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-stats.git',
+      ssh: 'git@gitlab.com:aria-php/aria-stats.git',
+    },
+  },
+  {
+    name: 'aria-site-logger',
+    description: 'Monolog plugin for ARIA site logging',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-site-logger.git',
+      ssh: 'git@gitlab.com:aria-php/aria-site-logger.git',
+    },
+  },
+  {
+    name: 'aria-service-ai',
+    description: 'Service AI library',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-service-ai.git',
+      ssh: 'git@gitlab.com:aria-php/aria-service-ai.git',
+    },
+  },
+  {
+    name: 'keycloak-api',
+    description: 'PHP bindings for Keycloak Account API',
+    urls: {
+      https: 'https://gitlab.com/aria-php/keycloak-api.git',
+      ssh: 'git@gitlab.com:aria-php/keycloak-api.git',
+    },
+  },
+  {
+    name: 'doi-package',
+    description: 'DOI microservice client',
+    urls: {
+      https: 'https://gitlab.com/aria-php/doi-package.git',
+      ssh: 'git@gitlab.com:aria-php/doi-package.git',
+    },
+  },
+  {
+    name: 'molgenis-php-client',
+    description: 'PHP client for Molgenis database',
+    urls: {
+      https: 'https://gitlab.com/aria-php/molgenis-php-client.git',
+      ssh: 'git@gitlab.com:aria-php/molgenis-php-client.git',
+    },
+  },
+  {
+    name: 'shibboleth-idp-dockerized',
+    description: 'Dockerized Shibboleth IdP (identity federation)',
+    urls: {
+      https: 'https://gitlab.com/aria-php/shibboleth-idp-dockerized.git',
+      ssh: 'git@gitlab.com:aria-php/shibboleth-idp-dockerized.git',
+    },
+  },
+  {
+    name: 'rtd-compiler',
+    description: 'ReadTheDocs compiler for ARIA documentation',
+    urls: {
+      https: 'https://gitlab.com/aria-php/rtd-compiler.git',
+      ssh: 'git@gitlab.com:aria-php/rtd-compiler.git',
+    },
+  },
+]
+
 const fragmentScreenRepos: Repository[] = [
   {
     name: 'fandanGO-core',
@@ -126,7 +281,7 @@ const fragmentScreenRepos: Repository[] = [
 export const reposAndRefsConfig: ReposAndRefsConfig = {
   links: {
     docs: 'https://diamondlightsource.github.io/smartem-decisions/',
-    projectBoard: 'https://github.com/orgs/DiamondLightSource/projects/33/views/1',
+    projectBoard: 'https://github.com/orgs/DiamondLightSource/projects/51/views/1',
   },
   repositories: [
     {
@@ -138,6 +293,11 @@ export const reposAndRefsConfig: ReposAndRefsConfig = {
       org: 'FragmentScreen',
       orgUrl: 'https://github.com/FragmentScreen',
       repos: fragmentScreenRepos,
+    },
+    {
+      org: 'aria-php',
+      orgUrl: 'https://gitlab.com/aria-php',
+      repos: gitlabAriaPHPRepos,
     },
   ],
 }
