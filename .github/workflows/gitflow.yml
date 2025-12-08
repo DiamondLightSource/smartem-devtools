@@ -1,0 +1,63 @@
+name: Gitflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: 'Label sync mode'
+        required: true
+        default: 'check'
+        type: choice
+        options:
+          - check
+          - sync
+  push:
+    branches: [main]
+    paths:
+      - 'core/github-tags-config.ts'
+      - 'tools/github/**'
+
+jobs:
+  check-labels:
+    name: Check Label Conformity
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.mode == 'check')
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check labels
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx tsx tools/github/sync-labels.ts --check --verbose
+
+  sync-labels:
+    name: Sync Labels
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.mode == 'sync'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Sync labels
+        env:
+          GH_TOKEN: ${{ secrets.LABEL_SYNC_TOKEN }}
+        run: npx tsx tools/github/sync-labels.ts --sync --verbose
