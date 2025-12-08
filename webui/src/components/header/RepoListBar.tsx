@@ -90,7 +90,12 @@ export function RepoListBar() {
         }}
       >
         {webUiAppContents.repos.repositories.map((orgGroup, orgIndex) => [
-          orgIndex > 0 && <Divider key={`divider-${orgGroup.org}`} sx={{ borderColor: 'rgba(255,255,255,0.2)' }} />,
+          orgIndex > 0 && (
+            <Divider
+              key={`divider-${orgGroup.org}`}
+              sx={{ borderColor: 'rgba(255,255,255,0.2)' }}
+            />
+          ),
           <ListSubheader
             key={`header-${orgGroup.org}`}
             component="a"
@@ -135,7 +140,10 @@ export function RepoListBar() {
               <Typography variant="body2" sx={{ fontWeight: 500 }}>
                 {repo.name}
               </Typography>
-              <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.7rem' }}>
+              <Typography
+                variant="caption"
+                sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.7rem' }}
+              >
                 {repo.description}
               </Typography>
             </MenuItem>

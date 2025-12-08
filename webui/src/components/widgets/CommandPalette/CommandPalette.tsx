@@ -275,7 +275,9 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                       <div className="command-palette__item-content">
                         <span className="command-palette__item-label">{item.label}</span>
                         {item.description && (
-                          <span className="command-palette__item-description">{item.description}</span>
+                          <span className="command-palette__item-description">
+                            {item.description}
+                          </span>
                         )}
                       </div>
                       {item.shortcut && (

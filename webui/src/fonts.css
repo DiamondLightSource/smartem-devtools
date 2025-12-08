@@ -1,33 +1,33 @@
 /* JetBrains Mono - Default font */
 @font-face {
-  font-family: 'JetBrains Mono';
+  font-family: "JetBrains Mono";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/assets/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+  src: url("/assets/fonts/JetBrainsMono-Regular.woff2") format("woff2");
 }
 
 @font-face {
-  font-family: 'JetBrains Mono';
+  font-family: "JetBrains Mono";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url('/assets/fonts/JetBrainsMono-Bold.woff2') format('woff2');
+  src: url("/assets/fonts/JetBrainsMono-Bold.woff2") format("woff2");
 }
 
 /* JetBrains Mono Nerd Font - For icons */
 @font-face {
-  font-family: 'JetBrainsMono NF';
+  font-family: "JetBrainsMono NF";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url('/assets/fonts/JetBrainsMonoNerdFontMono-Regular.ttf') format('truetype');
+  src: url("/assets/fonts/JetBrainsMonoNerdFontMono-Regular.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'JetBrainsMono NF';
+  font-family: "JetBrainsMono NF";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url('/assets/fonts/JetBrainsMonoNerdFontMono-Bold.ttf') format('truetype');
+  src: url("/assets/fonts/JetBrainsMonoNerdFontMono-Bold.ttf") format("truetype");
 }

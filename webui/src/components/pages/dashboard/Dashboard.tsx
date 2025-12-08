@@ -12,7 +12,6 @@ const itemBoxSx = {
   backgroundColor: 'rgba(255, 255, 255, 0.5)',
 }
 
-
 export function Dashboard() {
   return (
     <Box
@@ -32,12 +31,10 @@ export function Dashboard() {
     >
       {/* Architectural Overview */}
       <Box sx={{ ...sectionSx, flex: 2, display: 'flex', flexDirection: 'column', gap: 2 }}>
-
         {/* Two main columns: Ourside (2/3) and Otherside (1/3) */}
         <Box sx={{ display: 'flex', flexDirection: 'row', flex: 1 }}>
           {/* Ourside */}
           <Box sx={{ flex: 2, p: 1.5, display: 'flex', flexDirection: 'column', gap: 1 }}>
-
             {/* Two equal columns: CryoEM Facilities and SmartEM Application */}
             <Box sx={{ display: 'flex', flexDirection: 'row', flex: 1, gap: 1 }}>
               {/* CryoEM Facilities */}
@@ -55,7 +52,9 @@ export function Dashboard() {
                 </Typography>
 
                 {/* SmartEM Backend - half height */}
-                <Box sx={{ ...itemBoxSx, flex: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
+                <Box
+                  sx={{ ...itemBoxSx, flex: 1, display: 'flex', flexDirection: 'column', gap: 1 }}
+                >
                   <Typography variant="body2" sx={{ color: '#333' }}>
                     SmartEM Backend
                   </Typography>
@@ -109,7 +108,15 @@ export function Dashboard() {
                       ARIA Connector
                     </Typography>
                   </Box>
-                  <Box sx={{ ...itemBoxSx, flex: 1, display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                  <Box
+                    sx={{
+                      ...itemBoxSx,
+                      flex: 1,
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 0.5,
+                    }}
+                  >
                     <Typography variant="body2" sx={{ color: '#333' }}>
                       SmartEM Services
                     </Typography>
