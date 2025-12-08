@@ -23,6 +23,6 @@ lerna-debug.log*
 # OS
 .DS_Store
 
-# Generated
-src/routeTree.gen.ts
-src/config/webui-app-contents.ts
+# Generated files that should be committed (see ADR 0009)
+# src/routeTree.gen.ts - committed for immediate type safety
+# src/config/webui-app-contents.ts - committed for CI
