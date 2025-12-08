@@ -1,0 +1,7 @@
+[project]
+name = "smartem-devtools"
+version = "0.1.0"
+description = "Developer tooling and documentation for the SmartEM multi-repo ecosystem"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
