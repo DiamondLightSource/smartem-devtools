@@ -1,13 +1,11 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.0.0/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.2.5/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
     "useIgnoreFile": true
   },
-  "organizeImports": {
-    "enabled": true
-  },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "formatter": {
     "enabled": true,
     "indentStyle": "space",
@@ -29,11 +27,10 @@
         "useSemanticElements": "off"
       },
       "suspicious": {
-        "noExplicitAny": "warn"
-      },
-      "nursery": {
+        "noExplicitAny": "warn",
         "noUnknownAtRules": "off"
       },
+      "nursery": {},
       "complexity": {
         "noForEach": "off"
       }
@@ -41,7 +38,7 @@
   },
   "overrides": [
     {
-      "include": ["src/routeTree.gen.ts"],
+      "includes": ["**/src/routeTree.gen.ts"],
       "linter": {
         "enabled": false
       },

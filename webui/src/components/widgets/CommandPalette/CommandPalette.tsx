@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
+import type React from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo, useId } from 'react'
 import './CommandPalette.css'
 
 export interface CommandItem {
@@ -44,6 +45,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
 
   const inputRef = useRef<HTMLInputElement>(null)
   const listRef = useRef<HTMLDivElement>(null)
+  const listId = useId()
 
   const isOpen = controlledIsOpen ?? internalIsOpen
 
@@ -111,7 +113,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
       if (!groupMap.has(group.id)) {
         groupMap.set(group.id, { group, items: [] })
       }
-      groupMap.get(group.id)!.items.push(item)
+      groupMap.get(group.id)?.items.push(item)
     }
 
     return Array.from(groupMap.values())
@@ -172,11 +174,13 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
     }
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentional - scroll when selection changes
   useEffect(() => {
     const selectedElement = listRef.current?.querySelector('[data-selected="true"]')
     selectedElement?.scrollIntoView({ block: 'nearest' })
   }, [selectedIndex])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: intentional - reset selection when query changes
   useEffect(() => {
     setSelectedIndex(0)
   }, [query])
@@ -192,7 +196,13 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
   let itemIndex = -1
 
   return (
-    <div className="command-palette-backdrop" onClick={handleBackdropClick}>
+    // biome-ignore lint/a11y/noStaticElementInteractions: backdrop click-to-close is standard modal UX
+    <div
+      className="command-palette-backdrop"
+      onClick={handleBackdropClick}
+      onKeyDown={(e) => e.key === 'Escape' && setIsOpen(false)}
+      role="presentation"
+    >
       <div className="command-palette" role="dialog" aria-modal="true" aria-label="Command palette">
         <div className="command-palette__header">
           <svg
@@ -217,14 +227,14 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
             onKeyDown={handleInputKeyDown}
             aria-label="Search commands"
             aria-autocomplete="list"
-            aria-controls="command-palette-list"
+            aria-controls={listId}
           />
           <kbd className="command-palette__shortcut">ESC</kbd>
         </div>
 
         <div
           ref={listRef}
-          id="command-palette-list"
+          id={listId}
           className="command-palette__list"
           style={{ maxHeight }}
           role="listbox"
@@ -247,9 +257,17 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                       data-selected={isSelected}
                       role="option"
                       aria-selected={isSelected}
+                      tabIndex={isSelected ? 0 : -1}
                       onClick={() => {
                         item.onSelect()
                         setIsOpen(false)
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault()
+                          item.onSelect()
+                          setIsOpen(false)
+                        }
                       }}
                       onMouseEnter={() => setSelectedIndex(currentIndex)}
                     >
@@ -262,8 +280,8 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                       </div>
                       {item.shortcut && (
                         <div className="command-palette__item-shortcut">
-                          {item.shortcut.map((key, i) => (
-                            <kbd key={i} className="command-palette__kbd">
+                          {item.shortcut.map((key) => (
+                            <kbd key={key} className="command-palette__kbd">
                               {key}
                             </kbd>
                           ))}
