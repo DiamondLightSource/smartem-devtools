@@ -14,11 +14,56 @@
 // GitHub Tags Config
 // =============================================================================
 
-interface GitHubTagsConfig {
-  // To be defined
+interface GitHubLabel {
+  name: string
+  description: string
+  color: string // 6-char hex without #
 }
 
-const githubTagsConfig: GitHubTagsConfig = {}
+interface GitHubTagsConfig {
+  typesOfWork: GitHubLabel[]
+  systemComponents: GitHubLabel[]
+}
+
+const typesOfWork: GitHubLabel[] = [
+  { name: 'documentation', description: 'Improvements or additions to project documentation', color: '0d6d6e' },
+  { name: 'testing', description: 'Writing, updating, or fixing automated tests', color: '2da44e' },
+  { name: 'bugfixing', description: 'Fixing defects or unexpected behavior in existing code', color: 'cf222e' },
+  { name: 'development', description: 'New features or functionality implementation', color: '8250df' },
+  { name: 'refactoring', description: 'Code restructuring without changing external behavior', color: 'bc4c00' },
+  { name: 'research', description: 'Investigation, spikes, or proof-of-concept work', color: '0598bd' },
+  { name: 'devops', description: 'CI/CD, deployment, infrastructure, or tooling work', color: '57606a' },
+  { name: 'security', description: 'Security fixes, audits, or vulnerability remediation', color: 'a40e26' },
+  { name: 'admin', description: 'Project maintenance, dependency updates, or housekeeping', color: '7c4a03' },
+  { name: 'enhancement', description: 'Minor improvements to existing functionality', color: '1b7c83' },
+]
+
+const systemComponents: GitHubLabel[] = [
+  // smartem-backend family (ocean blue scale: #0a3069 -> #0550ae -> #218bff)
+  { name: 'smartem-backend', description: 'Core backend services, messaging, and persistence layer', color: '0a3069' },
+  { name: 'smartem-backend:db', description: 'Database schema, migrations, and data layer changes', color: '0550ae' },
+  { name: 'smartem-backend:api', description: 'REST API endpoints and HTTP interface changes', color: '218bff' },
+
+  // smartem-agent (gold - standalone)
+  { name: 'smartem-agent', description: 'EPU workstation agent for microscope integration', color: '9a6700' },
+
+  // smartem-frontend (green - standalone)
+  { name: 'smartem-frontend', description: 'User-facing web UI for acquisition sessions and ML decisions', color: '1a7f37' },
+
+  // smartem-aria-connector (purple - standalone)
+  { name: 'smartem-aria-connector', description: 'ARIA deposition integration via FandanGO plugin', color: '6639ba' },
+
+  // smartem-devtools family (warm pink scale: #99154b -> #bf3989 -> #db61a2 -> #f09bc8)
+  { name: 'smartem-devtools', description: 'Developer tooling, documentation, and workspace configuration', color: '99154b' },
+  { name: 'smartem-devtools:webui', description: 'Developer dashboard web interface', color: 'bf3989' },
+  { name: 'smartem-devtools:claude', description: 'Claude Code configuration, skills, and prompts', color: 'db61a2' },
+  { name: 'smartem-devtools:e2e-test', description: 'End-to-end testing infrastructure and scenarios', color: 'f09bc8' },
+]
+
+const githubTagsConfig: GitHubTagsConfig = {
+  typesOfWork,
+  systemComponents,
+}
 
 // =============================================================================
 // Repos and Refs
@@ -94,6 +139,161 @@ const diamondLightSourceRepos: Repository[] = [
   },
 ]
 
+const gitlabAriaPHPRepos: Repository[] = [
+  {
+    name: 'data-deposition-api',
+    description: 'ARIA GraphQL/REST API for metadata deposition (primary)',
+    urls: {
+      https: 'https://gitlab.com/aria-php/data-deposition-api.git',
+      ssh: 'git@gitlab.com:aria-php/data-deposition-api.git',
+    },
+  },
+  {
+    name: 'aria-graphql-client',
+    description: 'PHP library for communicating with ARIA GraphQL API',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-graphql-client.git',
+      ssh: 'git@gitlab.com:aria-php/aria-graphql-client.git',
+    },
+  },
+  {
+    name: 'aria-elasticsearch-client',
+    description: 'Elasticsearch client for ARIA search records',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-elasticsearch-client.git',
+      ssh: 'git@gitlab.com:aria-php/aria-elasticsearch-client.git',
+    },
+  },
+  {
+    name: 'aria-rest',
+    description: 'REST API framework for defining versioned APIs',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-rest.git',
+      ssh: 'git@gitlab.com:aria-php/aria-rest.git',
+    },
+  },
+  {
+    name: 'aria-storage-interface',
+    description: 'Storage provider interface',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-storage-interface.git',
+      ssh: 'git@gitlab.com:aria-php/aria-storage-interface.git',
+    },
+  },
+  {
+    name: 'aria-webhooks',
+    description: 'Standard webhook payload format for ARIA platform',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-webhooks.git',
+      ssh: 'git@gitlab.com:aria-php/aria-webhooks.git',
+    },
+  },
+  {
+    name: 'aria-incoming-email',
+    description: 'Incoming email message routing',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-incoming-email.git',
+      ssh: 'git@gitlab.com:aria-php/aria-incoming-email.git',
+    },
+  },
+  {
+    name: 'aria-mailer',
+    description: 'Email wrapper (PHPMailer + Swiftmailer)',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-mailer.git',
+      ssh: 'git@gitlab.com:aria-php/aria-mailer.git',
+    },
+  },
+  {
+    name: 'aria-mailgun-webhooks',
+    description: 'Mailgun webhook event parser',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-mailgun-webhooks.git',
+      ssh: 'git@gitlab.com:aria-php/aria-mailgun-webhooks.git',
+    },
+  },
+  {
+    name: 'aria-invite-users',
+    description: 'User invitation framework',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-invite-users.git',
+      ssh: 'git@gitlab.com:aria-php/aria-invite-users.git',
+    },
+  },
+  {
+    name: 'aria-data-subscription',
+    description: 'Data source subscription framework for feeds',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-data-subscription.git',
+      ssh: 'git@gitlab.com:aria-php/aria-data-subscription.git',
+    },
+  },
+  {
+    name: 'aria-stats',
+    description: 'Performance statistics monitoring',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-stats.git',
+      ssh: 'git@gitlab.com:aria-php/aria-stats.git',
+    },
+  },
+  {
+    name: 'aria-site-logger',
+    description: 'Monolog plugin for ARIA site logging',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-site-logger.git',
+      ssh: 'git@gitlab.com:aria-php/aria-site-logger.git',
+    },
+  },
+  {
+    name: 'aria-service-ai',
+    description: 'Service AI library',
+    urls: {
+      https: 'https://gitlab.com/aria-php/aria-service-ai.git',
+      ssh: 'git@gitlab.com:aria-php/aria-service-ai.git',
+    },
+  },
+  {
+    name: 'keycloak-api',
+    description: 'PHP bindings for Keycloak Account API',
+    urls: {
+      https: 'https://gitlab.com/aria-php/keycloak-api.git',
+      ssh: 'git@gitlab.com:aria-php/keycloak-api.git',
+    },
+  },
+  {
+    name: 'doi-package',
+    description: 'DOI microservice client',
+    urls: {
+      https: 'https://gitlab.com/aria-php/doi-package.git',
+      ssh: 'git@gitlab.com:aria-php/doi-package.git',
+    },
+  },
+  {
+    name: 'molgenis-php-client',
+    description: 'PHP client for Molgenis database',
+    urls: {
+      https: 'https://gitlab.com/aria-php/molgenis-php-client.git',
+      ssh: 'git@gitlab.com:aria-php/molgenis-php-client.git',
+    },
+  },
+  {
+    name: 'shibboleth-idp-dockerized',
+    description: 'Dockerized Shibboleth IdP (identity federation)',
+    urls: {
+      https: 'https://gitlab.com/aria-php/shibboleth-idp-dockerized.git',
+      ssh: 'git@gitlab.com:aria-php/shibboleth-idp-dockerized.git',
+    },
+  },
+  {
+    name: 'rtd-compiler',
+    description: 'ReadTheDocs compiler for ARIA documentation',
+    urls: {
+      https: 'https://gitlab.com/aria-php/rtd-compiler.git',
+      ssh: 'git@gitlab.com:aria-php/rtd-compiler.git',
+    },
+  },
+]
+
 const fragmentScreenRepos: Repository[] = [
   {
     name: 'fandanGO-core',
@@ -148,7 +348,7 @@ const fragmentScreenRepos: Repository[] = [
 const reposAndRefsConfig: ReposAndRefsConfig = {
   links: {
     docs: 'https://diamondlightsource.github.io/smartem-decisions/',
-    projectBoard: 'https://github.com/orgs/DiamondLightSource/projects/33/views/1',
+    projectBoard: 'https://github.com/orgs/DiamondLightSource/projects/51/views/1',
   },
   repositories: [
     {
@@ -160,6 +360,11 @@ const reposAndRefsConfig: ReposAndRefsConfig = {
       org: 'FragmentScreen',
       orgUrl: 'https://github.com/FragmentScreen',
       repos: fragmentScreenRepos,
+    },
+    {
+      org: 'aria-php',
+      orgUrl: 'https://gitlab.com/aria-php',
+      repos: gitlabAriaPHPRepos,
     },
   ],
 }
