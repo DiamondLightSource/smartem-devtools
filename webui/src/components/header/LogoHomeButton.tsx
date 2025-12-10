@@ -1,12 +1,13 @@
 import { Box } from '@mui/material'
 import { Link } from '@tanstack/react-router'
 import { AppTooltip } from '~/components/common'
+import { webUiAppContents } from '~/config'
 
 const ICON_HOME = '\uf015'
 
 export function LogoHomeButton() {
   return (
-    <AppTooltip title="Navigate back to dev dashboard" arrow placement="bottom">
+    <AppTooltip title={webUiAppContents.config.header.homeButton.tooltip} arrow placement="bottom">
       <Box
         component={Link}
         to="/home"
@@ -16,12 +17,14 @@ export function LogoHomeButton() {
           justifyContent: 'center',
           textDecoration: 'none',
           color: 'inherit',
-          p: 1,
+          px: 1,
+          py: 0.75,
           borderRadius: 1,
-          border: '0.5px solid rgba(255, 255, 255, 0.3)',
+          border: '1px solid rgba(255, 255, 255, 0.3)',
+          backgroundColor: 'rgba(255, 255, 255, 0.1)',
           transition: 'background-color 0.2s ease',
           '&:hover': {
-            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            backgroundColor: 'rgba(255, 255, 255, 0.15)',
           },
         }}
       >

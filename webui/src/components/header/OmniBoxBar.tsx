@@ -1,6 +1,7 @@
 import { Box } from '@mui/material'
 import { useState } from 'react'
 import { CommandPalette, type CommandGroup } from '~/components/widgets'
+import { webUiAppContents } from '~/config'
 
 const placeholderCommands: CommandGroup[] = [
   {
@@ -29,6 +30,7 @@ const placeholderCommands: CommandGroup[] = [
 
 export function OmniBoxBar() {
   const [isOpen, setIsOpen] = useState(false)
+  const placeholder = webUiAppContents.config.header.omniboxPlaceholder
 
   return (
     <Box>
@@ -40,16 +42,19 @@ export function OmniBoxBar() {
           alignItems: 'center',
           gap: 1,
           px: 2,
-          py: 0.5,
+          py: 0.75,
           borderRadius: 1,
-          border: '1px solid',
-          borderColor: 'divider',
+          border: '1px solid rgba(255, 255, 255, 0.3)',
           backgroundColor: 'rgba(255, 255, 255, 0.1)',
           minWidth: 200,
+          transition: 'background-color 0.2s ease',
+          '&:hover': {
+            backgroundColor: 'rgba(255, 255, 255, 0.15)',
+          },
         }}
       >
-        <Box component="span" sx={{ color: 'text.secondary', fontSize: 14 }}>
-          Search...
+        <Box component="span" sx={{ fontSize: 14, opacity: 0.7 }}>
+          {placeholder}
         </Box>
         <Box component="kbd" sx={{ ml: 'auto', fontSize: 11, color: 'text.secondary' }}>
           Ctrl+K
@@ -59,7 +64,7 @@ export function OmniBoxBar() {
         groups={placeholderCommands}
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
-        placeholder="Type a command or search..."
+        placeholder={placeholder}
       />
     </Box>
   )
