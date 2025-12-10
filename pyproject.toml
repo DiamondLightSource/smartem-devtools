@@ -3,5 +3,10 @@ name = "smartem-devtools"
 version = "0.1.0"
 description = "Developer tooling and documentation for the SmartEM multi-repo ecosystem"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 dependencies = []
+
+[project.optional-dependencies]
+fsrecorder = [
+    "watchdog>=4.0.0,<7.0.0",
+]
