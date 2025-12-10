@@ -46,8 +46,11 @@ coverage/
 # Vite/TanStack
 .tanstack/
 
-# Serena cache (can be regenerated)
-.serena/cache/
+# Serena (auto-generated project config)
+.serena/
+
+# Playwright test results
+test-results/
 
 # Local Claude settings (user-specific)
 .claude/settings.local.json
