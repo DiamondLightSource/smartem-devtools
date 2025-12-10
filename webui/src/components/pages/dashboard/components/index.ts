@@ -1,1 +1,6 @@
+export * from './ConnectionsOverlay'
 export * from './MicroscopeGrid'
+export * from './MicroscopeItemContainer'
+export * from './MicroscopeInstrument'
+export * from './MicroscopeWorkstation'
+export * from './SystemComponentContainer'

@@ -396,11 +396,56 @@ const microscopeList: CryoEMInstrument[] = [
 // WebUI Config
 // =============================================================================
 
-interface WebUiConfig {
-  // Reserved for future app-level config
+// =============================================================================
+// Feature Flags
+// =============================================================================
+
+interface FeatureFlags {
+    repoStatsInDev: boolean
+    repoStatsInProd: boolean
+    connectionLineStyle: 'straight' | 'bezier' | 'orthogonal'
 }
 
-const webUiConfig: WebUiConfig = {}
+const featureFlags: FeatureFlags = {
+  repoStatsInDev: true,
+  repoStatsInProd: true,
+  connectionLineStyle: 'bezier',
+}
+
+// =============================================================================
+// Header Configuration
+// =============================================================================
+
+interface HeaderButtonConfig {
+  text?: string
+  tooltip: string
+}
+
+interface HeaderConfig {
+  homeButton: HeaderButtonConfig
+  docsButton: HeaderButtonConfig
+  boardButton: HeaderButtonConfig
+  menuButton: HeaderButtonConfig
+  omniboxPlaceholder: string
+  repoSelectorLabel: string
+}
+
+interface WebUiConfig {
+  appTitle: string
+  header: HeaderConfig
+}
+
+const webUiConfig: WebUiConfig = {
+  appTitle: 'SmartEM Dev Dashboard',
+  header: {
+    homeButton: { tooltip: 'Navigate to dashboard home' },
+    docsButton: { text: 'docs', tooltip: 'Open project documentation' },
+    boardButton: { text: 'board', tooltip: 'Open GitHub project board' },
+    menuButton: { tooltip: 'Open settings menu' },
+    omniboxPlaceholder: 'search..',
+    repoSelectorLabel: 'repos / codebases',
+  },
+}
 
 // =============================================================================
 // Aggregated App Contents
@@ -411,6 +456,7 @@ export interface WebUiAppContents {
   repos: ReposAndRefsConfig
   microscopes: CryoEMInstrument[]
   config: WebUiConfig
+  featureFlags: FeatureFlags
 }
 
 export const webUiAppContents: WebUiAppContents = {
@@ -418,6 +464,7 @@ export const webUiAppContents: WebUiAppContents = {
   repos: reposAndRefsConfig,
   microscopes: microscopeList,
   config: webUiConfig,
+  featureFlags: featureFlags,
 }
 
 export default webUiAppContents

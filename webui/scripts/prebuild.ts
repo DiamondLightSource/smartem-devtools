@@ -72,6 +72,7 @@ export interface WebUiAppContents {
   repos: ReposAndRefsConfig
   microscopes: CryoEMInstrument[]
   config: WebUiConfig
+  featureFlags: FeatureFlags
 }
 
 export const webUiAppContents: WebUiAppContents = {
@@ -79,6 +80,7 @@ export const webUiAppContents: WebUiAppContents = {
   repos: reposAndRefsConfig,
   microscopes: microscopeList,
   config: webUiConfig,
+  featureFlags: featureFlags,
 }
 
 export default webUiAppContents
