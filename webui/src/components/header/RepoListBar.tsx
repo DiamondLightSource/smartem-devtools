@@ -1,9 +1,20 @@
 import { useState } from 'react'
 import { Box, Menu, MenuItem, ListSubheader, Typography, Divider } from '@mui/material'
+import { CopyCodeBox } from '~/components/common'
 import { webUiAppContents } from '~/config'
+import { RepoStatsDisplay } from './RepoStatsDisplay'
 
-const ICON_REPO = '\uf1d3'
+const ICON_CODEBASE = '\ue725'
 const ICON_CHEVRON = '\uf078'
+const ICON_GITHUB = '\uf09b'
+const ICON_GITLAB = '\uf296'
+const ICON_EXTERNAL_LINK = '\uf08e'
+
+function getPlatformIcon(url: string): string {
+  if (url.includes('github.com')) return ICON_GITHUB
+  if (url.includes('gitlab.com')) return ICON_GITLAB
+  return ''
+}
 
 export function RepoListBar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -52,9 +63,11 @@ export function RepoListBar() {
               lineHeight: 1,
             }}
           >
-            {ICON_REPO}
+            {ICON_CODEBASE}
           </Box>
-          <Typography variant="body2">Repositories ({totalRepos})</Typography>
+          <Typography variant="body2">
+            {webUiAppContents.config.header.repoSelectorLabel} ({totalRepos})
+          </Typography>
         </Box>
         <Box
           component="span"
@@ -80,11 +93,14 @@ export function RepoListBar() {
           paper: {
             sx: {
               mt: 1,
-              minWidth: 400,
+              minWidth: 900,
+              maxWidth: 1200,
               maxHeight: 500,
+              overflowY: 'scroll',
               backgroundColor: '#2c2c2c',
               backgroundImage: 'url("/assets/textures/asfalt-dark.png")',
               color: 'white',
+              border: '1px solid rgba(255, 255, 255, 0.3)',
             },
           },
         }}
@@ -103,49 +119,111 @@ export function RepoListBar() {
             target="_blank"
             rel="noopener noreferrer"
             sx={{
-              backgroundColor: 'transparent',
+              backgroundColor: '#2c2c2c',
+              backgroundImage: 'url("/assets/textures/asfalt-dark.png")',
               color: 'rgba(255,255,255,0.7)',
-              fontSize: '0.75rem',
+              fontSize: '0.875rem',
               fontWeight: 'bold',
-              textTransform: 'uppercase',
-              letterSpacing: '0.05em',
               lineHeight: 2.5,
               textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1,
+              pb: 2,
               '&:hover': {
                 color: 'white',
+                textDecoration: 'underline',
               },
             }}
           >
-            {orgGroup.org}
+            <Box
+              component="span"
+              sx={{
+                fontFamily: '"JetBrainsMono NF"',
+                fontSize: 28,
+                lineHeight: 1,
+              }}
+            >
+              {getPlatformIcon(orgGroup.orgUrl)}
+            </Box>
+            {orgGroup.orgUrl}
           </ListSubheader>,
           ...orgGroup.repos.map((repo) => (
             <MenuItem
               key={repo.name}
-              component="a"
-              href={repo.urls.https.replace('.git', '')}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={handleClose}
+              disableRipple
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'flex-start',
-                py: 1,
-                px: 2,
+                alignItems: 'stretch',
+                py: 2,
+                pl: 4,
+                pr: 2,
+                cursor: 'default',
                 '&:hover': {
-                  backgroundColor: 'rgba(255,255,255,0.1)',
+                  backgroundColor: 'rgba(255,255,255,0.05)',
                 },
               }}
             >
-              <Typography variant="body2" sx={{ fontWeight: 500 }}>
-                {repo.name}
-              </Typography>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  justifyContent: 'space-between',
+                  gap: 2,
+                  mb: 0.5,
+                }}
+              >
+                <Box
+                  component="a"
+                  href={repo.urls.https.replace('.git', '')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e: React.MouseEvent) => e.stopPropagation()}
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 0.75,
+                    color: 'inherit',
+                    textDecoration: 'none',
+                    '&:hover': {
+                      textDecoration: 'underline',
+                    },
+                  }}
+                >
+                  <Box
+                    component="span"
+                    sx={{
+                      fontFamily: '"JetBrainsMono NF"',
+                      fontSize: 14,
+                      lineHeight: 1,
+                      opacity: 0.7,
+                    }}
+                  >
+                    {ICON_EXTERNAL_LINK}
+                  </Box>
+                  <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                    {repo.name}
+                  </Typography>
+                </Box>
+                <Box
+                  onClick={(e: React.MouseEvent) => e.stopPropagation()}
+                  sx={{ flexShrink: 0, maxWidth: 400, mt: 0.5, opacity: 0.7 }}
+                >
+                  <CopyCodeBox code={repo.urls.ssh} />
+                </Box>
+              </Box>
               <Typography
                 variant="caption"
                 sx={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.7rem' }}
               >
                 {repo.description}
               </Typography>
+              <RepoStatsDisplay
+                owner={orgGroup.org}
+                repo={repo.name}
+                isGitHub={orgGroup.orgUrl.includes('github.com')}
+              />
             </MenuItem>
           )),
         ])}
