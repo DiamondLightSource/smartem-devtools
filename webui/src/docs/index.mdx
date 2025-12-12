@@ -1,0 +1,63 @@
+# smartem-devtools
+
+Developer tooling, documentation, and workspace configuration for the SmartEM multi-repo ecosystem.
+
+## Overview
+
+This repository serves as the **index repo** for SmartEM development at Diamond Light Source. It aggregates:
+
+- Developer documentation and how-to guides
+- Architecture Decision Records (ADRs)
+- Claude Code configuration for AI-assisted development
+- Developer WebUI for workspace management
+- Core configuration for the multi-repo ecosystem
+
+## How the documentation is structured
+
+Documentation is split into [four categories](https://diataxis.fr), following the Diataxis framework.
+
+import { CardGrid, DocCard } from '../components/mdx'
+import DirectionsWalk from '@mui/icons-material/DirectionsWalk'
+import Directions from '@mui/icons-material/Directions'
+import Info from '@mui/icons-material/Info'
+import MenuBook from '@mui/icons-material/MenuBook'
+
+<CardGrid columns={2}>
+  <DocCard title="Tutorials" href="/docs/tutorials/installation" icon={<DirectionsWalk />}>
+    Tutorials for installation and typical usage. New users start here.
+  </DocCard>
+  <DocCard title="How-To Guides" href="/docs/how-to" icon={<Directions />}>
+    Practical step-by-step guides for the more experienced user.
+  </DocCard>
+  <DocCard title="Explanations" href="/docs/explanations" icon={<Info />}>
+    Explanations of how it works and why it works that way.
+  </DocCard>
+  <DocCard title="Reference" href="/docs/reference" icon={<MenuBook />}>
+    Technical reference material including APIs and release notes.
+  </DocCard>
+</CardGrid>
+
+## API Documentation
+
+Interactive API documentation is available for all SmartEM Decisions services:
+
+import Psychology from '@mui/icons-material/Psychology'
+import SmartToy from '@mui/icons-material/SmartToy'
+
+<CardGrid columns={2}>
+  <DocCard title="Athena Decision Service API" href="/api/athena/index.html" icon={<Psychology />}>
+    Complete interactive documentation for the Athena Decision Service API, including session management, decision recording, and algorithm results.
+  </DocCard>
+  <DocCard title="SmartEM Core API" href="/api/smartem/index.html" icon={<SmartToy />}>
+    Documentation for the SmartEM Core API for recording electron microscopy sessions and experimental data.
+  </DocCard>
+</CardGrid>
+
+## Related Repositories
+
+| Repository | Purpose |
+|------------|---------|
+| [smartem-decisions](https://github.com/DiamondLightSource/smartem-decisions) | Backend API, agent, database |
+| [smartem-frontend](https://github.com/DiamondLightSource/smartem-frontend) | User-facing web interface |
+| [fandanGO-cryoem-dls](https://github.com/DiamondLightSource/fandanGO-cryoem-dls) | ARIA deposition plugin |
+| [cryoem-services](https://github.com/DiamondLightSource/cryoem-services) | Processing pipeline (reference) |

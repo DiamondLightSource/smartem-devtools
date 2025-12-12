@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecting...</title>
+    <script>
+      // GitHub Pages SPA redirect
+      // Converts the path to a query string parameter so the SPA can handle routing
+      const path = window.location.pathname;
+      const search = window.location.search;
+      const hash = window.location.hash;
+
+      // Redirect to index with the path preserved in sessionStorage
+      sessionStorage.setItem('spa-redirect-path', path + search + hash);
+      window.location.replace('/smartem-devtools/');
+    </script>
+  </head>
+  <body>
+    <p>Redirecting...</p>
+  </body>
+</html>
