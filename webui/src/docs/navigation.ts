@@ -44,22 +44,52 @@ export const docsNavigation: NavItem[] = [
     href: '/docs/explanations',
     children: [
       { title: 'SmartEM Agent Design', href: '/docs/explanations/smartem-agent-design' },
-      { title: 'Backend-Agent Communication', href: '/docs/explanations/backend-agent-communication-system-design' },
+      {
+        title: 'Backend-Agent Communication',
+        href: '/docs/explanations/backend-agent-communication-system-design',
+      },
       { title: 'EPU Data Structures', href: '/docs/explanations/epu-data-structures' },
       { title: 'Technical Notes', href: '/docs/explanations/technical-notes' },
       {
         title: 'Architecture Decisions',
         href: '/docs/explanations/decisions',
         children: [
-          { title: 'ADR-0001: Record Decisions', href: '/docs/explanations/decisions/0001-record-architecture-decisions' },
-          { title: 'ADR-0002: Copier Template', href: '/docs/explanations/decisions/0002-switched-to-python-copier-template' },
-          { title: 'ADR-0003: Message Grouping', href: '/docs/explanations/decisions/0003-message-queue-message-grouping' },
-          { title: 'ADR-0004: Zocalo-Free', href: '/docs/explanations/decisions/0004-zocalo-dependency-free' },
-          { title: 'ADR-0005: Secret Scanning', href: '/docs/explanations/decisions/0005-detect-secrets-for-secret-scanning' },
-          { title: 'ADR-0006: Sealed Secrets', href: '/docs/explanations/decisions/0006-sealed-secrets-kubernetes-secrets-management' },
-          { title: 'ADR-0007: Circular Deps', href: '/docs/explanations/decisions/0007-eliminate-smartem-api-circular-dependency' },
-          { title: 'ADR-0008: Agent Comms', href: '/docs/explanations/decisions/0008-backend-to-agent-communication-architecture' },
-          { title: 'ADR-0009: Route Tree', href: '/docs/explanations/decisions/0009-commit-generated-route-tree' },
+          {
+            title: 'ADR-0001: Record Decisions',
+            href: '/docs/explanations/decisions/0001-record-architecture-decisions',
+          },
+          {
+            title: 'ADR-0002: Copier Template',
+            href: '/docs/explanations/decisions/0002-switched-to-python-copier-template',
+          },
+          {
+            title: 'ADR-0003: Message Grouping',
+            href: '/docs/explanations/decisions/0003-message-queue-message-grouping',
+          },
+          {
+            title: 'ADR-0004: Zocalo-Free',
+            href: '/docs/explanations/decisions/0004-zocalo-dependency-free',
+          },
+          {
+            title: 'ADR-0005: Secret Scanning',
+            href: '/docs/explanations/decisions/0005-detect-secrets-for-secret-scanning',
+          },
+          {
+            title: 'ADR-0006: Sealed Secrets',
+            href: '/docs/explanations/decisions/0006-sealed-secrets-kubernetes-secrets-management',
+          },
+          {
+            title: 'ADR-0007: Circular Deps',
+            href: '/docs/explanations/decisions/0007-eliminate-smartem-api-circular-dependency',
+          },
+          {
+            title: 'ADR-0008: Agent Comms',
+            href: '/docs/explanations/decisions/0008-backend-to-agent-communication-architecture',
+          },
+          {
+            title: 'ADR-0009: Route Tree',
+            href: '/docs/explanations/decisions/0009-commit-generated-route-tree',
+          },
         ],
       },
     ],
@@ -69,7 +99,7 @@ export const docsNavigation: NavItem[] = [
     href: '/docs/reference',
     children: [
       { title: 'CLI Reference', href: '/docs/reference/cli-reference' },
-      { title: 'API Documentation', href: '/api/', },
+      { title: 'API Documentation', href: '/api/' },
     ],
   },
 ]

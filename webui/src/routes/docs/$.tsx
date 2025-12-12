@@ -7,9 +7,7 @@ const docModules = import.meta.glob('../../docs/**/*.mdx')
 function getDocComponent(path: string) {
   const normalizedPath = path.startsWith('/') ? path.slice(1) : path
 
-  const matchingKey = Object.keys(docModules).find(
-    (key) => key.endsWith(`${normalizedPath}.mdx`)
-  )
+  const matchingKey = Object.keys(docModules).find((key) => key.endsWith(`${normalizedPath}.mdx`))
 
   if (!matchingKey) {
     return null

@@ -14,13 +14,13 @@ export interface Connection {
 
 // Color palette for connections
 const colors = {
-  green: '#4caf50',      // Agent -> Backend API (data intake)
-  red: '#f44336',        // Agent <- Agent API (SSE recommendations)
-  blue: '#2196f3',       // C1: EPU -> fs (file writes)
-  orange: '#ff9800',     // C2: fs -> Agent (file watching)
-  purple: '#9c27b0',     // C3: Agent -> Athena API (microscope control)
-  teal: '#009688',       // C4: ARIA Connector flows
-  pink: '#e91e63',       // C5: Web UI -> Backend API
+  green: '#4caf50', // Agent -> Backend API (data intake)
+  red: '#f44336', // Agent <- Agent API (SSE recommendations)
+  blue: '#2196f3', // C1: EPU -> fs (file writes)
+  orange: '#ff9800', // C2: fs -> Agent (file watching)
+  purple: '#9c27b0', // C3: Agent -> Athena API (microscope control)
+  teal: '#009688', // C4: ARIA Connector flows
+  pink: '#e91e63', // C5: Web UI -> Backend API
 }
 
 export const dashboardConnections: Connection[] = [
@@ -68,7 +68,8 @@ export const dashboardConnections: Connection[] = [
     sourceAnchor: 'bottom',
     targetAnchor: 'bottom',
     color: colors.orange,
-    tooltip: 'SmartEM Agent watches filesystem for changes and parses acquisition data, performing data intake',
+    tooltip:
+      'SmartEM Agent watches filesystem for changes and parses acquisition data, performing data intake',
     sourceDotOffset: 10, // Move dot right on bottom edge (next to blue)
     targetDotOffset: -15, // Move dot left on bottom edge
     arrow: 'target', // Arrow pointing to Agent

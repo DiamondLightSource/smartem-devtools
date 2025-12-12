@@ -42,7 +42,9 @@ export function ProjectBoardButton() {
         >
           {ICON_GRID}
         </Box>
-        <Box component="span" sx={{ fontSize: 14 }}>{text}</Box>
+        <Box component="span" sx={{ fontSize: 14 }}>
+          {text}
+        </Box>
       </Box>
     </AppTooltip>
   )
