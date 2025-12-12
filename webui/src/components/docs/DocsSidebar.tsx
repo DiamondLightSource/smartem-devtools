@@ -20,10 +20,12 @@ function NavItemComponent({ item, depth = 0 }: NavItemComponentProps) {
   const hasChildren = item.children && item.children.length > 0
   const [open, setOpen] = useState(() => {
     if (!hasChildren) return false
-    return item.children!.some(
-      (child) =>
-        location.pathname === child.href ||
-        child.children?.some((c) => location.pathname === c.href)
+    return (
+      item.children?.some(
+        (child) =>
+          location.pathname === child.href ||
+          child.children?.some((c) => location.pathname === c.href)
+      ) ?? false
     )
   })
 
@@ -47,7 +49,7 @@ function NavItemComponent({ item, depth = 0 }: NavItemComponentProps) {
         </ListItemButton>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {item.children!.map((child) => (
+            {item.children?.map((child) => (
               <NavItemComponent key={child.href} item={child} depth={depth + 1} />
             ))}
           </List>
