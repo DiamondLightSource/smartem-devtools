@@ -156,6 +156,7 @@ export function ConnectionsOverlay({ connections, containerRef }: ConnectionsOve
 
   return (
     <svg
+      aria-hidden="true"
       style={{
         position: 'absolute',
         inset: 0,
