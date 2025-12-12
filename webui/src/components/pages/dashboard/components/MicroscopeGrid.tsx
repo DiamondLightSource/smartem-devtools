@@ -68,7 +68,10 @@ export function MicroscopeGrid() {
                         opacity: 0.2,
                       }}
                     />
-                    <Typography variant="caption" sx={{ color: 'rgba(0, 0, 0, 0.5)', fontStyle: 'italic' }}>
+                    <Typography
+                      variant="caption"
+                      sx={{ color: 'rgba(0, 0, 0, 0.5)', fontStyle: 'italic' }}
+                    >
                       +{collapsed.length} more microscopes
                     </Typography>
                   </Box>

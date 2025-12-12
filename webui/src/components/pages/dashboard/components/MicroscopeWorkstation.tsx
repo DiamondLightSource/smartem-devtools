@@ -68,20 +68,36 @@ export function MicroscopeWorkstation() {
             justifyContent: 'space-between',
           }}
         >
-          <Typography
-            variant="caption"
-            sx={{ color: '#fff', fontSize: '0.6rem', fontWeight: 500 }}
-          >
+          <Typography variant="caption" sx={{ color: '#fff', fontSize: '0.6rem', fontWeight: 500 }}>
             EPU
           </Typography>
           <Box sx={{ display: 'flex', gap: 0.25 }}>
-            <Box sx={{ width: 8, height: 8, backgroundColor: 'rgba(255,255,255,0.3)', borderRadius: '1px' }} />
-            <Box sx={{ width: 8, height: 8, backgroundColor: 'rgba(255,255,255,0.3)', borderRadius: '1px' }} />
+            <Box
+              sx={{
+                width: 8,
+                height: 8,
+                backgroundColor: 'rgba(255,255,255,0.3)',
+                borderRadius: '1px',
+              }}
+            />
+            <Box
+              sx={{
+                width: 8,
+                height: 8,
+                backgroundColor: 'rgba(255,255,255,0.3)',
+                borderRadius: '1px',
+              }}
+            />
             <Box sx={{ width: 8, height: 8, backgroundColor: '#e81123', borderRadius: '1px' }} />
           </Box>
         </Box>
-        <Box sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', p: 0.5 }}>
-          <Typography variant="caption" sx={{ color: '#333', textAlign: 'center', fontSize: '0.65rem' }}>
+        <Box
+          sx={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', p: 0.5 }}
+        >
+          <Typography
+            variant="caption"
+            sx={{ color: '#333', textAlign: 'center', fontSize: '0.65rem' }}
+          >
             Desktop Software
           </Typography>
         </Box>

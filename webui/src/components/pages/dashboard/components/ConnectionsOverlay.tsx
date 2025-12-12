@@ -13,10 +13,14 @@ type AnchorPosition = 'left' | 'right' | 'top' | 'bottom'
 // Get rotation angle for arrow based on anchor position (arrow points INTO the element)
 function getArrowRotation(anchor: AnchorPosition): number {
   switch (anchor) {
-    case 'left': return 180   // Arrow points left (into element from right)
-    case 'right': return 0    // Arrow points right (into element from left)
-    case 'top': return 270    // Arrow points up (into element from below)
-    case 'bottom': return 90  // Arrow points down (into element from above)
+    case 'left':
+      return 180 // Arrow points left (into element from right)
+    case 'right':
+      return 0 // Arrow points right (into element from left)
+    case 'top':
+      return 270 // Arrow points up (into element from below)
+    case 'bottom':
+      return 90 // Arrow points down (into element from above)
   }
 }
 
@@ -67,23 +71,41 @@ function renderPath(
       const offset = curveOffset
 
       // Determine control point directions based on anchors
-      let cp1x = x1, cp1y = y1
-      let cp2x = x2, cp2y = y2
+      let cp1x = x1,
+        cp1y = y1
+      let cp2x = x2,
+        cp2y = y2
 
       // Source control point - extend in the direction of the anchor
       switch (sourceAnchor) {
-        case 'left': cp1x = x1 - offset; break
-        case 'right': cp1x = x1 + offset; break
-        case 'top': cp1y = y1 - offset; break
-        case 'bottom': cp1y = y1 + offset; break
+        case 'left':
+          cp1x = x1 - offset
+          break
+        case 'right':
+          cp1x = x1 + offset
+          break
+        case 'top':
+          cp1y = y1 - offset
+          break
+        case 'bottom':
+          cp1y = y1 + offset
+          break
       }
 
       // Target control point - extend in the direction of the anchor
       switch (targetAnchor) {
-        case 'left': cp2x = x2 - offset; break
-        case 'right': cp2x = x2 + offset; break
-        case 'top': cp2y = y2 - offset; break
-        case 'bottom': cp2y = y2 + offset; break
+        case 'left':
+          cp2x = x2 - offset
+          break
+        case 'right':
+          cp2x = x2 + offset
+          break
+        case 'top':
+          cp2y = y2 - offset
+          break
+        case 'bottom':
+          cp2y = y2 + offset
+          break
       }
 
       return `M ${x1} ${y1} C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${x2} ${y2}`
@@ -173,10 +195,29 @@ export function ConnectionsOverlay({ connections, containerRef }: ConnectionsOve
 
         if (!sourceRect || !targetRect) return null
 
-        const source = getAnchorPoint(sourceRect, conn.sourceAnchor, containerRect, conn.sourceDotOffset)
-        const target = getAnchorPoint(targetRect, conn.targetAnchor, containerRect, conn.targetDotOffset)
+        const source = getAnchorPoint(
+          sourceRect,
+          conn.sourceAnchor,
+          containerRect,
+          conn.sourceDotOffset
+        )
+        const target = getAnchorPoint(
+          targetRect,
+          conn.targetAnchor,
+          containerRect,
+          conn.targetDotOffset
+        )
 
-        const pathD = renderPath(source.x, source.y, target.x, target.y, conn.sourceAnchor, conn.targetAnchor, lineStyle, conn.curveOffset)
+        const pathD = renderPath(
+          source.x,
+          source.y,
+          target.x,
+          target.y,
+          conn.sourceAnchor,
+          conn.targetAnchor,
+          lineStyle,
+          conn.curveOffset
+        )
 
         const showSourceArrow = conn.arrow === 'source' || conn.arrow === 'both'
         const showTargetArrow = conn.arrow === 'target' || conn.arrow === 'both'

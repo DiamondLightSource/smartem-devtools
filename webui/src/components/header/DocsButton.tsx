@@ -42,7 +42,9 @@ export function DocsButton() {
         >
           {ICON_BOOK_OPEN}
         </Box>
-        <Box component="span" sx={{ fontSize: 14 }}>{text}</Box>
+        <Box component="span" sx={{ fontSize: 14 }}>
+          {text}
+        </Box>
       </Box>
     </AppTooltip>
   )

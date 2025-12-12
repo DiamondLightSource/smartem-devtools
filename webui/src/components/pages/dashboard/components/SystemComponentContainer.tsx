@@ -8,7 +8,12 @@ interface SystemComponentContainerProps {
   flex?: number
 }
 
-export function SystemComponentContainer({ heading, children, minHeight, flex }: SystemComponentContainerProps) {
+export function SystemComponentContainer({
+  heading,
+  children,
+  minHeight,
+  flex,
+}: SystemComponentContainerProps) {
   return (
     <Box
       sx={{

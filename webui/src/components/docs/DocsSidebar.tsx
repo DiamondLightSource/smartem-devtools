@@ -1,9 +1,4 @@
-import {
-  Collapse,
-  List,
-  ListItemButton,
-  ListItemText,
-} from '@mui/material'
+import { Collapse, List, ListItemButton, ListItemText } from '@mui/material'
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
 import { Link, useLocation } from '@tanstack/react-router'
 import { useState } from 'react'
@@ -34,10 +29,7 @@ function NavItemComponent({ item, depth = 0 }: NavItemComponentProps) {
   if (hasChildren) {
     return (
       <>
-        <ListItemButton
-          onClick={() => setOpen(!open)}
-          sx={{ pl: 2 + depth * 2 }}
-        >
+        <ListItemButton onClick={() => setOpen(!open)} sx={{ pl: 2 + depth * 2 }}>
           <ListItemText
             primary={item.title}
             primaryTypographyProps={{
@@ -79,12 +71,7 @@ function NavItemComponent({ item, depth = 0 }: NavItemComponentProps) {
   }
 
   return (
-    <ListItemButton
-      component={Link}
-      to={item.href}
-      selected={isActive}
-      sx={{ pl: 2 + depth * 2 }}
-    >
+    <ListItemButton component={Link} to={item.href} selected={isActive} sx={{ pl: 2 + depth * 2 }}>
       <ListItemText
         primary={item.title}
         primaryTypographyProps={{

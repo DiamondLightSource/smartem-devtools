@@ -29,15 +29,9 @@ const components: MDXComponents = {
   ),
   p: (props) => <Typography variant="body1" paragraph {...props} />,
   a: (props) => <Link {...props} />,
-  ul: (props) => (
-    <Box component="ul" sx={{ pl: 3, mb: 2 }} {...props} />
-  ),
-  ol: (props) => (
-    <Box component="ol" sx={{ pl: 3, mb: 2 }} {...props} />
-  ),
-  li: (props) => (
-    <Typography component="li" variant="body1" sx={{ mb: 0.5 }} {...props} />
-  ),
+  ul: (props) => <Box component="ul" sx={{ pl: 3, mb: 2 }} {...props} />,
+  ol: (props) => <Box component="ol" sx={{ pl: 3, mb: 2 }} {...props} />,
+  li: (props) => <Typography component="li" variant="body1" sx={{ mb: 0.5 }} {...props} />,
   blockquote: (props) => (
     <Paper
       elevation={0}
@@ -100,9 +94,7 @@ const components: MDXComponents = {
   thead: (props) => <TableHead {...props} />,
   tbody: (props) => <TableBody {...props} />,
   tr: (props) => <TableRow {...props} />,
-  th: (props) => (
-    <TableCell component="th" sx={{ fontWeight: 'bold' }} {...props} />
-  ),
+  th: (props) => <TableCell component="th" sx={{ fontWeight: 'bold' }} {...props} />,
   td: (props) => <TableCell {...props} />,
 }
 
