@@ -1,4 +1,5 @@
 import { Box } from '@mui/material'
+import { Link } from '@tanstack/react-router'
 import { AppTooltip } from '~/components/common'
 import { webUiAppContents } from '~/config'
 
@@ -10,10 +11,8 @@ export function DocsButton() {
   return (
     <AppTooltip title={tooltip} arrow placement="bottom">
       <Box
-        component="a"
-        href={webUiAppContents.repos.links.docs}
-        target="_blank"
-        rel="noopener noreferrer"
+        component={Link}
+        to="/docs"
         sx={{
           display: 'flex',
           alignItems: 'center',

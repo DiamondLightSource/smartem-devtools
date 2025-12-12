@@ -1,5 +1,5 @@
-import { Collapse, List, ListItemButton, ListItemText } from '@mui/material'
 import { ExpandLess, ExpandMore } from '@mui/icons-material'
+import { Collapse, List, ListItemButton, ListItemText } from '@mui/material'
 import { Link, useLocation } from '@tanstack/react-router'
 import { useState } from 'react'
 import type { NavItem } from '~/docs/navigation'
@@ -7,6 +7,14 @@ import type { NavItem } from '~/docs/navigation'
 interface NavItemComponentProps {
   item: NavItem
   depth?: number
+}
+
+const sidebarStyles = {
+  text: { color: 'rgba(255, 255, 255, 0.9)' },
+  textMuted: { color: 'rgba(255, 255, 255, 0.7)' },
+  icon: { color: 'rgba(255, 255, 255, 0.7)' },
+  hover: { bgcolor: 'rgba(255, 255, 255, 0.08)' },
+  selected: { bgcolor: 'rgba(255, 255, 255, 0.12)' },
 }
 
 function NavItemComponent({ item, depth = 0 }: NavItemComponentProps) {
@@ -29,15 +37,19 @@ function NavItemComponent({ item, depth = 0 }: NavItemComponentProps) {
   if (hasChildren) {
     return (
       <>
-        <ListItemButton onClick={() => setOpen(!open)} sx={{ pl: 2 + depth * 2 }}>
+        <ListItemButton
+          onClick={() => setOpen(!open)}
+          sx={{ pl: 2 + depth * 2, '&:hover': sidebarStyles.hover }}
+        >
           <ListItemText
             primary={item.title}
             primaryTypographyProps={{
               variant: 'body2',
               fontWeight: depth === 0 ? 600 : 400,
+              sx: sidebarStyles.text,
             }}
           />
-          {open ? <ExpandLess /> : <ExpandMore />}
+          {open ? <ExpandLess sx={sidebarStyles.icon} /> : <ExpandMore sx={sidebarStyles.icon} />}
         </ListItemButton>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
@@ -57,13 +69,13 @@ function NavItemComponent({ item, depth = 0 }: NavItemComponentProps) {
         href={item.href}
         target="_blank"
         rel="noopener noreferrer"
-        sx={{ pl: 2 + depth * 2 }}
+        sx={{ pl: 2 + depth * 2, '&:hover': sidebarStyles.hover }}
       >
         <ListItemText
           primary={item.title}
           primaryTypographyProps={{
             variant: 'body2',
-            color: 'primary',
+            sx: { color: '#90caf9' },
           }}
         />
       </ListItemButton>
@@ -71,12 +83,23 @@ function NavItemComponent({ item, depth = 0 }: NavItemComponentProps) {
   }
 
   return (
-    <ListItemButton component={Link} to={item.href} selected={isActive} sx={{ pl: 2 + depth * 2 }}>
+    <ListItemButton
+      component={Link}
+      to={item.href}
+      selected={isActive}
+      sx={{
+        pl: 2 + depth * 2,
+        '&:hover': sidebarStyles.hover,
+        '&.Mui-selected': sidebarStyles.selected,
+        '&.Mui-selected:hover': sidebarStyles.selected,
+      }}
+    >
       <ListItemText
         primary={item.title}
         primaryTypographyProps={{
           variant: 'body2',
           fontWeight: isActive ? 600 : 400,
+          sx: isActive ? sidebarStyles.text : sidebarStyles.textMuted,
         }}
       />
     </ListItemButton>

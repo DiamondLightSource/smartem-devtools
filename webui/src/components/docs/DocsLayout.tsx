@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import { docsNavigation } from '~/docs/navigation'
 import { DocsSidebar } from './DocsSidebar'
 
-const DRAWER_WIDTH = 280
+const DRAWER_WIDTH = 260
 
 interface DocsLayoutProps {
   children: ReactNode
@@ -26,8 +26,8 @@ export function DocsLayout({ children }: DocsLayoutProps) {
               boxSizing: 'border-box',
               position: 'relative',
               height: '100%',
-              borderRight: 1,
-              borderColor: 'divider',
+              bgcolor: '#2c2c2c',
+              borderRight: '1px solid rgba(255, 255, 255, 0.1)',
             },
           }}
         >
@@ -40,9 +40,10 @@ export function DocsLayout({ children }: DocsLayoutProps) {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
+          p: 4,
           maxWidth: '900px',
           mx: 'auto',
+          color: '#333',
         }}
       >
         {children}
