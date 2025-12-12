@@ -56,11 +56,51 @@ const components: MDXComponents = {
     />
   ),
   p: (props) => <Typography variant="body1" paragraph sx={{ color: textColor }} {...props} />,
-  a: (props) => <Link sx={{ color: linkColor }} {...props} />,
-  ul: (props) => <Box component="ul" sx={{ pl: 3, mb: 2, color: textColor }} {...props} />,
-  ol: (props) => <Box component="ol" sx={{ pl: 3, mb: 2, color: textColor }} {...props} />,
+  a: (props) => (
+    <Link
+      sx={{
+        color: linkColor,
+        textDecoration: 'none',
+        '&:hover': {
+          textDecoration: 'underline',
+        },
+      }}
+      {...props}
+    />
+  ),
+  ul: (props) => (
+    <Box
+      component="ul"
+      sx={{
+        pl: 3,
+        mb: 2,
+        color: textColor,
+        listStyleType: 'disc',
+        '& ul': { listStyleType: 'circle' },
+        '& ul ul': { listStyleType: 'square' },
+      }}
+      {...props}
+    />
+  ),
+  ol: (props) => (
+    <Box
+      component="ol"
+      sx={{
+        pl: 3,
+        mb: 2,
+        color: textColor,
+        listStyleType: 'decimal',
+      }}
+      {...props}
+    />
+  ),
   li: (props) => (
-    <Typography component="li" variant="body1" sx={{ mb: 0.5, color: textColor }} {...props} />
+    <Typography
+      component="li"
+      variant="body1"
+      sx={{ mb: 0.5, color: textColor, display: 'list-item' }}
+      {...props}
+    />
   ),
   blockquote: (props) => (
     <Paper
@@ -120,17 +160,34 @@ const components: MDXComponents = {
     return <code {...props} />
   },
   table: (props) => (
-    <Paper elevation={0} sx={{ my: 2, overflow: 'auto', border: '1px solid #ddd' }}>
+    <Paper
+      elevation={0}
+      sx={{ my: 2, overflow: 'auto', border: '1px solid #444', borderRadius: 1 }}
+    >
       <Table size="small" {...props} />
     </Paper>
   ),
-  thead: (props) => <TableHead sx={{ bgcolor: '#f5f5f5' }} {...props} />,
+  thead: (props) => <TableHead {...props} />,
   tbody: (props) => <TableBody {...props} />,
-  tr: (props) => <TableRow sx={{ '&:nth-of-type(even)': { bgcolor: '#fafafa' } }} {...props} />,
-  th: (props) => (
-    <TableCell component="th" sx={{ fontWeight: 'bold', color: textColor }} {...props} />
+  tr: (props) => (
+    <TableRow sx={{ bgcolor: '#fff', '&:nth-of-type(even)': { bgcolor: '#f0f0f0' } }} {...props} />
   ),
-  td: (props) => <TableCell sx={{ color: textColor }} {...props} />,
+  th: (props) => (
+    <TableCell
+      component="th"
+      sx={{
+        fontWeight: 'bold',
+        color: '#fff',
+        backgroundColor: '#2c2c2c',
+        backgroundImage: 'url("/assets/textures/asfalt-dark.png")',
+        borderBottom: '1px solid #444',
+      }}
+      {...props}
+    />
+  ),
+  td: (props) => (
+    <TableCell sx={{ color: textColor, borderBottom: '1px solid #e0e0e0' }} {...props} />
+  ),
 }
 
 interface MDXProviderProps {

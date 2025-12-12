@@ -1,7 +1,8 @@
 import mdx from '@mdx-js/rollup'
-import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
 import tailwindcss from '@tailwindcss/vite'
+import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
 import react from '@vitejs/plugin-react'
+import rehypePrettyCode from 'rehype-pretty-code'
 import remarkFrontmatter from 'remark-frontmatter'
 import remarkGfm from 'remark-gfm'
 import { defineConfig } from 'vite'
@@ -12,6 +13,16 @@ export default defineConfig({
   plugins: [
     mdx({
       remarkPlugins: [remarkGfm, remarkFrontmatter],
+      rehypePlugins: [
+        [
+          rehypePrettyCode,
+          {
+            theme: 'github-dark',
+            keepBackground: true,
+          },
+        ],
+      ],
+      providerImportSource: '@mdx-js/react',
     }),
     react(),
     tailwindcss(),

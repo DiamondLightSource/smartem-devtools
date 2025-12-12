@@ -26,7 +26,8 @@ export function DocsLayout({ children }: DocsLayoutProps) {
               boxSizing: 'border-box',
               position: 'relative',
               height: '100%',
-              bgcolor: '#2c2c2c',
+              backgroundColor: '#2c2c2c',
+              backgroundImage: 'url("/assets/textures/asfalt-dark.png")',
               borderRight: '1px solid rgba(255, 255, 255, 0.1)',
             },
           }}

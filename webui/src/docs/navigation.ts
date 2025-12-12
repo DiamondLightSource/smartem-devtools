@@ -90,6 +90,10 @@ export const docsNavigation: NavItem[] = [
             title: 'ADR-0009: Route Tree',
             href: '/docs/explanations/decisions/0009-commit-generated-route-tree',
           },
+          {
+            title: 'ADR-0010: Shiki Highlighting',
+            href: '/docs/explanations/decisions/0010-shiki-syntax-highlighting',
+          },
         ],
       },
     ],
