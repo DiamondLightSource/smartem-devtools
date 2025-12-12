@@ -11,13 +11,14 @@ interface DocCardProps {
 
 const cardStyles = {
   card: {
-    bgcolor: '#fff',
-    border: '1px solid #ddd',
+    backgroundColor: '#2c2c2c',
+    backgroundImage: 'url("/assets/textures/asfalt-dark.png")',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
     borderRadius: 1,
     transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
     '&:hover': {
-      borderColor: '#999',
-      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+      borderColor: 'rgba(255, 255, 255, 0.2)',
+      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)',
     },
   },
 }
@@ -27,12 +28,23 @@ export function DocCard({ title, href, icon, children }: DocCardProps) {
 
   const content = (
     <CardContent>
-      {icon && <Typography sx={{ mb: 1, color: '#555' }}>{icon}</Typography>}
-      <Typography variant="h6" component="div" gutterBottom sx={{ color: '#333' }}>
+      {icon && <Typography sx={{ mb: 1, color: 'rgba(255, 255, 255, 0.6)' }}>{icon}</Typography>}
+      <Typography variant="h6" component="div" gutterBottom sx={{ color: '#fff' }}>
         {title}
       </Typography>
       {children && (
-        <Typography variant="body2" sx={{ color: '#666' }}>
+        <Typography
+          variant="body2"
+          component="div"
+          sx={{
+            mt: 1,
+            fontWeight: 500,
+            textShadow: '0 1px 3px rgba(0,0,0,0.8)',
+            '& p': { color: 'rgba(255, 255, 255, 0.8)', margin: 0 },
+            '& *': { color: 'rgba(255, 255, 255, 0.8)' },
+            color: 'rgba(255, 255, 255, 0.8)',
+          }}
+        >
           {children}
         </Typography>
       )}

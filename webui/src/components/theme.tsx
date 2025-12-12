@@ -4,50 +4,17 @@ export const theme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
-      main: '#5C9EAD',
+      main: '#90caf9',
     },
     secondary: {
-      main: '#b927d9',
+      main: '#666',
+    },
+    background: {
+      default: '#121212',
+      paper: '#2c2c2c',
     },
   },
   typography: {
     fontFamily: '"JetBrains Mono", monospace',
-  },
-  components: {
-    MuiTableRow: {
-      styleOverrides: {
-        head: {
-          backgroundColor: '#c165c7',
-        },
-      },
-    },
-    MuiTableCell: {
-      styleOverrides: {
-        head: {
-          backgroundColor: '#c165c7',
-        },
-      },
-    },
-    MuiDrawer: {
-      styleOverrides: {
-        paper: {
-          backgroundColor: '#5C9EAD',
-        },
-      },
-    },
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          backgroundColor: '#b927d9',
-        },
-      },
-    },
-    MuiCardContent: {
-      styleOverrides: {
-        root: {
-          backgroundColor: '#E39EC1',
-        },
-      },
-    },
   },
 })
