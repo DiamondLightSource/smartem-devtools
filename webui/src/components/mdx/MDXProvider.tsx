@@ -14,24 +14,54 @@ import {
 import type { MDXComponents } from 'mdx/types'
 import type { ReactNode } from 'react'
 
+const textColor = '#333'
+const mutedColor = '#666'
+const linkColor = '#1976d2'
+
 const components: MDXComponents = {
   h1: (props) => (
-    <Typography variant="h3" component="h1" gutterBottom sx={{ mt: 4, mb: 2 }} {...props} />
+    <Typography
+      variant="h3"
+      component="h1"
+      gutterBottom
+      sx={{ mt: 4, mb: 2, color: textColor }}
+      {...props}
+    />
   ),
   h2: (props) => (
-    <Typography variant="h4" component="h2" gutterBottom sx={{ mt: 3, mb: 2 }} {...props} />
+    <Typography
+      variant="h4"
+      component="h2"
+      gutterBottom
+      sx={{ mt: 3, mb: 2, color: textColor }}
+      {...props}
+    />
   ),
   h3: (props) => (
-    <Typography variant="h5" component="h3" gutterBottom sx={{ mt: 2, mb: 1 }} {...props} />
+    <Typography
+      variant="h5"
+      component="h3"
+      gutterBottom
+      sx={{ mt: 2, mb: 1, color: textColor }}
+      {...props}
+    />
   ),
   h4: (props) => (
-    <Typography variant="h6" component="h4" gutterBottom sx={{ mt: 2, mb: 1 }} {...props} />
+    <Typography
+      variant="h6"
+      component="h4"
+      gutterBottom
+      sx={{ mt: 2, mb: 1, color: textColor }}
+      {...props}
+    />
   ),
-  p: (props) => <Typography variant="body1" paragraph {...props} />,
-  a: (props) => <Link {...props} />,
-  ul: (props) => <Box component="ul" sx={{ pl: 3, mb: 2 }} {...props} />,
-  ol: (props) => <Box component="ol" sx={{ pl: 3, mb: 2 }} {...props} />,
-  li: (props) => <Typography component="li" variant="body1" sx={{ mb: 0.5 }} {...props} />,
+  p: (props) => <Typography variant="body1" paragraph sx={{ color: textColor }} {...props} />,
+  a: (props) => <Link sx={{ color: linkColor }} {...props} />,
+  ul: (props) => <Box component="ul" sx={{ pl: 3, mb: 2, color: textColor }} {...props} />,
+  ol: (props) => <Box component="ol" sx={{ pl: 3, mb: 2, color: textColor }} {...props} />,
+  li: (props) => (
+    <Typography component="li" variant="body1" sx={{ mb: 0.5, color: textColor }} {...props} />
+  ),
   blockquote: (props) => (
     <Paper
       elevation={0}
@@ -40,13 +70,14 @@ const components: MDXComponents = {
         py: 1,
         my: 2,
         borderLeft: 4,
-        borderColor: 'primary.main',
-        bgcolor: 'action.hover',
+        borderColor: '#666',
+        bgcolor: '#f5f5f5',
+        color: mutedColor,
       }}
       {...props}
     />
   ),
-  hr: () => <Divider sx={{ my: 3 }} />,
+  hr: () => <Divider sx={{ my: 3, borderColor: '#ddd' }} />,
   pre: (props) => (
     <Paper
       component="pre"
@@ -55,11 +86,12 @@ const components: MDXComponents = {
         p: 2,
         my: 2,
         overflow: 'auto',
-        bgcolor: 'grey.900',
-        color: 'grey.100',
+        bgcolor: '#2c2c2c',
+        color: '#e0e0e0',
         borderRadius: 1,
+        border: '1px solid #444',
         '& code': {
-          fontFamily: 'monospace',
+          fontFamily: '"JetBrains Mono", monospace',
           fontSize: '0.875rem',
         },
       }}
@@ -75,9 +107,10 @@ const components: MDXComponents = {
           sx={{
             px: 0.5,
             py: 0.25,
-            bgcolor: 'action.hover',
+            bgcolor: '#e8e8e8',
+            color: '#333',
             borderRadius: 0.5,
-            fontFamily: 'monospace',
+            fontFamily: '"JetBrains Mono", monospace',
             fontSize: '0.875em',
           }}
           {...props}
@@ -87,15 +120,17 @@ const components: MDXComponents = {
     return <code {...props} />
   },
   table: (props) => (
-    <Paper elevation={0} sx={{ my: 2, overflow: 'auto' }}>
+    <Paper elevation={0} sx={{ my: 2, overflow: 'auto', border: '1px solid #ddd' }}>
       <Table size="small" {...props} />
     </Paper>
   ),
-  thead: (props) => <TableHead {...props} />,
+  thead: (props) => <TableHead sx={{ bgcolor: '#f5f5f5' }} {...props} />,
   tbody: (props) => <TableBody {...props} />,
-  tr: (props) => <TableRow {...props} />,
-  th: (props) => <TableCell component="th" sx={{ fontWeight: 'bold' }} {...props} />,
-  td: (props) => <TableCell {...props} />,
+  tr: (props) => <TableRow sx={{ '&:nth-of-type(even)': { bgcolor: '#fafafa' } }} {...props} />,
+  th: (props) => (
+    <TableCell component="th" sx={{ fontWeight: 'bold', color: textColor }} {...props} />
+  ),
+  td: (props) => <TableCell sx={{ color: textColor }} {...props} />,
 }
 
 interface MDXProviderProps {
