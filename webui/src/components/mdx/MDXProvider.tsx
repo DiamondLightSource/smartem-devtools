@@ -179,7 +179,7 @@ const components: MDXComponents = {
         fontWeight: 'bold',
         color: '#fff',
         backgroundColor: '#2c2c2c',
-        backgroundImage: 'url("/assets/textures/asfalt-dark.png")',
+        backgroundImage: `url("${import.meta.env.BASE_URL}assets/textures/asfalt-dark.png")`,
         borderBottom: '1px solid #444',
       }}
       {...props}

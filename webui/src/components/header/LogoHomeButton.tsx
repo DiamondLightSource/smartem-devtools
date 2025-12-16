@@ -10,7 +10,7 @@ export function LogoHomeButton() {
     <AppTooltip title={webUiAppContents.config.header.homeButton.tooltip} arrow placement="bottom">
       <Box
         component={Link}
-        to="/home"
+        to="/"
         sx={{
           display: 'flex',
           alignItems: 'center',

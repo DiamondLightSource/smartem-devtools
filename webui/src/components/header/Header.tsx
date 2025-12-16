@@ -11,7 +11,7 @@ export function Header() {
     <AppBar
       position="sticky"
       sx={{
-        backgroundImage: 'url("/assets/textures/asfalt-dark.png")',
+        backgroundImage: `url("${import.meta.env.BASE_URL}assets/textures/asfalt-dark.png")`,
         backgroundColor: '#2c2c2c',
       }}
     >

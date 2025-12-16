@@ -1,5 +1,5 @@
-import { useRef } from 'react'
 import { Box, Link, Typography } from '@mui/material'
+import { useRef } from 'react'
 import { ConnectionsOverlay, MicroscopeGrid, SystemComponentContainer } from './components'
 import { dashboardConnections } from './components/connectionConfig'
 
@@ -7,7 +7,7 @@ const itemBoxSx = {
   border: '1px solid rgba(0, 0, 0, 0.15)',
   borderRadius: 1,
   p: 1.5,
-  backgroundColor: 'rgba(255, 255, 255, 0.5)',
+  backgroundColor: '#ffffff',
 }
 
 export function Dashboard() {
@@ -34,7 +34,7 @@ export function Dashboard() {
     >
       <ConnectionsOverlay connections={dashboardConnections} containerRef={containerRef} />
       {/* Column Headings Row */}
-      <Box sx={{ display: 'flex', flexDirection: 'row', gap: 3, mb: 4 }}>
+      <Box sx={{ display: 'flex', flexDirection: 'row', gap: 3, mb: 8 }}>
         <Box sx={{ flex: 2, display: 'flex', flexDirection: 'row', gap: 3 }}>
           <Typography
             variant="body2"
@@ -130,7 +130,7 @@ export function Dashboard() {
                       >
                         <Box
                           component="img"
-                          src="/assets/database.svg"
+                          src={`${import.meta.env.BASE_URL}assets/database.svg`}
                           alt="Database"
                           sx={{ width: 20, height: 20, opacity: 0.6 }}
                         />
@@ -149,7 +149,7 @@ export function Dashboard() {
                       >
                         <Box
                           component="img"
-                          src="/assets/database.svg"
+                          src={`${import.meta.env.BASE_URL}assets/database.svg`}
                           alt="Message Queue"
                           sx={{ width: 20, height: 20, opacity: 0.6, transform: 'rotate(90deg)' }}
                         />

@@ -1,5 +1,5 @@
-import { Box, Typography } from '@mui/material'
 import FolderIcon from '@mui/icons-material/Folder'
+import { Box, Typography } from '@mui/material'
 
 export function MicroscopeWorkstation() {
   return (
@@ -10,7 +10,7 @@ export function MicroscopeWorkstation() {
         height: 120,
         border: '1px solid rgba(0, 0, 0, 0.25)',
         borderRadius: 1,
-        backgroundColor: 'rgba(240, 240, 240, 0.7)',
+        backgroundColor: '#f0f0f0',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
         display: 'flex',
         flexDirection: 'row',
@@ -25,7 +25,7 @@ export function MicroscopeWorkstation() {
           top: 0,
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          backgroundColor: 'rgba(240, 240, 240, 0.95)',
+          backgroundColor: '#f0f0f0',
           border: '1px solid rgba(0, 0, 0, 0.25)',
           borderRadius: 0.5,
           px: 1,
@@ -51,7 +51,7 @@ export function MicroscopeWorkstation() {
           flex: 1,
           border: '1px solid rgba(0, 0, 0, 0.15)',
           borderRadius: 0.5,
-          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+          backgroundColor: '#ffffff',
           display: 'flex',
           flexDirection: 'column',
           overflow: 'hidden',
@@ -112,7 +112,7 @@ export function MicroscopeWorkstation() {
           alignSelf: 'center',
           border: '1px solid rgba(0, 0, 0, 0.15)',
           borderRadius: 0.5,
-          backgroundColor: 'rgba(255, 255, 255, 0.5)',
+          backgroundColor: '#ffffff',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -134,7 +134,7 @@ export function MicroscopeWorkstation() {
           flex: 1,
           border: '1px solid rgba(0, 0, 0, 0.15)',
           borderRadius: 0.5,
-          backgroundColor: 'rgba(255, 255, 255, 0.5)',
+          backgroundColor: '#ffffff',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

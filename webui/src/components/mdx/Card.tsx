@@ -12,7 +12,7 @@ interface DocCardProps {
 const cardStyles = {
   card: {
     backgroundColor: '#2c2c2c',
-    backgroundImage: 'url("/assets/textures/asfalt-dark.png")',
+    backgroundImage: `url("${import.meta.env.BASE_URL}assets/textures/asfalt-dark.png")`,
     border: '1px solid rgba(255, 255, 255, 0.1)',
     borderRadius: 1,
     transition: 'border-color 0.2s ease, box-shadow 0.2s ease',
