@@ -1,5 +1,5 @@
+import { Box, Divider, ListSubheader, Menu, MenuItem, Typography } from '@mui/material'
 import { useState } from 'react'
-import { Box, Menu, MenuItem, ListSubheader, Typography, Divider } from '@mui/material'
 import { CopyCodeBox } from '~/components/common'
 import { webUiAppContents } from '~/config'
 import { RepoStatsDisplay } from './RepoStatsDisplay'
@@ -98,7 +98,7 @@ export function RepoListBar() {
               maxHeight: 500,
               overflowY: 'scroll',
               backgroundColor: '#2c2c2c',
-              backgroundImage: 'url("/assets/textures/asfalt-dark.png")',
+              backgroundImage: `url("${import.meta.env.BASE_URL}assets/textures/asfalt-dark.png")`,
               color: 'white',
               border: '1px solid rgba(255, 255, 255, 0.3)',
             },
@@ -120,7 +120,7 @@ export function RepoListBar() {
             rel="noopener noreferrer"
             sx={{
               backgroundColor: '#2c2c2c',
-              backgroundImage: 'url("/assets/textures/asfalt-dark.png")',
+              backgroundImage: `url("${import.meta.env.BASE_URL}assets/textures/asfalt-dark.png")`,
               color: 'rgba(255,255,255,0.7)',
               fontSize: '0.875rem',
               fontWeight: 'bold',

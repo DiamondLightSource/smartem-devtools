@@ -14,7 +14,7 @@ export function MicroscopeInstrument({ name, alias }: MicroscopeInstrumentProps)
         height: 120,
         border: '1px solid rgba(0, 0, 0, 0.25)',
         borderRadius: 1,
-        backgroundColor: 'rgba(240, 240, 240, 0.7)',
+        backgroundColor: '#f0f0f0',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
       }}
     >
@@ -25,7 +25,7 @@ export function MicroscopeInstrument({ name, alias }: MicroscopeInstrumentProps)
           top: 0,
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          backgroundColor: 'rgba(240, 240, 240, 0.95)',
+          backgroundColor: '#f0f0f0',
           border: '1px solid rgba(0, 0, 0, 0.25)',
           borderRadius: 0.5,
           px: 1,
@@ -60,7 +60,7 @@ export function MicroscopeInstrument({ name, alias }: MicroscopeInstrumentProps)
         sx={{
           position: 'absolute',
           inset: 0,
-          backgroundImage: 'url(/assets/laboratory-microscope-svgrepo-com.svg)',
+          backgroundImage: `url(${import.meta.env.BASE_URL}assets/laboratory-microscope-svgrepo-com.svg)`,
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'contain',
           backgroundPosition: 'center',
@@ -77,7 +77,7 @@ export function MicroscopeInstrument({ name, alias }: MicroscopeInstrumentProps)
           transform: 'translate(-50%, -50%)',
           border: '1px solid rgba(0, 0, 0, 0.15)',
           borderRadius: 0.5,
-          backgroundColor: 'rgba(255, 255, 255, 0.7)',
+          backgroundColor: '#ffffff',
           px: 0.75,
           py: 0.25,
         }}

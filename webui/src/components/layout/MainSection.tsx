@@ -9,8 +9,7 @@ export function MainSection() {
         flexGrow: 1,
         display: 'flex',
         flexDirection: 'column',
-        p: 2,
-        backgroundImage: 'url("/assets/textures/asfalt-light.png")',
+        backgroundImage: `url("${import.meta.env.BASE_URL}assets/textures/asfalt-light.png")`,
         backgroundColor: '#f0f0f0',
       }}
     >

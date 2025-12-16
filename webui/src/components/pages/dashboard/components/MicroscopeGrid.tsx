@@ -1,10 +1,10 @@
 import { Box, Typography } from '@mui/material'
 import { webUiAppContents } from '~/config'
-import { MicroscopeItemContainer } from './MicroscopeItemContainer'
 import { MicroscopeInstrument } from './MicroscopeInstrument'
+import { MicroscopeItemContainer } from './MicroscopeItemContainer'
 import { MicroscopeWorkstation } from './MicroscopeWorkstation'
 
-const DETAILED_COUNT = 2
+const DETAILED_COUNT = 1
 
 export function MicroscopeGrid() {
   const detailed = webUiAppContents.microscopes.slice(0, DETAILED_COUNT)
@@ -15,7 +15,7 @@ export function MicroscopeGrid() {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        gap: 3.5,
+        gap: 7,
         flex: 1,
       }}
     >
@@ -44,7 +44,7 @@ export function MicroscopeGrid() {
                 height: 76,
                 border: '1px solid rgba(0, 0, 0, 0.25)',
                 borderRadius: 1,
-                backgroundColor: `rgba(240, 240, 240, ${0.9 - index * 0.15})`,
+                backgroundColor: '#f0f0f0',
                 boxShadow: '0 1px 3px rgba(0, 0, 0, 0.08)',
                 display: 'flex',
                 flexDirection: 'column',
@@ -61,7 +61,7 @@ export function MicroscopeGrid() {
                       sx={{
                         width: 32,
                         height: 32,
-                        backgroundImage: 'url(/assets/laboratory-microscope-svgrepo-com.svg)',
+                        backgroundImage: `url(${import.meta.env.BASE_URL}assets/laboratory-microscope-svgrepo-com.svg)`,
                         backgroundRepeat: 'no-repeat',
                         backgroundSize: 'contain',
                         backgroundPosition: 'center',

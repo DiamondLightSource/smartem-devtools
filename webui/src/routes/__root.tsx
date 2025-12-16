@@ -1,8 +1,8 @@
-import { useEffect } from 'react'
 import { Box, CssBaseline, ThemeProvider } from '@mui/material'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/router-devtools'
+import { useEffect } from 'react'
 import { ErrorBoundary } from '~/components/common'
 import { Header } from '~/components/header'
 import { MainSection } from '~/components/layout'
@@ -39,7 +39,7 @@ function RootComponent() {
             <MainSection />
           </ErrorBoundary>
         </Box>
-        <TanStackRouterDevtools position="bottom-right" />
+        {import.meta.env.DEV && <TanStackRouterDevtools position="bottom-right" />}
       </ThemeProvider>
     </QueryClientProvider>
   )

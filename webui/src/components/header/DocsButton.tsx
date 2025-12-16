@@ -3,7 +3,7 @@ import { Link } from '@tanstack/react-router'
 import { AppTooltip } from '~/components/common'
 import { webUiAppContents } from '~/config'
 
-const ICON_BOOK_OPEN = '\uf518'
+const ICON_BOOK = '\uf02d'
 
 export function DocsButton() {
   const { text, tooltip } = webUiAppContents.config.header.docsButton
@@ -39,7 +39,7 @@ export function DocsButton() {
             color: 'inherit',
           }}
         >
-          {ICON_BOOK_OPEN}
+          {ICON_BOOK}
         </Box>
         <Box component="span" sx={{ fontSize: 14 }}>
           {text}

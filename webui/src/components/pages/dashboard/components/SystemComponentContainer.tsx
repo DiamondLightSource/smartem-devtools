@@ -1,5 +1,5 @@
-import type { ReactNode } from 'react'
 import { Box, Typography } from '@mui/material'
+import type { ReactNode } from 'react'
 
 interface SystemComponentContainerProps {
   heading: string
@@ -23,7 +23,7 @@ export function SystemComponentContainer({
         pt: 2.5,
         px: 1.5,
         pb: 1.5,
-        backgroundColor: 'rgba(240, 240, 240, 0.7)',
+        backgroundColor: '#f0f0f0',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
         display: 'flex',
         flexDirection: 'column',
@@ -42,7 +42,7 @@ export function SystemComponentContainer({
           color: '#333',
           fontWeight: 500,
           textAlign: 'center',
-          backgroundColor: 'rgba(240, 240, 240, 0.95)',
+          backgroundColor: '#f0f0f0',
           border: '1px solid rgba(0, 0, 0, 0.25)',
           borderRadius: 0.5,
           px: 1,

@@ -53,6 +53,11 @@ export function RepoStatsDisplay({ owner, repo, isGitHub }: RepoStatsDisplayProp
     },
   }
 
+  const numberStyle = {
+    color: 'rgba(255,255,255,0.95)',
+    fontWeight: 500,
+  }
+
   const repoUrl = `https://github.com/${owner}/${repo}`
 
   if (!isGitHub || !statsEnabled) {
@@ -106,7 +111,10 @@ export function RepoStatsDisplay({ owner, repo, isGitHub }: RepoStatsDisplayProp
         onClick={(e: React.MouseEvent) => e.stopPropagation()}
         sx={linkStyle}
       >
-        PRs: {data.openPRs}
+        PRs:{' '}
+        <Box component="span" sx={numberStyle}>
+          {data.openPRs}
+        </Box>
       </Box>
       <span>|</span>
       <Box
@@ -117,7 +125,10 @@ export function RepoStatsDisplay({ owner, repo, isGitHub }: RepoStatsDisplayProp
         onClick={(e: React.MouseEvent) => e.stopPropagation()}
         sx={linkStyle}
       >
-        Issues: {data.openIssues}
+        Issues:{' '}
+        <Box component="span" sx={numberStyle}>
+          {data.openIssues}
+        </Box>
       </Box>
       <span>|</span>
       <Box
@@ -128,8 +139,16 @@ export function RepoStatsDisplay({ owner, repo, isGitHub }: RepoStatsDisplayProp
         onClick={(e: React.MouseEvent) => e.stopPropagation()}
         sx={linkStyle}
       >
-        Last pushed: {data.lastCommitSha}
-        {relativeTime && ` (${relativeTime})`}
+        Last pushed:{' '}
+        <Box component="span" sx={numberStyle}>
+          {data.lastCommitSha}
+        </Box>
+        {relativeTime && (
+          <Box component="span" sx={numberStyle}>
+            {' '}
+            ({relativeTime})
+          </Box>
+        )}
       </Box>
     </Box>
   )

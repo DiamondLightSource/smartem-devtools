@@ -1,4 +1,4 @@
-import { Box, Drawer, useMediaQuery, useTheme } from '@mui/material'
+import { Box, useMediaQuery, useTheme } from '@mui/material'
 import type { ReactNode } from 'react'
 import { docsNavigation } from '~/docs/navigation'
 import { DocsSidebar } from './DocsSidebar'
@@ -14,28 +14,31 @@ export function DocsLayout({ children }: DocsLayoutProps) {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'))
 
   return (
-    <Box sx={{ display: 'flex', minHeight: 'calc(100vh - 64px)' }}>
+    <Box
+      sx={{
+        display: 'flex',
+        minHeight: 'calc(100vh - 64px)',
+        backgroundColor: '#ffffff',
+      }}
+    >
       {!isMobile && (
-        <Drawer
-          variant="permanent"
+        <Box
           sx={{
             width: DRAWER_WIDTH,
             flexShrink: 0,
-            '& .MuiDrawer-paper': {
-              width: DRAWER_WIDTH,
-              boxSizing: 'border-box',
-              position: 'relative',
-              height: '100%',
-              backgroundColor: '#2c2c2c',
-              backgroundImage: 'url("/assets/textures/asfalt-dark.png")',
-              borderRight: '1px solid rgba(255, 255, 255, 0.1)',
-            },
+            position: 'sticky',
+            top: 64,
+            height: 'calc(100vh - 64px)',
+            backgroundColor: '#2c2c2c',
+            backgroundImage: `url("${import.meta.env.BASE_URL}assets/textures/asfalt-dark.png")`,
+            borderRight: '1px solid rgba(255, 255, 255, 0.1)',
+            overflow: 'auto',
           }}
         >
-          <Box sx={{ overflow: 'auto', py: 2 }}>
+          <Box sx={{ py: 2 }}>
             <DocsSidebar navigation={docsNavigation} />
           </Box>
-        </Drawer>
+        </Box>
       )}
       <Box
         component="main"
