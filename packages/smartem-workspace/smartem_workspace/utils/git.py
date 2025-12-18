@@ -1,0 +1,70 @@
+"""Git utility functions."""
+
+import subprocess
+from pathlib import Path
+
+
+def check_git_available() -> bool:
+    """Check if git is available in PATH."""
+    try:
+        result = subprocess.run(
+            ["git", "--version"],
+            capture_output=True,
+            text=True,
+        )
+        return result.returncode == 0
+    except FileNotFoundError:
+        return False
+
+
+def run_git_command(
+    args: list[str],
+    cwd: Path | None = None,
+    timeout: int = 120,
+) -> tuple[int, str, str]:
+    """
+    Run a git command and return the result.
+
+    Args:
+        args: Git command arguments (without 'git' prefix)
+        cwd: Working directory for the command
+        timeout: Timeout in seconds
+
+    Returns:
+        Tuple of (return_code, stdout, stderr)
+    """
+    try:
+        result = subprocess.run(
+            ["git", *args],
+            cwd=cwd,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+        )
+        return result.returncode, result.stdout, result.stderr
+    except subprocess.TimeoutExpired:
+        return -1, "", "Command timed out"
+    except FileNotFoundError:
+        return -1, "", "Git not found"
+
+
+def get_current_branch(repo_path: Path) -> str | None:
+    """Get the current branch name of a repository."""
+    returncode, stdout, _ = run_git_command(
+        ["branch", "--show-current"],
+        cwd=repo_path,
+    )
+    if returncode == 0:
+        return stdout.strip()
+    return None
+
+
+def has_uncommitted_changes(repo_path: Path) -> bool:
+    """Check if a repository has uncommitted changes."""
+    returncode, stdout, _ = run_git_command(
+        ["status", "--porcelain"],
+        cwd=repo_path,
+    )
+    if returncode == 0:
+        return bool(stdout.strip())
+    return False
