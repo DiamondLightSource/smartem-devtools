@@ -78,8 +78,8 @@ smartem-workspace add DiamondLightSource/smartem-frontend
 ## Documentation
 
 - **User Guide**: [Setup SmartEM Workspace](https://diamondlightsource.github.io/smartem-devtools/how-to/setup-smartem-workspace.html)
-- **Developer Guide**: [Contributing to smartem-workspace](docs/developer-guide.md)
-- **PyPI Setup**: [Token Configuration for Maintainers](docs/pypi-setup.md)
+- **Developer Guide**: [Contributing to smartem-workspace](https://diamondlightsource.github.io/smartem-devtools/explanations/smartem-workspace-developer-guide.html)
+- **PyPI Setup**: [Publishing to PyPI](https://diamondlightsource.github.io/smartem-devtools/how-to/publish-smartem-workspace-to-pypi.html)
 - **API Documentation**: [SmartEM Devtools Docs](https://diamondlightsource.github.io/smartem-devtools/)
 
 ## Development
@@ -100,7 +100,7 @@ uv run ruff check .
 uv build
 ```
 
-See [Developer Guide](docs/developer-guide.md) for detailed development instructions.
+See [Developer Guide](../../docs/explanations/smartem-workspace-developer-guide.md) for detailed development instructions.
 
 ## Links
 
