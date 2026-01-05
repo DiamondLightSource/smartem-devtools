@@ -1,5 +1,10 @@
 # smartem-workspace
 
+[![PyPI version](https://badge.fury.io/py/smartem-workspace.svg)](https://pypi.org/project/smartem-workspace/)
+[![Python Versions](https://img.shields.io/pypi/pyversions/smartem-workspace.svg)](https://pypi.org/project/smartem-workspace/)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![CI](https://github.com/DiamondLightSource/smartem-devtools/actions/workflows/publish-smartem-workspace.yml/badge.svg)](https://github.com/DiamondLightSource/smartem-devtools/actions/workflows/publish-smartem-workspace.yml)
+
 CLI tool to automate SmartEM multi-repo workspace setup.
 
 ## Installation
@@ -70,6 +75,13 @@ smartem-workspace add DiamondLightSource/smartem-frontend
 3. **Serena MCP server** - Semantic code navigation
 4. **Workspace structure** - CLAUDE.md, tmp/, testdata/ directories
 
+## Documentation
+
+- **User Guide**: [Setup SmartEM Workspace](https://diamondlightsource.github.io/smartem-devtools/how-to/setup-smartem-workspace.html)
+- **Developer Guide**: [Contributing to smartem-workspace](docs/developer-guide.md)
+- **PyPI Setup**: [Token Configuration for Maintainers](docs/pypi-setup.md)
+- **API Documentation**: [SmartEM Devtools Docs](https://diamondlightsource.github.io/smartem-devtools/)
+
 ## Development
 
 ```bash
@@ -83,7 +95,19 @@ uv run pytest
 
 # Run linter
 uv run ruff check .
+
+# Build package
+uv build
 ```
+
+See [Developer Guide](docs/developer-guide.md) for detailed development instructions.
+
+## Links
+
+- **PyPI**: https://pypi.org/project/smartem-workspace/
+- **Repository**: https://github.com/DiamondLightSource/smartem-devtools
+- **Issues**: https://github.com/DiamondLightSource/smartem-devtools/issues
+- **Changelog**: [GitHub Releases](https://github.com/DiamondLightSource/smartem-devtools/releases?q=smartem-workspace)
 
 ## License
 

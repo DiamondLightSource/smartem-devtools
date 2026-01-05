@@ -49,6 +49,20 @@ smartem-devtools/
 
 ## Quick Start
 
+### smartem-workspace CLI
+
+Automated workspace setup for SmartEM development:
+
+```bash
+# Set up complete development environment
+uvx smartem-workspace init --preset smartem-core
+
+# Or just this repository and docs
+uvx smartem-workspace init --preset minimal
+```
+
+See [smartem-workspace documentation](packages/smartem-workspace/README.md) for details.
+
 ### Developer WebUI
 
 ```bash
