@@ -40,15 +40,7 @@ jobs:
         run: uv sync --all-extras
 
       - name: Run tests
-        run: uv run pytest -v --cov=smartem_workspace --cov-report=xml --cov-report=term
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
-        with:
-          files: ./packages/smartem-workspace/coverage.xml
-          flags: smartem-workspace
-          name: smartem-workspace-coverage
-          fail_ci_if_error: false
+        run: uv run pytest -v
 
   lint:
     name: Lint smartem-workspace
