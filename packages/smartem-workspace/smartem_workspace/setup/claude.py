@@ -1,6 +1,7 @@
 """Claude Code configuration setup."""
 
 import json
+import os
 from pathlib import Path
 
 from rich.console import Console
@@ -40,7 +41,7 @@ def setup_claude_config(
     claude_config_link = workspace_path / "claude-config"
     if not claude_config_link.exists() and claude_config_source.exists():
         try:
-            claude_config_link.symlink_to(claude_config_source)
+            os.symlink(str(claude_config_source.resolve()), str(claude_config_link))
             console.print(f"  [green]Created symlink: claude-config -> {claude_config_source}[/green]")
         except OSError as e:
             console.print(f"  [yellow]Could not create claude-config symlink: {e}[/yellow]")
@@ -61,7 +62,7 @@ def setup_claude_config(
 
         if skill_source.exists():
             try:
-                skill_link.symlink_to(skill_source)
+                os.symlink(str(skill_source.resolve()), str(skill_link))
                 console.print(f"  [green]Linked skill: {skill.name}[/green]")
             except OSError as e:
                 console.print(f"  [yellow]Could not link skill {skill.name}: {e}[/yellow]")
@@ -83,6 +84,7 @@ def setup_claude_config(
 
     if claude_md_source.exists() and not claude_md_target.exists():
         import shutil
+
         shutil.copy(claude_md_source, claude_md_target)
         console.print(f"  [green]Copied CLAUDE.md[/green]")
     elif claude_md_target.exists():
