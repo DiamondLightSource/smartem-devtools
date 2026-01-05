@@ -181,8 +181,6 @@ packages/smartem-workspace/
 │   └── test_utils.py               # Utility function tests
 │
 ├── docs/                           # Developer documentation
-│   ├── developer-guide.md          # This file
-│   └── pypi-setup.md               # PyPI token setup
 │
 ├── dist/                           # Build artifacts (generated)
 │   ├── smartem_workspace-*.whl     # Wheel distribution
@@ -1610,6 +1608,6 @@ This developer guide covers:
 
 For user-facing documentation, see the [Setup SmartEM Workspace](../../docs/how-to/setup-smartem-workspace.md) guide.
 
-For PyPI token setup, see [PyPI Setup Guide](pypi-setup.md).
+For PyPI token setup, see [Publishing to PyPI](../how-to/publish-smartem-workspace-to-pypi.md).
 
 For questions or contributions, open an issue at https://github.com/DiamondLightSource/smartem-devtools/issues.
