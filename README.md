@@ -105,7 +105,7 @@ ADRs document significant technical decisions:
 | ADR | Title |
 |-----|-------|
 | 0001 | Record architecture decisions |
-| 0002 | Switched to python-copier-template |
+| 0002 | Switched to python-copier-template (superseded by ADR-0011) |
 | 0003 | Message queue message grouping |
 | 0004 | Zocalo dependency-free |
 | 0005 | detect-secrets for secret scanning |
@@ -113,6 +113,7 @@ ADRs document significant technical decisions:
 | 0007 | Eliminate SmartEM API circular dependency |
 | 0008 | Backend to agent communication architecture |
 | 0009 | Commit generated route tree (smartem-frontend) |
+| 0011 | Remove python-copier-template |
 
 ## Contributing
 

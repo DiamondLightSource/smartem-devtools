@@ -59,7 +59,7 @@ export const docsNavigation: NavItem[] = [
             href: '/docs/explanations/decisions/0001-record-architecture-decisions',
           },
           {
-            title: 'ADR-0002: Copier Template',
+            title: 'ADR-0002: Copier Template (superseded)',
             href: '/docs/explanations/decisions/0002-switched-to-python-copier-template',
           },
           {
@@ -93,6 +93,10 @@ export const docsNavigation: NavItem[] = [
           {
             title: 'ADR-0010: Shiki Highlighting',
             href: '/docs/explanations/decisions/0010-shiki-syntax-highlighting',
+          },
+          {
+            title: 'ADR-0011: Remove Copier Template',
+            href: '/docs/explanations/decisions/0011-remove-python-copier-template',
           },
         ],
       },
