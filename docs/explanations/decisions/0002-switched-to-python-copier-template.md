@@ -2,7 +2,9 @@
 
 ## Status
 
-Accepted
+Superseded by ADR-0011
+
+> **Note**: This decision was reversed on 2026-01-05. See [ADR-0011](0011-remove-python-copier-template.md) for details.
 
 ## Context
 
