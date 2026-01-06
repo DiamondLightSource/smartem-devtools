@@ -16,7 +16,7 @@ The CLI is organised into the following command groups:
 
 ## Global Options
 
-All commands support the following verbosity options:
+The following verbosity options are supported by the `watch` command:
 
 | Option | Short | Type | Default | Description |
 |--------|-------|------|---------|-------------|
@@ -26,6 +26,8 @@ All commands support the following verbosity options:
 - **0 (default)**: ERROR level - Only critical errors are shown
 - **1 (-v)**: INFO level - General information and warnings
 - **2 (-vv)**: DEBUG level - Detailed debugging information
+
+> **Note**: The `-v`/`--verbose` flag currently only works with the `watch` command. Parse and validate commands use default logging levels. This is a known limitation.
 
 ## Parse Commands
 
@@ -44,7 +46,6 @@ python -m smartem_agent parse dir [OPTIONS] EPU_OUTPUT_DIR
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `epu_output_dir` | str | Yes | Path to EPU output directory containing multiple grid directories |
-| `--verbose` | count | No | Verbosity level (see [Global Options](#global-options)) |
 
 **Example:**
 ```bash
@@ -69,7 +70,6 @@ python -m smartem_agent parse grid [OPTIONS] GRID_DATA_DIR
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `grid_data_dir` | str | Yes | Path to individual grid data directory |
-| `--verbose` | count | No | Verbosity level (see [Global Options](#global-options)) |
 
 **Example:**
 ```bash
@@ -94,7 +94,6 @@ python -m smartem_agent parse session [OPTIONS] PATH
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `path` | str | Yes | Path to EPU session manifest file |
-| `--verbose` | count | No | Verbosity level (see [Global Options](#global-options)) |
 
 **Example:**
 ```bash
@@ -116,7 +115,6 @@ python -m smartem_agent parse atlas [OPTIONS] PATH
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `path` | str | Yes | Path to atlas manifest file |
-| `--verbose` | count | No | Verbosity level (see [Global Options](#global-options)) |
 
 **Example:**
 ```bash
@@ -138,7 +136,6 @@ python -m smartem_agent parse gridsquare-metadata [OPTIONS] PATH
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `path` | str | Yes | Path to grid square metadata file |
-| `--verbose` | count | No | Verbosity level (see [Global Options](#global-options)) |
 
 **Example:**
 ```bash
@@ -160,7 +157,6 @@ python -m smartem_agent parse gridsquare [OPTIONS] PATH
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `path` | str | Yes | Path to grid square manifest file |
-| `--verbose` | count | No | Verbosity level (see [Global Options](#global-options)) |
 
 **Example:**
 ```bash
@@ -182,7 +178,6 @@ python -m smartem_agent parse foilhole [OPTIONS] PATH
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `path` | str | Yes | Path to foil hole manifest file |
-| `--verbose` | count | No | Verbosity level (see [Global Options](#global-options)) |
 
 **Example:**
 ```bash
@@ -204,7 +199,6 @@ python -m smartem_agent parse micrograph [OPTIONS] PATH
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `path` | str | Yes | Path to micrograph manifest file |
-| `--verbose` | count | No | Verbosity level (see [Global Options](#global-options)) |
 
 **Example:**
 ```bash
@@ -226,7 +220,6 @@ python -m smartem_agent validate [OPTIONS] PATH
 | Parameter | Type | Required | Default | Description |
 |-----------|------|----------|---------|-------------|
 | `path` | str | Yes | - | Path to EPU project directory to validate |
-| `--verbose` | count | No | 0 | Verbosity level (see [Global Options](#global-options)) |
 
 **Exit Codes:**
 - **0**: Directory structure is valid

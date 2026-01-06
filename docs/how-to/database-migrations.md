@@ -33,10 +33,10 @@ python -m alembic upgrade head
 
 This will:
 1. Create the Alembic version tracking table
-2. Apply migration 001: Create user preferences table
-3. Apply baseline migration (6e6302f1ccb6): Create all core SmartEM schema tables (acquisition, grid, gridsquare, micrograph, foilhole, atlas, quality prediction models, etc.)
-4. Apply migration 002: Add performance indexes for acquisition datetime queries
-5. Apply remaining migrations including agent communication tables
+2. Apply migration 001: Create core SmartEM schema baseline (acquisition, grid, gridsquare, micrograph, foilhole, atlas, etc.)
+3. Apply migration 002: Add performance indexes for acquisition datetime queries
+4. Apply migration 003: Add prediction model tables
+5. Apply remaining migrations for quality metrics, training tables, and schema fixes
 
 ### Running Migrations
 
@@ -268,10 +268,16 @@ Ensure your environment variables are set:
 │   ├── env.py                              # Migration environment
 │   ├── script.py.mako                      # Migration template
 │   └── versions/                           # Individual migration files
-│       ├── 001_add_user_preferences.py
-│       ├── 002_add_acquisition_time_index.py
-│       └── 003_seed_system_config.py
+│       ├── 2025_09_18_1042-001_create_core_smartem_schema_baseline.py
+│       ├── 2025_01_11_1431-002_add_acquisition_time_index.py
+│       ├── 2025_09_18_1630-003_add_scifi_robot_prediction_models.py
+│       └── ...                              # Additional migrations
 ```
+
+**Migration file naming convention**: `YYYY_MM_DD_HHMM-NNN_description.py` where:
+- `YYYY_MM_DD_HHMM` is the creation timestamp
+- `NNN` is the sequential migration number
+- `description` describes the change
 
 ## Further Reading
 
