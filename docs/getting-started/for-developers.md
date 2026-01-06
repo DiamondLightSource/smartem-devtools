@@ -82,7 +82,7 @@ python -m smartem_agent --help
 
 Once installation is complete, you can proceed to:
 
-- [Run the backend service](../how-to/run-backend.md)
-- [Deploy using containers](../how-to/run-container.md)  
-- [Set up the development environment](../how-to/development-tools.md)
-- [Configure logging](../how-to/configure-logging.md)
+- [Run the backend service](../backend/api-server.md)
+- [Deploy using containers](../operations/run-container.md)
+- [Set up the development environment](../development/tools.md)
+- [Configure logging](../operations/logging.md)

@@ -125,7 +125,7 @@ cp .env.example.k8s.production .env.k8s.production
 - Should use Sealed Secrets (encrypted) instead of plain `.env` files
 - Credentials should be rotated regularly
 - Access to this file should be strictly controlled
-- See [Manage Kubernetes Secrets](manage-kubernetes-secrets.md) for best practices
+- See [Manage Kubernetes Secrets](kubernetes-secrets.md) for best practices
 
 **Used By**:
 - Production CI/CD pipelines
@@ -151,7 +151,7 @@ SMARTEM_MCP_LOG_LEVEL=INFO
 
 **Used By**:
 - MCP server when run via Claude Code
-- See [Use MCP Interface](use-mcp-interface.md) for details
+- See [Use MCP Interface](../development/mcp-interface.md) for details
 
 ## Quick Start: First-Time Setup
 
@@ -339,9 +339,9 @@ env | grep POSTGRES
 
 ## Related Documentation
 
-- [Run Backend Services](run-backend.md) - Starting backend API and consumer
-- [Run E2E Development Simulation](run-e2e-dev-simulation.md) - E2E testing workflows
-- [Deploy to Kubernetes](deploy-kubernetes.md) - K8s deployment guide
-- [Manage Kubernetes Secrets](manage-kubernetes-secrets.md) - Sealed Secrets and security
-- [Database Migrations](database-migrations.md) - Alembic migration workflow
-- [Use MCP Interface](use-mcp-interface.md) - Claude Code MCP integration
+- [Run Backend Services](../backend/api-server.md) - Starting backend API and consumer
+- [Run E2E Development Simulation](../development/e2e-simulation.md) - E2E testing workflows
+- [Deploy to Kubernetes](kubernetes.md) - K8s deployment guide
+- [Manage Kubernetes Secrets](kubernetes-secrets.md) - Sealed Secrets and security
+- [Database Migrations](../backend/database.md) - Alembic migration workflow
+- [Use MCP Interface](../development/mcp-interface.md) - Claude Code MCP integration

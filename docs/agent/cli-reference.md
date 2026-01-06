@@ -480,4 +480,4 @@ The watch command requires a compatible SmartEM backend API with the following e
 - Consider `--heartbeat-interval` tuning based on network stability
 - Use `--dry-run` for local testing and development
 
-This CLI reference provides comprehensive coverage of all SmartEM Agent command-line functionality. For additional help with specific use cases or troubleshooting, refer to the [CLI Troubleshooting Guide](troubleshoot-cli.md).
+This CLI reference provides comprehensive coverage of all SmartEM Agent command-line functionality. For additional help with specific use cases or troubleshooting, refer to the [CLI Troubleshooting Guide](troubleshooting.md).
