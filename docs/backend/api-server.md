@@ -10,10 +10,10 @@ The core backend service providing HTTP API, database operations, and message qu
 
 # launch RabbitMQ worker (consumer)
 python -m smartem_backend.consumer              # ERROR level (default)
-python -m smartem_backend.consumer -v           # INFO level  
+python -m smartem_backend.consumer -v           # INFO level
 python -m smartem_backend.consumer -vv          # DEBUG level
 
-# simulating an system event: 
+# simulating an system event:
 python -m smartem_backend.simulate_msg --help # to see a list of options
 ./tools/simulate-messages.sh # run a simulation, triggering system events in sequence
 

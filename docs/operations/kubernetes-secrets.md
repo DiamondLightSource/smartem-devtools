@@ -4,8 +4,8 @@ This guide explains how to securely manage secrets in the SmartEM Decisions proj
 
 ## Overview
 
-The SmartEM Decisions project uses [Bitnami Sealed Secrets](https://sealed-secrets.netlify.app/) to securely manage sensitive 
-configuration data such as database credentials and message queue passwords. Sealed Secrets provide a secure alternative to 
+The SmartEM Decisions project uses [Bitnami Sealed Secrets](https://sealed-secrets.netlify.app/) to securely manage sensitive
+configuration data such as database credentials and message queue passwords. Sealed Secrets provide a secure alternative to
 storing plain-text secrets in version control.
 
 ### Why Sealed Secrets?
@@ -13,7 +13,7 @@ storing plain-text secrets in version control.
 Sealed Secrets offer several security advantages over traditional Kubernetes secrets:
 
 - **Version Control Safe**: Sealed secrets are encrypted and safe to commit to Git repositories
-- **Asymmetric Encryption**: Uses public/private key cryptography for maximum security  
+- **Asymmetric Encryption**: Uses public/private key cryptography for maximum security
 - **Cluster-Specific**: Secrets are encrypted for a specific cluster and cannot be used elsewhere
 - **Automatic Decryption**: The sealed-secrets controller automatically decrypts secrets in the cluster
 - **Audit Trail**: All secret changes are tracked in version control with proper attribution
@@ -49,7 +49,7 @@ kubeseal --version
 
 ### Cluster Requirements
 
-The sealed-secrets controller must be installed in your Kubernetes cluster. For Diamond Light Source clusters, this is 
+The sealed-secrets controller must be installed in your Kubernetes cluster. For Diamond Light Source clusters, this is
 typically pre-installed. Verify the controller is running:
 
 ```bash
@@ -83,7 +83,7 @@ Development environments use automatically generated secure passwords for conven
 
 This will:
 - Generate cryptographically secure random passwords
-- Create sealed secrets for the `smartem-decisions` namespace  
+- Create sealed secrets for the `smartem-decisions` namespace
 - Display a summary of generated usernames (passwords remain sealed)
 - Update `k8s/environments/development/secrets.yaml`
 
@@ -112,9 +112,9 @@ For advanced use cases, you can manually create sealed secrets:
 kubectl create secret generic smartem-secrets \
     --namespace=smartem-decisions-production \
     --from-literal=POSTGRES_USER="secure_postgres_user" \
-    --from-literal=POSTGRES_PASSWORD="secure_postgres_password" \  # pragma: allowlist secret
+    --from-literal=POSTGRES_PASSWORD="secure_postgres_password" \
     --from-literal=RABBITMQ_USER="secure_rabbitmq_user" \
-    --from-literal=RABBITMQ_PASSWORD="secure_rabbitmq_password" \  # pragma: allowlist secret
+    --from-literal=RABBITMQ_PASSWORD="secure_rabbitmq_password" \
     --dry-run=client \
     --output=yaml > temp-secret.yaml
 ```
@@ -191,7 +191,7 @@ k8s/environments/
 │   ├── kustomization.yaml    # References secrets.yaml
 │   └── secrets.yaml          # Sealed secret for development
 ├── staging/
-│   ├── kustomization.yaml    # References secrets.yaml  
+│   ├── kustomization.yaml    # References secrets.yaml
 │   └── secrets.yaml          # Sealed secret for staging
 └── production/
     ├── kustomization.yaml    # References secrets.yaml
@@ -315,7 +315,7 @@ To use different secret names:
 # Modify script variables or create custom sealed secret
 kubectl create secret generic custom-secret-name \
     --namespace=smartem-decisions \
-    --from-literal=API_KEY="secure_api_key" \  # pragma: allowlist secret
+    --from-literal=API_KEY="secure_api_key" \
     --dry-run=client -o yaml | \
 kubeseal --format=yaml --namespace=smartem-decisions > custom-sealed-secret.yaml
 ```
@@ -331,7 +331,7 @@ For complex applications requiring multiple secret sources:
 # Additional API secrets
 kubectl create secret generic api-secrets \
     --namespace=smartem-decisions-production \
-    --from-literal=EXTERNAL_API_KEY="api_key_here" \  # pragma: allowlist secret
+    --from-literal=EXTERNAL_API_KEY="api_key_here" \
     --dry-run=client -o yaml | \
 kubeseal --format=yaml --namespace=smartem-decisions-production > api-sealed-secrets.yaml
 ```
@@ -341,7 +341,7 @@ kubeseal --format=yaml --namespace=smartem-decisions-production > api-sealed-sec
 When moving between clusters, sealed secrets must be regenerated:
 
 ```bash
-# Export existing secret from source cluster  
+# Export existing secret from source cluster
 kubectl get secret smartem-secrets -n smartem-decisions -o yaml > plain-secret.yaml
 
 # Remove cluster-specific metadata
@@ -361,7 +361,7 @@ rm plain-secret.yaml
 │   │   ├── secrets.yaml                     # Development sealed secrets
 │   │   └── kustomization.yaml               # References secrets.yaml
 │   ├── staging/
-│   │   ├── secrets.yaml                     # Staging sealed secrets  
+│   │   ├── secrets.yaml                     # Staging sealed secrets
 │   │   └── kustomization.yaml               # References secrets.yaml
 │   └── production/
 │       ├── secrets.yaml                     # Production sealed secrets

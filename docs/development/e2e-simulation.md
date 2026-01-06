@@ -342,7 +342,7 @@ Access RabbitMQ management UI:
 ```bash
 # RabbitMQ management interface (if enabled in k3s)
 # Check k8s service for management UI port mapping
-# Default credentials: guest/guest  # pragma: allowlist secret
+# Default credentials: guest/guest
 ```
 
 ### Cleaning Queue Between Tests
@@ -407,7 +407,7 @@ python -m fastapi dev src/smartem_backend/api_server.py \
 ### Backend Worker/Consumer
 ```bash
 source .venv/bin/activate
-export RABBITMQ_URL=amqp://guest:guest@localhost:30672/  # pragma: allowlist secret
+export RABBITMQ_URL=amqp://guest:guest@localhost:30672/
 python -m smartem_backend.consumer -vv 2>&1 | tee logs/e2e-tests/TIMESTAMP/logs/consumer.log
 ```
 **Verbosity flags**: `-v` for INFO, `-vv` for DEBUG
@@ -633,20 +633,20 @@ python -m smartem_agent watch \
 **ALWAYS check the agent log file first if things aren't working!**
 
 1. **Wrong agent command**: Use `python -m smartem_agent watch`, NOT:
-   - ❌ `python -m smartem_agent.main`
-   - ❌ `python -m smartem_agent`
-   - ✅ `python -m smartem_agent watch`
+   - `python -m smartem_agent.main`
+   - `python -m smartem_agent`
+   - `python -m smartem_agent watch`
 
 2. **Wrong recording path**: Must use .tar.gz file, NOT directory:
-   - ❌ `../../testdata/recordings/pre-acquisition`
-   - ✅ `../../testdata/recordings/bi37708-42_fsrecord.tar.gz`
+   - `../../testdata/recordings/pre-acquisition`
+   - `../../testdata/recordings/bi37708-42_fsrecord.tar.gz`
 
 3. **FastAPI dev server**: Use uvicorn for e2e tests, NOT `python -m fastapi dev`:
-   - ❌ `python -m fastapi dev src/smartem_backend/api_server.py`
-   - ✅ `python -m uvicorn smartem_backend.api_server:app`
+   - `python -m fastapi dev src/smartem_backend/api_server.py`
+   - `python -m uvicorn smartem_backend.api_server:app`
 
 4. **Forgot to activate venv**: All commands must run with venv activated:
-   - ✅ `source .venv/bin/activate` at the start
+   - `source .venv/bin/activate` at the start
 
 5. **Agent log is tiny (< 1KB)**: Agent failed to start - check the error message in agent.log
 
@@ -741,17 +741,17 @@ tail -f "$TEST_DIR/logs/playback.log"
 ### Success Criteria
 
 A successful test should demonstrate:
-- ✅ All backend services start without errors
-- ✅ RabbitMQ queue is empty at test start
-- ✅ Database is freshly created with no leftover data
-- ✅ Playback creates expected files in output directory
-- ✅ Agent detects file changes and sends data to API
-- ✅ API receives and stores data in database
-- ✅ Worker processes messages from queue
-- ✅ No errors in any service logs
-- ✅ Database contains expected entities after test
-- ✅ **Filesystem counts match database counts**: EPU sessions → grids, GridSquares → gridsquare rows, MRC files → micrograph rows
-- ✅ **No or minimal "No grid found" messages** in agent.log (indicates proper grid association)
+- All backend services start without errors
+- RabbitMQ queue is empty at test start
+- Database is freshly created with no leftover data
+- Playback creates expected files in output directory
+- Agent detects file changes and sends data to API
+- API receives and stores data in database
+- Worker processes messages from queue
+- No errors in any service logs
+- Database contains expected entities after test
+- **Filesystem counts match database counts**: EPU sessions -> grids, GridSquares -> gridsquare rows, MRC files -> micrograph rows
+- **No or minimal "No grid found" messages** in agent.log (indicates proper grid association)
 
 ## Cleanup and Teardown
 
@@ -795,7 +795,7 @@ kubectl get pods -n smartem-decisions
 kubectl logs deployment/rabbitmq -n smartem-decisions
 
 # Verify connection from host
-curl -u guest:guest http://localhost:30673  # pragma: allowlist secret
+curl -u guest:guest http://localhost:30673
 ```
 
 ### Agent Not Detecting Files

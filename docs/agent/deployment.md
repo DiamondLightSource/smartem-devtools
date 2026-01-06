@@ -27,7 +27,7 @@ The agent operates in several modes depending on the timing of EPU data acquisit
 
 ## Quick Start
 
-For comprehensive parameter documentation, see the [CLI Reference](../reference/cli-reference.md). For troubleshooting, see the [CLI Troubleshooting Guide](troubleshoot-cli.md).
+For comprehensive parameter documentation, see the [CLI Reference](cli-reference.md). For troubleshooting, see the [CLI Troubleshooting Guide](troubleshooting.md).
 
 ### Basic Directory Monitoring
 

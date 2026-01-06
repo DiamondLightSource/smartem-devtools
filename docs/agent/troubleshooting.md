@@ -1,6 +1,6 @@
 # SmartEM CLI Troubleshooting Guide
 
-This guide provides solutions for common issues encountered when using the SmartEM Agent command-line interface. For comprehensive parameter documentation, see the [CLI Reference](../reference/cli-reference.md).
+This guide provides solutions for common issues encountered when using the SmartEM Agent command-line interface. For comprehensive parameter documentation, see the [CLI Reference](cli-reference.md).
 
 ## Quick Diagnostics
 

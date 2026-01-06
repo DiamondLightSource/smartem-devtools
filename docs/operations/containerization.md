@@ -114,7 +114,7 @@ This approach:
 
 - [Container User Configuration](container-user-configuration.md) - Detailed guide on UID/GID configuration
 - [Run in a Container](run-container.md) - Using pre-built containers
-- [Kubernetes Deployment](deploy-kubernetes.md) - Deploying to Kubernetes
+- [Kubernetes Deployment](kubernetes.md) - Deploying to Kubernetes
 
 ## References
 

@@ -140,7 +140,7 @@ def upgrade() -> None:
         column('preference_key', sa.String),
         column('preference_value', sa.JSON)
     )
-    
+
     op.bulk_insert(user_preferences, [
         {
             'user_id': 'system',
