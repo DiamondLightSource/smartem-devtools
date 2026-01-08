@@ -9,9 +9,7 @@ from rich.console import Console
 
 from smartem_workspace.config.schema import ReposConfig
 
-GITHUB_RAW_URL = (
-    "https://raw.githubusercontent.com/DiamondLightSource/smartem-devtools/main/core/repos.json"
-)
+GITHUB_RAW_URL = "https://raw.githubusercontent.com/DiamondLightSource/smartem-devtools/main/core/repos.json"
 REQUEST_TIMEOUT = 10.0
 
 console = Console()

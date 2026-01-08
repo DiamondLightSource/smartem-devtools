@@ -3,8 +3,6 @@
 import json
 from pathlib import Path
 
-import pytest
-
 from smartem_workspace.config.schema import ReposConfig
 
 

@@ -86,9 +86,9 @@ def setup_claude_config(
         import shutil
 
         shutil.copy(claude_md_source, claude_md_target)
-        console.print(f"  [green]Copied CLAUDE.md[/green]")
+        console.print("  [green]Copied CLAUDE.md[/green]")
     elif claude_md_target.exists():
-        console.print(f"  [dim]CLAUDE.md already exists[/dim]")
+        console.print("  [dim]CLAUDE.md already exists[/dim]")
 
     console.print("[green]Claude Code configuration complete[/green]")
     return True

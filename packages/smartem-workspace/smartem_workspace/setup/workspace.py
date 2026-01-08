@@ -54,9 +54,9 @@ Thumbs.db
 .claude/settings.local.json
 """
         gitignore_path.write_text(gitignore_content)
-        console.print(f"  [green]Created .gitignore[/green]")
+        console.print("  [green]Created .gitignore[/green]")
     else:
-        console.print(f"  [dim].gitignore already exists[/dim]")
+        console.print("  [dim].gitignore already exists[/dim]")
 
     console.print("[green]Workspace structure complete[/green]")
     return True
