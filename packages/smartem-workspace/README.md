@@ -102,6 +102,22 @@ uv build
 
 See [Developer Guide](../../docs/explanations/smartem-workspace-developer-guide.md) for detailed development instructions.
 
+## Releasing
+
+Releases are published to PyPI via GitHub Actions using [Trusted Publishers](https://docs.pypi.org/trusted-publishers/).
+
+```bash
+# 1. Update version in pyproject.toml
+# 2. Commit the change
+git commit -am "chore: release smartem-workspace vX.Y.Z"
+
+# 3. Create and push a version tag
+git tag smartem-workspace-vX.Y.Z
+git push origin main --tags
+```
+
+The CI workflow runs tests, builds the package, and publishes to PyPI automatically on tag push.
+
 ## Links
 
 - **PyPI**: https://pypi.org/project/smartem-workspace/
