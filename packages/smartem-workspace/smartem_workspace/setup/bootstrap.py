@@ -24,10 +24,7 @@ def ensure_devtools_in_selection(
     config: ReposConfig,
 ) -> list[tuple[Organization, Repository]]:
     """Ensure smartem-devtools is in the selection (required)."""
-    has_devtools = any(
-        org.name == "DiamondLightSource" and repo.name == "smartem-devtools"
-        for org, repo in repos
-    )
+    has_devtools = any(org.name == "DiamondLightSource" and repo.name == "smartem-devtools" for org, repo in repos)
 
     if not has_devtools:
         dls_org = config.get_organization("DiamondLightSource")
@@ -81,10 +78,7 @@ def bootstrap_workspace(
         console.print(f"[dim]Using preset: {preset}[/dim]")
     elif interactive:
         preset_choice = select_preset(config)
-        if preset_choice:
-            selected_repos = config.resolve_preset(preset_choice)
-        else:
-            selected_repos = select_repos(config)
+        selected_repos = config.resolve_preset(preset_choice) if preset_choice else select_repos(config)
     else:
         console.print("[red]No preset specified and interactive mode disabled[/red]")
         return False
@@ -111,9 +105,8 @@ def bootstrap_workspace(
     console.print()
     console.print(f"[bold]Clone results:[/bold] {success} succeeded, {failed} failed")
 
-    if failed > 0 and interactive:
-        if not confirm("Some repos failed to clone. Continue with setup?"):
-            return False
+    if failed > 0 and interactive and not confirm("Some repos failed to clone. Continue with setup?"):
+        return False
 
     if not skip_claude:
         setup_claude_config(config, workspace_path)

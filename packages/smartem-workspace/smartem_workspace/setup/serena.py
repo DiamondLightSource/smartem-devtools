@@ -54,10 +54,7 @@ def setup_serena_config(
             "mcpServers": {
                 "serena": {
                     "command": config.mcpConfig.serena.command,
-                    "args": [
-                        arg.replace("${PWD}", str(workspace_path))
-                        for arg in config.mcpConfig.serena.args
-                    ],
+                    "args": [arg.replace("${PWD}", str(workspace_path)) for arg in config.mcpConfig.serena.args],
                 }
             }
         }

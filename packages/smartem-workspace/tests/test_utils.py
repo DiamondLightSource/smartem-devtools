@@ -2,8 +2,6 @@
 
 from pathlib import Path
 
-import pytest
-
 from smartem_workspace.utils.git import check_git_available
 from smartem_workspace.utils.paths import ensure_directory, resolve_workspace_path
 

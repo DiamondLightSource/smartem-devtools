@@ -47,7 +47,7 @@ def init(
     """Initialize a new SmartEM workspace."""
     workspace_path = path or Path.cwd()
 
-    console.print(f"[bold blue]SmartEM Workspace Setup[/bold blue]")
+    console.print("[bold blue]SmartEM Workspace Setup[/bold blue]")
     console.print(f"Target: {workspace_path.absolute()}")
 
     config = load_config()

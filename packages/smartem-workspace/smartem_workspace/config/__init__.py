@@ -6,8 +6,8 @@ from smartem_workspace.config.schema import (
     McpConfig,
     Organization,
     Preset,
-    Repository,
     ReposConfig,
+    Repository,
     SerenaConfig,
 )
 
