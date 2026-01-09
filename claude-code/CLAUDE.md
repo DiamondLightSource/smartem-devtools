@@ -128,7 +128,7 @@ Developer tooling, documentation, and workspace configuration for the SmartEM ec
 - API specs (SmartEM, Athena)
 
 **Key directories:**
-- `docs/` - Sphinx documentation, ADRs, how-to guides
+- `docs/` - Markdown documentation, ADRs, how-to guides (synced to webui as MDX)
 - `claude-code/` - Skills, repo guidelines, architecture docs
 - `webui/` - React developer dashboard
 - `core/` - Repository and workspace config definitions

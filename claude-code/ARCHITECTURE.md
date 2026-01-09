@@ -155,7 +155,7 @@ export ARIA_GQL_LOCAL=http://localhost:9002/graphql
 | smartem-frontend | Regenerate OpenAPI client |
 | smartem-agent | Update api_client imports |
 | fandanGO-cryoem-dls | Update SmartEMAPIClient |
-| Docs | Regenerate OpenAPI spec, Sphinx |
+| Docs | Regenerate OpenAPI spec |
 | Containers | Rebuild images |
 
 ### When smartem-backend MQ schema changes

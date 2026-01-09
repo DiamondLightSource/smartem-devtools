@@ -35,26 +35,3 @@ jobs:
 
       - name: Format check
         run: npm run format:check
-
-  docs:
-    name: Documentation Build
-    runs-on: ubuntu-latest
-    # TODO: Enable when docs are migrated from smartem-decisions
-    if: false
-
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-
-      - name: Setup Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: "3.11"
-
-      - name: Install dependencies
-        run: |
-          pip install sphinx myst-parser sphinx-copybutton sphinx-design pydata-sphinx-theme
-
-      - name: Build docs
-        run: sphinx-build -E docs build/html
