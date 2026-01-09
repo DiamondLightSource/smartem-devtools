@@ -2,9 +2,4 @@
 
 Tutorials for installation and typical usage. New users start here.
 
-```{toctree}
-:maxdepth: 1
-:glob:
-
-tutorials/*
-```
+- [Installation](/docs/tutorials/installation) - Get started with SmartEM

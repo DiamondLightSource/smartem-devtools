@@ -2,13 +2,12 @@
 
 Technical reference material including APIs and release notes.
 
-```{toctree}
-:maxdepth: 1
-:glob:
+## CLI
+- [CLI Reference](/docs/reference/cli-reference) - Command-line interface documentation
 
-Athena Decision Service API <api/athena/index.html>
-SmartEM Core API <api/smartem/index.html>
-API <_api/smartem_backend>
-genindex
-Release Notes <https://github.com/DiamondLightSource/smartem-decisions/releases>
-```
+## API Documentation
+- [Athena Decision Service API](/api/athena/index.html) - Decision service API docs
+- [SmartEM Core API](/api/smartem/index.html) - Core API docs
+
+## External Links
+- [Release Notes](https://github.com/DiamondLightSource/smartem-decisions/releases) - GitHub releases

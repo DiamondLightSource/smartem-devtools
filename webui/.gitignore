@@ -26,3 +26,8 @@ lerna-debug.log*
 # Generated files that should be committed (see ADR 0009)
 # src/routeTree.gen.ts - committed for immediate type safety
 # src/config/webui-app-contents.ts - committed for CI
+
+# Generated documentation (synced from docs/ by scripts/sync-docs.ts)
+# These files are regenerated during prebuild, do not edit directly
+src/docs/**/*.mdx
+!src/docs/index.mdx

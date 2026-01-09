@@ -2,6 +2,11 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+// Sync documentation from docs/ to webui/src/docs/
+import { syncDocs } from './generate-mdx-docs.js'
+
+syncDocs()
+
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const projectRoot = resolve(__dirname, '..')
 const coreDir = resolve(projectRoot, '..', 'core')
