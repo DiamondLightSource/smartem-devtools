@@ -11,7 +11,7 @@ The SmartEM ecosystem uses a standardised set of GitHub labels across four repos
 - `DiamondLightSource/smartem-devtools`
 - `DiamondLightSource/fandanGO-cryoem-dls`
 
-Labels are defined in `core/github-tags-config.ts` and synced using `tools/github/sync-labels.ts`.
+Labels are defined in `core/github-labels-config.ts` and synced using `tools/github/sync-labels.ts`.
 
 ## Prerequisites
 
@@ -73,7 +73,7 @@ npx tsx tools/github/sync-labels.ts --check
 
 This will:
 1. Fetch existing labels from each repository
-2. Compare against the defined labels in `core/github-tags-config.ts`
+2. Compare against the defined labels in `core/github-labels-config.ts`
 3. Report any discrepancies (missing, extra, or outdated labels)
 4. Exit with code 1 if any repository is non-conforming
 
@@ -117,7 +117,7 @@ npx tsx tools/github/sync-labels.ts --check --verbose
 
 The `gitflow.yml` workflow automates label management:
 
-- **On push to main**: Runs `--check` mode when `core/github-tags-config.ts` or `tools/github/**` changes
+- **On push to main**: Runs `--check` mode when `core/github-labels-config.ts` or `tools/github/**` changes
 - **Manual dispatch**: Can trigger `--sync` mode via GitHub Actions UI
 
 ### Running Sync via CI/CD
@@ -132,7 +132,7 @@ The `gitflow.yml` workflow automates label management:
 
 To add, remove, or modify labels:
 
-1. Edit `core/github-tags-config.ts`
+1. Edit `core/github-labels-config.ts`
 2. Run `npm run labels:check` to verify changes
 3. Run `npm run labels:sync` to apply changes
 4. Commit and push changes
