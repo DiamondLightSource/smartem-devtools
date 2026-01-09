@@ -17,11 +17,15 @@ const projectRoot = resolve(__dirname, '..')
 const docsSource = resolve(projectRoot, '..', 'docs')
 const docsTarget = resolve(projectRoot, 'src', 'docs')
 
-// Files to exclude from sync (Sphinx-specific or handled separately)
+// Files to exclude from sync (by filename only)
 const EXCLUDED_FILES = new Set([
-  'index.md', // Uses React components in webui version
   'genindex.md', // Sphinx-specific
   'athena-decision-service-api-spec.README.md', // API spec file
+])
+
+// Paths to exclude from sync (relative to docs root)
+const EXCLUDED_PATHS = new Set([
+  'index.md', // Root index uses React components in webui version
 ])
 
 // Directories to exclude from sync
@@ -54,8 +58,9 @@ function collectMdFiles(dir: string, baseDir: string = dir): string[] {
         files.push(...collectMdFiles(fullPath, baseDir))
       }
     } else if (entry.isFile() && entry.name.endsWith('.md')) {
-      if (!EXCLUDED_FILES.has(entry.name)) {
-        files.push(relative(baseDir, fullPath))
+      const relativePath = relative(baseDir, fullPath)
+      if (!EXCLUDED_FILES.has(entry.name) && !EXCLUDED_PATHS.has(relativePath)) {
+        files.push(relativePath)
       }
     }
   }
