@@ -75,15 +75,16 @@ Opens at http://localhost:5173
 
 ### Documentation
 
-Documentation is built with Sphinx and published to GitHub Pages from smartem-decisions.
+Documentation is built as part of the webui and published to GitHub Pages.
 
 ```bash
-# Build locally (requires sphinx)
-cd docs
-sphinx-build -E . ../build/html
+# Build locally
+cd webui
+npm install
+npm run build
 ```
 
-View at: https://diamondlightsource.github.io/smartem-decisions/
+View at: https://diamondlightsource.github.io/smartem-devtools/
 
 ## Claude Code Configuration
 

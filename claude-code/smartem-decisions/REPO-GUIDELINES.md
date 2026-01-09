@@ -56,9 +56,8 @@ ruff format
 # Pre-commit checks
 pre-commit run --all-files
 
-# Documentation
-sphinx-build -E docs build/html
-sphinx-autobuild docs build/html  # Live reload
+# Documentation (see smartem-devtools webui)
+cd ../smartem-devtools/webui && npm run dev
 
 # Database migrations
 python -m alembic upgrade head
@@ -97,10 +96,9 @@ python -m alembic revision --autogenerate -m "Description"
 - **CI/CD**: GitHub Actions with pre-commit hooks
 
 ## Documentation
-- **Sphinx**: Auto-generated API docs with Napoleon (Google-style docstrings)
-- **MyST**: Markdown support in documentation
-- **Live development**: Use sphinx-autobuild for real-time doc updates
+- **Markdown**: Documentation in `docs/` synced to smartem-devtools webui as MDX
 - **API documentation**: Swagger/OpenAPI specs auto-generated
+- **Live development**: Run `npm run dev` in smartem-devtools/webui for hot-reload
 
 ## Available Skills
 

@@ -185,30 +185,33 @@ Licence information.
 - Link to detailed documentation
 - Keep it scannable (headers, bullets, code blocks)
 
-## Sphinx Documentation
+## Documentation (smartem-devtools)
 
 ### Build Commands
 
 ```bash
-cd repos/DiamondLightSource/smartem-decisions
+cd repos/DiamondLightSource/smartem-devtools/webui
 
-# Full build
-sphinx-build -E docs build/html
+# Install dependencies
+npm install
 
-# Live reload during writing
-sphinx-autobuild docs build/html
+# Development server with hot reload
+npm run dev
 
-# Check links
-sphinx-build -b linkcheck docs build/linkcheck
+# Production build
+npm run build
 ```
 
 ### Adding New Pages
 
 1. Create `.md` file in appropriate `docs/` subdirectory
-2. Add to `toctree` in parent `index.md`
-3. Use MyST Markdown syntax
+2. Add link to the appropriate navigation file (`docs/how-to.md`, `docs/explanations.md`, etc.)
+3. Update `webui/src/docs/navigation.ts` if adding to sidebar
+4. Run `npm run prebuild` to sync changes (automatic in dev mode)
 
-### MyST Markdown Features
+### Markdown Features
+
+Documentation uses standard GitHub Flavored Markdown:
 
 ```markdown
 # Headings use standard Markdown
@@ -219,19 +222,13 @@ def example():
     pass
 ```
 
-Admonitions:
-```{note}
-This is a note.
+**Bold**, *italic*, `inline code`
+
+- Bullet lists
+- [Links](/docs/path/to/page)
 ```
 
-```{warning}
-This is a warning.
-```
-
-Cross-references:
-{ref}`label-name`
-{doc}`path/to/document`
-```
+**Note**: Avoid curly braces `{}` in prose as they're interpreted as JSX. Use backticks for values like `` `<10ms` ``.
 
 ## Common British vs American Spellings
 
@@ -272,5 +269,5 @@ Before finalising documentation:
 ## References
 
 - ADR format: https://adr.github.io/
-- MyST Markdown: https://myst-parser.readthedocs.io/
-- Sphinx: https://www.sphinx-doc.org/
+- GitHub Flavored Markdown: https://github.github.com/gfm/
+- MDX: https://mdxjs.com/
