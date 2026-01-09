@@ -2,27 +2,26 @@
 /**
  * GitHub Labels Sync Script
  *
- * Syncs GitHub labels across SmartEM repositories to match the definition
- * in core/github-tags-config.ts.
+ * Syncs GitHub labels across SmartEM repositories to match the configuration
+ * in core/github-labels-config.ts.
  *
  * Usage:
  *   npx tsx tools/github/sync-labels.ts --check    # Check conformity (default)
  *   npx tsx tools/github/sync-labels.ts --sync     # Sync labels to all repos
  *   npx tsx tools/github/sync-labels.ts --sync --repo smartem-decisions
  *
- * Requires: gh CLI installed and authenticated
+ * Backends:
+ *   - Primary: gh CLI (requires `gh auth login`)
+ *   - Fallback: GitHub REST API (requires GITHUB_TOKEN env var)
  */
 
-import { execSync } from 'child_process'
-import { githubTagsConfig, type GitHubLabel } from '../../core/github-tags-config.js'
+import { $ } from 'zx'
+import { githubLabelsConfig, type GitHubLabel } from '../../core/github-labels-config.js'
 
-const OWNER = 'DiamondLightSource'
-const TARGET_REPOS = [
-  'smartem-decisions',
-  'smartem-frontend',
-  'smartem-devtools',
-  'fandanGO-cryoem-dls',
-]
+// Suppress zx verbose output
+$.verbose = false
+
+const { owner: OWNER, repos: REPO_CONFIGS, typesOfWork, systemComponents } = githubLabelsConfig
 
 interface ExistingLabel {
   name: string
@@ -35,6 +34,192 @@ interface LabelDiff {
   missing: string[]
   extra: string[]
   outdated: { name: string; reason: string }[]
+}
+
+/**
+ * Backend abstraction for GitHub label operations
+ */
+interface LabelBackend {
+  name: string
+  checkAuth(): Promise<void>
+  getLabels(repo: string): Promise<ExistingLabel[]>
+  createLabel(repo: string, label: GitHubLabel): Promise<void>
+  updateLabel(repo: string, label: GitHubLabel): Promise<void>
+  deleteLabel(repo: string, name: string): Promise<void>
+}
+
+/**
+ * gh CLI backend - uses zx for shell execution
+ */
+class GhCliBackend implements LabelBackend {
+  name = 'gh CLI'
+
+  async checkAuth(): Promise<void> {
+    try {
+      await $`gh auth status`
+    } catch {
+      console.error('\n[Error] GitHub CLI is not authenticated.')
+      console.error('Please run: gh auth login')
+      console.error('Or set GITHUB_TOKEN environment variable to use API fallback.\n')
+      process.exit(1)
+    }
+  }
+
+  async getLabels(repo: string): Promise<ExistingLabel[]> {
+    const result = await $`gh label list --repo ${OWNER}/${repo} --json name,description,color --limit 100`
+    const output = result.stdout.trim()
+    if (!output) {
+      return []
+    }
+    return JSON.parse(output)
+  }
+
+  async createLabel(repo: string, label: GitHubLabel): Promise<void> {
+    await $`gh label create ${label.name} --repo ${OWNER}/${repo} --description ${label.description} --color ${label.color}`
+  }
+
+  async updateLabel(repo: string, label: GitHubLabel): Promise<void> {
+    await $`gh label edit ${label.name} --repo ${OWNER}/${repo} --description ${label.description} --color ${label.color}`
+  }
+
+  async deleteLabel(repo: string, name: string): Promise<void> {
+    await $`gh label delete ${name} --repo ${OWNER}/${repo} --yes`
+  }
+}
+
+/**
+ * GitHub REST API backend - uses native fetch
+ */
+class GitHubApiBackend implements LabelBackend {
+  name = 'GitHub API'
+  private token: string
+
+  constructor() {
+    this.token = process.env.GITHUB_TOKEN || ''
+  }
+
+  async checkAuth(): Promise<void> {
+    if (!this.token) {
+      console.error('\n[Error] GITHUB_TOKEN environment variable is not set.')
+      console.error('Please set it with a token that has repo scope:')
+      console.error('  export GITHUB_TOKEN=ghp_xxxxxxxxxxxx')
+      console.error('Or install and authenticate gh CLI: gh auth login\n')
+      process.exit(1)
+    }
+
+    // Verify token works
+    const response = await fetch('https://api.github.com/user', {
+      headers: this.headers(),
+    })
+
+    if (!response.ok) {
+      console.error('\n[Error] GITHUB_TOKEN is invalid or expired.')
+      console.error('Please generate a new token with repo scope at:')
+      console.error('  https://github.com/settings/tokens\n')
+      process.exit(1)
+    }
+  }
+
+  private headers(): Record<string, string> {
+    return {
+      Authorization: `Bearer ${this.token}`,
+      Accept: 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28',
+    }
+  }
+
+  async getLabels(repo: string): Promise<ExistingLabel[]> {
+    const response = await fetch(`https://api.github.com/repos/${OWNER}/${repo}/labels?per_page=100`, {
+      headers: this.headers(),
+    })
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch labels: ${response.statusText}`)
+    }
+
+    const data = (await response.json()) as Array<{ name: string; description: string | null; color: string }>
+    return data.map((l) => ({
+      name: l.name,
+      description: l.description || '',
+      color: l.color,
+    }))
+  }
+
+  async createLabel(repo: string, label: GitHubLabel): Promise<void> {
+    const response = await fetch(`https://api.github.com/repos/${OWNER}/${repo}/labels`, {
+      method: 'POST',
+      headers: this.headers(),
+      body: JSON.stringify({
+        name: label.name,
+        description: label.description,
+        color: label.color,
+      }),
+    })
+
+    if (!response.ok) {
+      throw new Error(`Failed to create label: ${response.statusText}`)
+    }
+  }
+
+  async updateLabel(repo: string, label: GitHubLabel): Promise<void> {
+    const response = await fetch(`https://api.github.com/repos/${OWNER}/${repo}/labels/${encodeURIComponent(label.name)}`, {
+      method: 'PATCH',
+      headers: this.headers(),
+      body: JSON.stringify({
+        description: label.description,
+        color: label.color,
+      }),
+    })
+
+    if (!response.ok) {
+      throw new Error(`Failed to update label: ${response.statusText}`)
+    }
+  }
+
+  async deleteLabel(repo: string, name: string): Promise<void> {
+    const response = await fetch(`https://api.github.com/repos/${OWNER}/${repo}/labels/${encodeURIComponent(name)}`, {
+      method: 'DELETE',
+      headers: this.headers(),
+    })
+
+    if (!response.ok) {
+      throw new Error(`Failed to delete label: ${response.statusText}`)
+    }
+  }
+}
+
+/**
+ * Select the best available backend
+ */
+async function selectBackend(): Promise<LabelBackend> {
+  try {
+    await $`gh --version`
+    const backend = new GhCliBackend()
+    await backend.checkAuth()
+    return backend
+  } catch {
+    // gh CLI not available or not authenticated, try API
+    console.log('gh CLI not available or not authenticated, trying GitHub API...')
+    const backend = new GitHubApiBackend()
+    await backend.checkAuth()
+    return backend
+  }
+}
+
+/**
+ * Get the labels that should be applied to a specific repo based on config
+ */
+function getLabelsForRepo(repo: string): GitHubLabel[] {
+  const config = REPO_CONFIGS.find((r) => r.repo === repo)
+  if (!config) {
+    console.warn(`Warning: No config found for repo '${repo}', using types-only`)
+    return [...typesOfWork]
+  }
+
+  if (config.labels === 'all') {
+    return [...typesOfWork, ...systemComponents]
+  }
+  return [...typesOfWork]
 }
 
 function parseArgs(): { mode: 'check' | 'sync'; repos: string[]; verbose: boolean } {
@@ -57,27 +242,10 @@ function parseArgs(): { mode: 'check' | 'sync'; repos: string[]; verbose: boolea
   }
 
   if (repos.length === 0) {
-    repos = TARGET_REPOS
+    repos = REPO_CONFIGS.map((r) => r.repo)
   }
 
   return { mode, repos, verbose }
-}
-
-function getAllDefinedLabels(): GitHubLabel[] {
-  return [...githubTagsConfig.typesOfWork, ...githubTagsConfig.systemComponents]
-}
-
-function getExistingLabels(repo: string): ExistingLabel[] {
-  try {
-    const result = execSync(
-      `gh label list --repo ${OWNER}/${repo} --json name,description,color --limit 100`,
-      { encoding: 'utf-8', stdio: ['pipe', 'pipe', 'pipe'] }
-    )
-    return JSON.parse(result)
-  } catch (error) {
-    console.error(`Failed to fetch labels from ${OWNER}/${repo}`)
-    throw error
-  }
 }
 
 function compareLabels(existing: ExistingLabel[], defined: GitHubLabel[]): LabelDiff {
@@ -118,28 +286,8 @@ function compareLabels(existing: ExistingLabel[], defined: GitHubLabel[]): Label
   return { conforming, missing, extra, outdated }
 }
 
-function createLabel(repo: string, label: GitHubLabel): void {
-  const desc = label.description.replace(/"/g, '\\"')
-  execSync(
-    `gh label create "${label.name}" --repo ${OWNER}/${repo} --description "${desc}" --color "${label.color}"`,
-    { stdio: 'inherit' }
-  )
-}
-
-function updateLabel(repo: string, label: GitHubLabel): void {
-  const desc = label.description.replace(/"/g, '\\"')
-  execSync(
-    `gh label edit "${label.name}" --repo ${OWNER}/${repo} --description "${desc}" --color "${label.color}"`,
-    { stdio: 'inherit' }
-  )
-}
-
-function deleteLabel(repo: string, name: string): void {
-  execSync(`gh label delete "${name}" --repo ${OWNER}/${repo} --yes`, { stdio: 'inherit' })
-}
-
-function printDiff(repo: string, diff: LabelDiff, verbose: boolean): void {
-  console.log(`\n=== ${OWNER}/${repo} ===`)
+function printDiff(repo: string, diff: LabelDiff, expectedCount: number, verbose: boolean): void {
+  console.log(`\n=== ${OWNER}/${repo} (expects ${expectedCount} labels) ===`)
 
   if (diff.conforming.length > 0) {
     console.log(`  [ok] ${diff.conforming.length} labels conforming`)
@@ -168,24 +316,26 @@ function isConforming(diff: LabelDiff): boolean {
 
 async function main(): Promise<void> {
   const { mode, repos, verbose } = parseArgs()
-  const defined = getAllDefinedLabels()
 
-  console.log(`GitHub Labels Sync`)
+  console.log('GitHub Labels Sync')
   console.log(`Mode: ${mode}`)
   console.log(`Repos: ${repos.join(', ')}`)
-  console.log(`Defined labels: ${defined.length}`)
 
-  const results: { repo: string; diff: LabelDiff }[] = []
+  const backend = await selectBackend()
+  console.log(`Backend: ${backend.name}`)
+
+  const results: { repo: string; diff: LabelDiff; defined: GitHubLabel[] }[] = []
 
   for (const repo of repos) {
-    const existing = getExistingLabels(repo)
+    const defined = getLabelsForRepo(repo)
+    const existing = await backend.getLabels(repo)
     const diff = compareLabels(existing, defined)
-    results.push({ repo, diff })
-    printDiff(repo, diff, verbose)
+    results.push({ repo, diff, defined })
+    printDiff(repo, diff, defined.length, verbose)
   }
 
   const nonConforming = results.filter((r) => !isConforming(r.diff))
-  console.log(`\n--- Summary ---`)
+  console.log('\n--- Summary ---')
   console.log(`${results.length} repos checked, ${nonConforming.length} non-conforming`)
 
   if (mode === 'check') {
@@ -198,9 +348,9 @@ async function main(): Promise<void> {
   }
 
   if (mode === 'sync') {
-    const definedMap = new Map(defined.map((l) => [l.name, l]))
+    for (const { repo, diff, defined } of results) {
+      const definedMap = new Map(defined.map((l) => [l.name, l]))
 
-    for (const { repo, diff } of results) {
       if (isConforming(diff)) {
         console.log(`\n${repo}: Already conforming, skipping`)
         continue
@@ -210,19 +360,19 @@ async function main(): Promise<void> {
 
       for (const name of diff.extra) {
         console.log(`  Deleting: ${name}`)
-        deleteLabel(repo, name)
+        await backend.deleteLabel(repo, name)
       }
 
       for (const name of diff.missing) {
         const label = definedMap.get(name)!
         console.log(`  Creating: ${name}`)
-        createLabel(repo, label)
+        await backend.createLabel(repo, label)
       }
 
       for (const { name } of diff.outdated) {
         const label = definedMap.get(name)!
         console.log(`  Updating: ${name}`)
-        updateLabel(repo, label)
+        await backend.updateLabel(repo, label)
       }
     }
 

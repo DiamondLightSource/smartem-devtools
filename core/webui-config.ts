@@ -2,7 +2,7 @@
  * Web UI configuration for SmartEM frontend.
  *
  * This file is intentionally minimal. Configuration is split across:
- * - github-tags-config.ts - GitHub tags and version tracking
+ * - github-labels-config.ts - GitHub labels and per-repo configuration
  * - repos-and-refs.ts - Repository definitions and external links
  * - microscope-list.ts - CryoEM instrument definitions
  *

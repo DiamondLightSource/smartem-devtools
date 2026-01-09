@@ -27,7 +27,7 @@ smartem-devtools/
 │   ├── repos-and-refs.ts    # Repository definitions and URLs
 │   ├── microscope-list.ts   # Microscope configuration
 │   ├── webui-config.ts      # WebUI configuration
-│   └── github-tags-config.ts
+│   └── github-labels-config.ts
 ├── webui/                   # Developer dashboard (React/Vite)
 ├── claude-code/             # Claude Code configuration
 │   ├── ARCHITECTURE.md      # System architecture overview
