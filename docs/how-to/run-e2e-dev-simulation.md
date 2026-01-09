@@ -805,7 +805,7 @@ curl -u guest:guest http://localhost:30673  # pragma: allowlist secret
 - Confirm file permissions allow agent to read files
 
 ### Consumer Not Processing Messages
-- Verify `RABBITMQ_URL=amqp://guest:guest@localhost:30672/` is correct  <!-- pragma: allowlist secret -->
+- Verify `RABBITMQ_URL=amqp://guest:guest@localhost:30672/` is correct {/* pragma: allowlist secret */}
 - Check queue has messages waiting
 - Review consumer logs for connection errors
 - Ensure database is accessible to worker

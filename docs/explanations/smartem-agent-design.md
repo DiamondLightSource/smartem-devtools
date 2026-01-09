@@ -554,7 +554,7 @@ incomplete transfers):
 **Rationale**:
 1. **Entity interdependencies**: Parent entities must exist before children can persist. Concurrent processing risks
    child processing completing before parent processing, artificially creating orphans.
-2. **Throughput sufficiency**: Parsing and persisting a single entity takes <10ms in typical cases. Serial processing
+2. **Throughput sufficiency**: Parsing and persisting a single entity takes `<10ms` in typical cases. Serial processing
    sustains ~100 entities/second, far exceeding typical EPU output rates (10-20 entities/second during active
    collection).
 3. **Simplicity**: Serial processing eliminates concurrency bugs, Data Store locking requirements, and orphan
@@ -609,7 +609,7 @@ variables or configuration file for deployment-specific tuning.
 
 **Rationale**:
 1. **Zero latency**: Orphans resolve immediately when their parent appears, not on next retry cycle. Typical resolution
-   time: <1ms after parent persistence.
+   time: `<1ms` after parent persistence.
 2. **No wasted cycles**: Resolution attempts only occur when new parents arrive. Periodic retry wastes CPU checking
    orphans during quiet periods.
 3. **Cascading resolution**: Resolving an orphan (e.g., GridSquare) immediately enables resolution of its children
@@ -743,7 +743,7 @@ and multiple timing modes:
 - Zero entity loss across all ordering scenarios and timing modes
 - Orphan resolution success rate >99% for complete hierarchies
 - Orphaned entities with missing parents log timeout warnings (no eviction)
-- Processing latency <5 seconds for 95th percentile entities (fast mode)
+- Processing latency `<5 seconds` for 95th percentile entities (fast mode)
 
 #### End-to-End Tests
 
@@ -778,7 +778,7 @@ patterns. Primary test dataset: bi37708-42 (8,389 events). Tests validate:
 - Memory consumption during processing
 
 **Decision Criteria**: Select batch size minimising orphan resolution time whilst maintaining total processing time
-<10% above minimum observed (to avoid sacrificing throughput for marginal resolution improvements).
+`<10%` above minimum observed (to avoid sacrificing throughput for marginal resolution improvements).
 
 #### 2. Persistent Orphan Storage
 
