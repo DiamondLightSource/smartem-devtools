@@ -66,7 +66,7 @@ For the HTTP API, you can also control logging via environment variables:
 ```bash
 # Set log level via environment variable (equivalent to -v/-vv flags)
 SMARTEM_LOG_LEVEL=ERROR python -m smartem_backend.api_server
-SMARTEM_LOG_LEVEL=INFO python -m smartem_backend.api_server 
+SMARTEM_LOG_LEVEL=INFO python -m smartem_backend.api_server
 SMARTEM_LOG_LEVEL=DEBUG python -m smartem_backend.api_server
 ```
 

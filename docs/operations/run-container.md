@@ -57,7 +57,7 @@ $ docker run -e ROLE=worker -e SMARTEM_LOG_LEVEL=DEBUG ghcr.io/DiamondLightSourc
 
 ## Complete Development Stack
 
-For a complete development environment with database and message queue, see the [Kubernetes deployment guide](../../k8s/README.md) which provides a docker-compose-like experience.
+For a complete development environment with database and message queue, see the [Kubernetes deployment guide](kubernetes.md) which provides a docker-compose-like experience.
 
 ## Advanced Configuration
 

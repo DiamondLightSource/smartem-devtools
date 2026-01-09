@@ -48,7 +48,7 @@ python -m smartem_mcp interactive
 
 Example questions:
 - "Show me a summary of session /path/to/epu/directory"
-- "Find low quality items in /path/to/epu with threshold 0.3"  
+- "Find low quality items in /path/to/epu with threshold 0.3"
 - "What are the recent acquisitions?"
 
 ### 2. Command Line Usage
@@ -78,13 +78,13 @@ async with SmartEMMCPClient() as client:
     result = await client.parse_epu_directory("/path/to/epu")
     if result.get("success"):
         print(f"Found {result['grid_count']} grids")
-    
+
     # Find low quality items
     quality_result = await client.find_low_quality_items(
-        "/path/to/epu", 
+        "/path/to/epu",
         threshold=0.3
     )
-    
+
     # Query API data
     acquisitions = await client.query_recent_acquisitions(limit=5)
 ```
@@ -233,7 +233,7 @@ Start a new Claude Code session and verify the SmartEM tools are available:
 
 You should see the following tools available:
 - `parse_epu_directory` - Parse EPU microscopy directories
-- `query_quality_metrics` - Find low-quality images and foil holes  
+- `query_quality_metrics` - Find low-quality images and foil holes
 - `query_acquisitions` - Query recent acquisition sessions
 - `query_grid_status` - Get grid processing status
 
@@ -373,7 +373,7 @@ client = SmartEMMCPClient(api_token="your_token_here")
 #### 1. MCP Server Registration Problems
 
 **"SmartEM MCP server not found"**
-- Ensure MCP dependencies are installed: `pip install -e .[mcp]` (includes FastMCP 2.0)  
+- Ensure MCP dependencies are installed: `pip install -e .[mcp]` (includes FastMCP 2.0)
 - Verify Python path includes smartem_mcp module: `python -c "import smartem_mcp; print('OK')"`
 - Check registration with `claude mcp list`
 
@@ -391,7 +391,7 @@ client = SmartEMMCPClient(api_token="your_token_here")
 
 **"Invalid EPU directory"**
 - Verify directory contains EpuSession.dm file
-- Check Metadata/ and Images-Disc*/ subdirectories exist  
+- Check Metadata/ and Images-Disc*/ subdirectories exist
 - Ensure proper file permissions for reading EPU data
 
 **"Permission denied accessing EPU files"**
@@ -461,7 +461,7 @@ python -m smartem_mcp interactive
 - Ensure virtual environment is activated when registering
 - Use absolute Python paths: `claude mcp add smartem -- /path/to/.venv/bin/python -m smartem_mcp server`
 
-#### Production Environment  
+#### Production Environment
 - Verify all dependencies are installed in production Python environment
 - Check firewall rules for API connectivity
 - Ensure proper logging configuration for production
@@ -482,7 +482,7 @@ If issues persist:
    pip list | grep -E "(smartem|mcp)"
    claude mcp list
    claude mcp status smartem
-   
+
    # Test basic functionality
    python -m smartem_mcp --version
    python -c "import smartem_mcp; print('Import successful')"

@@ -71,17 +71,16 @@ acquisitions = await client.aget_acquisitions()
 ### Creating an Acquisition
 
 ```python
-from smartem_agent.model.schemas import EpuSessionData
+from smartem_common.schemas import AcquisitionData
 from datetime import datetime
 
-# Create an acquisition from EPU session data
-session = EpuSessionData(
-    id="my-acquisition-id",
+# Create an acquisition from acquisition data
+acquisition_data = AcquisitionData(
     name="My Acquisition",
     start_time=datetime.now(),
     storage_path="/path/to/storage"
 )
-response = client.create_acquisition(session)
+response = client.create_acquisition(acquisition_data)
 print(f"Created acquisition with ID: {response.id}")
 
 # Alternatively, create directly with an API request model
@@ -138,29 +137,28 @@ The client supports the full hierarchy of entities:
 Here's an example of creating entities at each level:
 
 ```python
+from smartem_common.schemas import (
+    AcquisitionData, GridData, GridSquareData, FoilHoleData,
+    MicrographData, MicrographManifest
+)
+
 # Create an acquisition
-acquisition = client.create_acquisition(EpuSessionData(id="acq-1", name="Test Acquisition"))
+acquisition_data = AcquisitionData(name="Test Acquisition")
+acquisition = client.create_acquisition(acquisition_data)
 
 # Create a grid for the acquisition
-from smartem_agent.model.schemas import GridData
-
 grid = GridData(data_dir="/path/to/grid")
 grid_response = client.create_acquisition_grid(acquisition.id, grid)
 
 # Create a grid square for the grid
-from smartem_agent.model.schemas import GridSquareData
-
 gridsquare = GridSquareData(id="gs-1", data_dir="/path/to/gridsquare")
 gridsquare_response = client.create_grid_gridsquare(grid_response.id, gridsquare)
 
 # Create a foil hole for the grid square
-from smartem_agent.model.schemas import FoilHoleData
-
 foilhole = FoilHoleData(id="fh-1", gridsquare_id=gridsquare.id)
 foilhole_response = client.create_gridsquare_foilhole(gridsquare_response.id, foilhole)
 
 # Create a micrograph for the foil hole
-from smartem_agent.model.schemas import MicrographData, MicrographManifest
 
 manifest = MicrographManifest(
     unique_id="mic-1",

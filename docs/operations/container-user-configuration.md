@@ -414,9 +414,9 @@ docker build --build-arg groupid=5000 --build-arg userid=5000 \
 ## Related Documentation
 
 - [Run in a Container](run-container.md) - Basic container usage
-- [Kubernetes Deployment](deploy-kubernetes.md) - Full deployment guide
+- [Kubernetes Deployment](kubernetes.md) - Full deployment guide
 - [Containerization](containerization.md) - Building and pushing images
-- [Managing Kubernetes Secrets](manage-kubernetes-secrets.md) - Secure credential management
+- [Managing Kubernetes Secrets](kubernetes-secrets.md) - Secure credential management
 
 ## References
 

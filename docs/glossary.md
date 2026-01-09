@@ -1,4 +1,4 @@
-# Terms and Definitions
+# Glossary
 
 ## EPU
 
@@ -25,7 +25,7 @@ https://instruct-eric.org/help/about-aria
 
 ## Atlas
 
-A comprehensive overview image of the entire grid, composed of individual tiles arranged in a 5×5 grid pattern. The
+A comprehensive overview image of the entire grid, composed of individual tiles arranged in a 5x5 grid pattern. The
 atlas provides spatial context and navigation reference for subsequent high-magnification data collection across the
 specimen grid.
 

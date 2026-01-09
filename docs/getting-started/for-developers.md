@@ -61,13 +61,7 @@ pip install -e .[all]
 
 ## Verify Installation
 
-The library should now be installed with the command-line interface available on your system path. Verify the installation by checking the installed version:
-
-```bash
-smartem-decisions --version
-```
-
-You can also verify that all components are correctly installed by running:
+Verify that all components are correctly installed by running:
 
 ```bash
 # Test core functionality
@@ -77,11 +71,18 @@ python -c "import smartem_backend, smartem_agent, smartem_common; print('Core co
 python -c "import smartem_mcp; print('MCP components available')"
 ```
 
+You can also verify the CLI tools are available:
+
+```bash
+# Check agent CLI is accessible
+python -m smartem_agent --help
+```
+
 ## Next Steps
 
 Once installation is complete, you can proceed to:
 
-- [Run the backend service](../how-to/run-backend.md)
-- [Deploy using containers](../how-to/run-container.md)  
-- [Set up the development environment](../how-to/development-tools.md)
-- [Configure logging](../how-to/configure-logging.md)
+- [Run the backend service](../backend/api-server.md)
+- [Deploy using containers](../operations/run-container.md)
+- [Set up the development environment](../development/tools.md)
+- [Configure logging](../operations/logging.md)
