@@ -1,6 +1,12 @@
 /**
  * GitHub labels configuration for SmartEM repositories.
  * Used for issue/PR categorisation and project management.
+ *
+ * This file defines:
+ * - Label definitions (types of work, system components)
+ * - Per-repo label assignments
+ *
+ * Synced using: npx tsx tools/github/sync-labels.ts --sync
  */
 
 export interface GitHubLabel {
@@ -9,9 +15,16 @@ export interface GitHubLabel {
   color: string // 6-char hex without #
 }
 
-export interface GitHubTagsConfig {
+export interface RepoLabelConfig {
+  repo: string
+  labels: 'all' | 'types-only'
+}
+
+export interface GitHubLabelsConfig {
+  owner: string
   typesOfWork: GitHubLabel[]
   systemComponents: GitHubLabel[]
+  repos: RepoLabelConfig[]
 }
 
 /**
@@ -57,9 +70,23 @@ const systemComponents: GitHubLabel[] = [
   { name: 'smartem-devtools:e2e-test', description: 'End-to-end testing infrastructure and scenarios', color: 'f09bc8' },
 ]
 
-export const githubTagsConfig: GitHubTagsConfig = {
+/**
+ * Per-repo label configuration.
+ * - 'all': Types of work + system components
+ * - 'types-only': Only types of work labels
+ */
+const repos: RepoLabelConfig[] = [
+  { repo: 'smartem-devtools', labels: 'all' },
+  { repo: 'smartem-decisions', labels: 'types-only' },
+  { repo: 'smartem-frontend', labels: 'types-only' },
+  { repo: 'fandanGO-cryoem-dls', labels: 'types-only' },
+]
+
+export const githubLabelsConfig: GitHubLabelsConfig = {
+  owner: 'DiamondLightSource',
   typesOfWork,
   systemComponents,
+  repos,
 }
 
-export default githubTagsConfig
+export default githubLabelsConfig
