@@ -16,7 +16,9 @@ Labels are defined in `core/github-labels-config.ts` and synced using `tools/git
 ## Prerequisites
 
 - Node.js 18+
-- GitHub CLI (`gh`) installed and authenticated
+- Authentication via one of:
+  - GitHub CLI (`gh`) installed and authenticated (`gh auth login`)
+  - `GITHUB_TOKEN` environment variable with repo scope
 - For sync operations: write access to target repositories
 
 ## Label Categories
@@ -54,6 +56,26 @@ Labels that identify which part of the system is affected:
 | smartem-devtools:webui | Pink (mid) | Developer dashboard |
 | smartem-devtools:claude | Pink (light) | Claude Code configuration |
 | smartem-devtools:e2e-test | Pink (lightest) | E2E testing infrastructure |
+
+### Per-Repository Configuration
+
+Not all repos need all labels. The config defines which label sets each repo receives:
+
+| Mode | Labels Applied | Use Case |
+|------|----------------|----------|
+| `all` | Types of work + system components | Index repo (smartem-devtools) |
+| `types-only` | Types of work only | Individual repos |
+
+Current assignments in `core/github-labels-config.ts`:
+
+| Repository | Mode |
+|------------|------|
+| smartem-devtools | `all` |
+| smartem-decisions | `types-only` |
+| smartem-frontend | `types-only` |
+| fandanGO-cryoem-dls | `types-only` |
+
+System component labels are only relevant in the devtools index repo where cross-repo issues are tracked.
 
 ## Usage
 
@@ -139,6 +161,38 @@ To add, remove, or modify labels:
 
 The CI/CD workflow will verify conformity on push.
 
+## Authentication Backends
+
+The sync script supports two authentication backends with automatic fallback:
+
+### Primary: GitHub CLI
+
+The preferred method uses `gh` CLI for shell-based operations:
+
+```bash
+gh auth login
+gh auth status  # verify authentication
+```
+
+### Fallback: GitHub REST API
+
+If `gh` CLI is unavailable or not authenticated, the script falls back to the GitHub REST API using a personal access token:
+
+```bash
+export GITHUB_TOKEN=ghp_xxxxxxxxxxxx
+```
+
+Generate a token at https://github.com/settings/tokens with `repo` scope.
+
+The script automatically selects the best available backend and displays which one is in use:
+
+```
+GitHub Labels Sync
+Mode: check
+Repos: smartem-devtools, smartem-decisions, smartem-frontend, fandanGO-cryoem-dls
+Backend: gh CLI
+```
+
 ## Troubleshooting
 
 ### Authentication Errors
@@ -149,6 +203,8 @@ Ensure `gh` CLI is authenticated:
 gh auth status
 gh auth login  # if not authenticated
 ```
+
+Or set `GITHUB_TOKEN` environment variable as fallback.
 
 ### Permission Denied
 
