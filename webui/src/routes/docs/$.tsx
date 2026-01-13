@@ -1,13 +1,19 @@
+import { Box, CircularProgress, Typography } from '@mui/material'
 import { createFileRoute } from '@tanstack/react-router'
 import { lazy, Suspense } from 'react'
-import { Box, CircularProgress, Typography } from '@mui/material'
 
 const docModules = import.meta.glob('../../docs/**/*.mdx')
 
 function getDocComponent(path: string) {
   const normalizedPath = path.startsWith('/') ? path.slice(1) : path
 
-  const matchingKey = Object.keys(docModules).find((key) => key.endsWith(`${normalizedPath}.mdx`))
+  // Try exact match first: "{path}.mdx"
+  let matchingKey = Object.keys(docModules).find((key) => key.endsWith(`${normalizedPath}.mdx`))
+
+  // If not found, try index file: "{path}/index.mdx"
+  if (!matchingKey) {
+    matchingKey = Object.keys(docModules).find((key) => key.endsWith(`${normalizedPath}/index.mdx`))
+  }
 
   if (!matchingKey) {
     return null
