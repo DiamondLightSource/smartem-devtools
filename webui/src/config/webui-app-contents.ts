@@ -670,14 +670,31 @@ interface HeaderConfig {
   homeButton: HeaderButtonConfig
   docsButton: HeaderButtonConfig
   boardButton: HeaderButtonConfig
+  artefactsButton: HeaderButtonConfig
   menuButton: HeaderButtonConfig
   omniboxPlaceholder: string
   repoSelectorLabel: string
 }
 
+// =============================================================================
+// Artefacts Configuration
+// =============================================================================
+
+interface ArtefactItem {
+  id: string
+  label: string
+  url: string
+  description?: string
+}
+
+interface ArtefactsConfig {
+  items: ArtefactItem[]
+}
+
 interface WebUiConfig {
   appTitle: string
   header: HeaderConfig
+  artefacts: ArtefactsConfig
 }
 
 const webUiConfig: WebUiConfig = {
@@ -686,9 +703,19 @@ const webUiConfig: WebUiConfig = {
     homeButton: { tooltip: 'Navigate to dashboard home' },
     docsButton: { text: 'docs', tooltip: 'Open project documentation' },
     boardButton: { text: 'board', tooltip: 'Open GitHub project board' },
+    artefactsButton: { text: 'artefacts', tooltip: 'Download artefacts and releases' },
     menuButton: { tooltip: 'Open settings menu' },
     omniboxPlaceholder: 'search..',
     repoSelectorLabel: 'repos / codebases',
+  },
+  artefacts: {
+    items: [
+      { id: 'workspace', label: 'SmartEM Dev Workspace', url: '#', description: 'Python CLI tool' },
+      { id: 'backend', label: 'SmartEM Backend (Container)', url: '#', description: 'Docker container image' },
+      { id: 'agent', label: 'SmartEM Agent (Win10)', url: '#', description: 'Windows 10 executable' },
+      { id: 'fsrecorder', label: 'FSRecorder (Win10)', url: '#', description: 'Windows 10 executable' },
+      { id: 'frontend', label: 'SmartEM Frontend', url: '#', description: 'Web UI package' },
+    ],
   },
 }
 
