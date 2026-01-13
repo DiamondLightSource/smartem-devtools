@@ -83,10 +83,11 @@ def setup_claude_config(
     claude_md_target = workspace_path / "CLAUDE.md"
 
     if claude_md_source.exists() and not claude_md_target.exists():
-        import shutil
-
-        shutil.copy(claude_md_source, claude_md_target)
-        console.print("  [green]Copied CLAUDE.md[/green]")
+        try:
+            os.symlink(str(claude_md_source.resolve()), str(claude_md_target))
+            console.print("  [green]Created symlink: CLAUDE.md[/green]")
+        except OSError as e:
+            console.print(f"  [yellow]Could not create CLAUDE.md symlink: {e}[/yellow]")
     elif claude_md_target.exists():
         console.print("  [dim]CLAUDE.md already exists[/dim]")
 
