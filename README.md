@@ -46,13 +46,6 @@ Opens at http://localhost:5173
 
 Full documentation: <https://DiamondLightSource.github.io/smartem-devtools>
 
-- [Getting Started](https://diamondlightsource.github.io/smartem-devtools/docs/getting-started)
-- [Backend](https://diamondlightsource.github.io/smartem-devtools/docs/backend)
-- [Agent](https://diamondlightsource.github.io/smartem-devtools/docs/agent)
-- [Operations](https://diamondlightsource.github.io/smartem-devtools/docs/operations)
-- [Development](https://diamondlightsource.github.io/smartem-devtools/docs/development)
-- [Decision Records](https://diamondlightsource.github.io/smartem-devtools/docs/decision-records)
-
 ## Contributing
 
 See the [contribution guide](https://diamondlightsource.github.io/smartem-devtools/docs/development/contributing) for development workflow and code standards.
