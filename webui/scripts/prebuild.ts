@@ -4,8 +4,10 @@ import { fileURLToPath } from 'node:url'
 
 // Sync documentation from docs/ to webui/src/docs/
 import { syncDocs } from './generate-mdx-docs.js'
+import { generateNavigation } from './generate-nav-from-docs.js'
 
 syncDocs()
+generateNavigation()
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const projectRoot = resolve(__dirname, '..')

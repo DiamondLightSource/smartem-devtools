@@ -12,28 +12,34 @@ This repository serves as the **index repo** for SmartEM development at Diamond 
 - Developer WebUI for workspace management
 - Core configuration for the multi-repo ecosystem
 
-## How the documentation is structured
-
-Documentation is split into [four categories](https://diataxis.fr), following the Diataxis framework.
+## Documentation Sections
 
 import { CardGrid, DocCard } from '../components/mdx'
-import DirectionsWalk from '@mui/icons-material/DirectionsWalk'
-import Directions from '@mui/icons-material/Directions'
-import Info from '@mui/icons-material/Info'
+import Storage from '@mui/icons-material/Storage'
+import Memory from '@mui/icons-material/Memory'
+import Cloud from '@mui/icons-material/Cloud'
+import Code from '@mui/icons-material/Code'
+import Architecture from '@mui/icons-material/Architecture'
 import MenuBook from '@mui/icons-material/MenuBook'
 
 <CardGrid columns={2}>
-  <DocCard title="Tutorials" href="/docs/tutorials/installation" icon={<DirectionsWalk />}>
-    Tutorials for installation and typical usage. New users start here.
+  <DocCard title="Getting Started" href="/docs/getting-started" icon={<MenuBook />}>
+    Installation, setup, and first steps for new developers.
   </DocCard>
-  <DocCard title="How-To Guides" href="/docs/how-to" icon={<Directions />}>
-    Practical step-by-step guides for the more experienced user.
+  <DocCard title="Backend" href="/docs/backend" icon={<Storage />}>
+    API server, database, and HTTP client documentation.
   </DocCard>
-  <DocCard title="Explanations" href="/docs/explanations" icon={<Info />}>
-    Explanations of how it works and why it works that way.
+  <DocCard title="Agent" href="/docs/agent" icon={<Memory />}>
+    EPU workstation agent deployment and configuration.
   </DocCard>
-  <DocCard title="Reference" href="/docs/reference" icon={<MenuBook />}>
-    Technical reference material including APIs and release notes.
+  <DocCard title="Operations" href="/docs/operations" icon={<Cloud />}>
+    Containerization, Kubernetes, and deployment guides.
+  </DocCard>
+  <DocCard title="Development" href="/docs/development" icon={<Code />}>
+    Contributing, tooling, and development workflows.
+  </DocCard>
+  <DocCard title="Decision Records" href="/docs/decision-records" icon={<Architecture />}>
+    Architecture decisions and technical explanations.
   </DocCard>
 </CardGrid>
 
