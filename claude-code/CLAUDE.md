@@ -279,3 +279,11 @@ Refer to `claude-config/smartem-decisions/REPO-GUIDELINES.md` for:
 
 - Follow FandanGO plugin conventions
 - Reference peer plugins in repos/FragmentScreen/ for patterns
+
+---
+
+## Git Commit Guidelines
+
+- **No Claude attribution**: Do NOT add `Co-Authored-By: Claude` or any similar attribution lines to commit messages. Commits should appear as normal developer commits.
+- Write clear, concise commit messages following conventional commits format when appropriate (feat, fix, docs, refactor, etc.)
+- Focus on the "why" not the "what" in commit body
