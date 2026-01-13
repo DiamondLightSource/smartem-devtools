@@ -1,42 +1,37 @@
+[![Built with Claude Code](https://img.shields.io/badge/Built%20with-Claude%20Code-6366f1?logo=claude)](https://claude.ai/code)
+
 # smartem-devtools
 
 Developer tooling, documentation, and workspace configuration for the SmartEM multi-repo ecosystem.
 
-## Overview
+## Quick Links
 
-This repository serves as the **index repo** for SmartEM development at Diamond Light Source. It aggregates:
+Source          | <https://github.com/DiamondLightSource/smartem-devtools>
+:---:           | :---:
+Documentation   | <https://DiamondLightSource.github.io/smartem-devtools>
+Project Board   | <https://github.com/orgs/DiamondLightSource/projects/51/views/1>
 
-- Developer documentation and how-to guides
-- Architecture Decision Records (ADRs)
-- Claude Code configuration for AI-assisted development
-- Developer WebUI for workspace management
-- Core configuration for the multi-repo ecosystem
+## What's Included
 
-## Repository Structure
+- **docs/**: Central documentation for all SmartEM repositories
+- **webui/**: Developer dashboard (React/Vite)
+- **claude-code/**: AI-assisted development configuration
+- **core/**: Shared TypeScript configuration
+- **packages/smartem-workspace/**: CLI tool for workspace setup
 
+## Quick Start
+
+```bash
+# Set up complete development environment
+uvx smartem-workspace init --preset smartem-core
+
+# Run developer dashboard
+cd webui
+npm install
+npm run dev
 ```
-smartem-devtools/
-├── docs/                    # Developer documentation
-│   ├── how-to/              # Step-by-step guides
-│   ├── tutorials/           # Getting started tutorials
-│   ├── explanations/        # Architecture and design docs
-│   │   └── decisions/       # ADRs (Architecture Decision Records)
-│   ├── reference/           # CLI and API reference
-│   └── api/                 # OpenAPI specs (SmartEM, Athena)
-├── core/                    # TypeScript workspace config
-│   ├── repos-and-refs.ts    # Repository definitions and URLs
-│   ├── microscope-list.ts   # Microscope configuration
-│   ├── webui-config.ts      # WebUI configuration
-│   └── github-labels-config.ts
-├── webui/                   # Developer dashboard (React/Vite)
-├── claude-code/             # Claude Code configuration
-│   ├── ARCHITECTURE.md      # System architecture overview
-│   ├── shared/skills/       # Cross-repo skills
-│   ├── smartem-decisions/   # Backend repo config
-│   ├── smartem-frontend/    # Frontend repo config
-│   └── fandango-cryoem-dls/ # FandanGO plugin config
-└── README.md
-```
+
+Opens at http://localhost:5173
 
 ## Related Repositories
 
@@ -47,101 +42,20 @@ smartem-devtools/
 | [fandanGO-cryoem-dls](https://github.com/DiamondLightSource/fandanGO-cryoem-dls) | ARIA deposition plugin |
 | [cryoem-services](https://github.com/DiamondLightSource/cryoem-services) | Processing pipeline (reference) |
 
-## Quick Start
+## Documentation
 
-### smartem-workspace CLI
+Full documentation: <https://DiamondLightSource.github.io/smartem-devtools>
 
-Automated workspace setup for SmartEM development:
-
-```bash
-# Set up complete development environment
-uvx smartem-workspace init --preset smartem-core
-
-# Or just this repository and docs
-uvx smartem-workspace init --preset minimal
-```
-
-See [smartem-workspace documentation](packages/smartem-workspace/README.md) for details.
-
-### Developer WebUI
-
-```bash
-cd webui
-npm install
-npm run dev
-```
-
-Opens at http://localhost:5173
-
-### Documentation
-
-Documentation is built as part of the webui and published to GitHub Pages.
-
-```bash
-# Build locally
-cd webui
-npm install
-npm run build
-```
-
-View at: https://diamondlightsource.github.io/smartem-devtools/
-
-## Claude Code Configuration
-
-The `claude-code/` directory contains configuration for AI-assisted development across the SmartEM workspace:
-
-- **Skills**: Reusable capabilities (database-admin, devops, git, github, technical-writer)
-- **Repo guidelines**: Code standards and workflows per repository
-- **Architecture docs**: System design and integration points
-
-### Setting up Claude Code
-
-When working in the ERIC multi-repo workspace:
-
-1. Symlink skills to `.claude/skills/` at workspace root
-2. Reference `claude-code/ARCHITECTURE.md` for system context
-3. Use repo-specific guidelines for code standards
-
-## Documentation Structure
-
-Following the [Diataxis](https://diataxis.fr/) framework:
-
-| Type | Purpose | Location |
-|------|---------|----------|
-| **Tutorials** | Learning-oriented | `docs/tutorials/` |
-| **How-to guides** | Task-oriented | `docs/how-to/` |
-| **Explanations** | Understanding-oriented | `docs/explanations/` |
-| **Reference** | Information-oriented | `docs/reference/` |
-
-## Architecture Decision Records
-
-ADRs document significant technical decisions:
-
-| ADR | Title |
-|-----|-------|
-| 0001 | Record architecture decisions |
-| 0002 | Switched to python-copier-template (superseded by ADR-0011) |
-| 0003 | Message queue message grouping |
-| 0004 | Zocalo dependency-free |
-| 0005 | detect-secrets for secret scanning |
-| 0006 | Sealed secrets for Kubernetes |
-| 0007 | Eliminate SmartEM API circular dependency |
-| 0008 | Backend to agent communication architecture |
-| 0009 | Commit generated route tree (smartem-frontend) |
-| 0011 | Remove python-copier-template |
+- [Getting Started](https://diamondlightsource.github.io/smartem-devtools/docs/getting-started)
+- [Backend](https://diamondlightsource.github.io/smartem-devtools/docs/backend)
+- [Agent](https://diamondlightsource.github.io/smartem-devtools/docs/agent)
+- [Operations](https://diamondlightsource.github.io/smartem-devtools/docs/operations)
+- [Development](https://diamondlightsource.github.io/smartem-devtools/docs/development)
+- [Decision Records](https://diamondlightsource.github.io/smartem-devtools/docs/decision-records)
 
 ## Contributing
 
-- Use British English in documentation
-- No emojis in code or docs (Windows build compatibility)
-- Follow existing patterns in `claude-code/` for new skills
-- ADRs for significant architectural decisions
-
-## Links
-
-- [Documentation](https://diamondlightsource.github.io/smartem-decisions/)
-- [Project Board](https://github.com/orgs/DiamondLightSource/projects/51/views/1)
-- [SmartEM Backend](https://github.com/DiamondLightSource/smartem-decisions)
+See the [contribution guide](https://diamondlightsource.github.io/smartem-devtools/docs/development/contributing) for development workflow and code standards.
 
 ## Licence
 
