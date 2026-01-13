@@ -1,3 +1,4 @@
+export { ArtefactsMenu } from './ArtefactsMenu'
 export { DocsButton } from './DocsButton'
 export { Header } from './Header'
 export { LogoHomeButton } from './LogoHomeButton'
