@@ -52,14 +52,19 @@ def load_from_file(path: Path) -> dict | None:
         return None
 
 
-def load_config(local_path: Path | None = None) -> ReposConfig | None:
+def load_config(local_path: Path | None = None, offline: bool = False) -> ReposConfig | None:
     """
     Load workspace configuration.
 
     Strategy:
     1. If local_path provided, use that
-    2. Try network (GitHub raw)
-    3. Fall back to bundled config
+    2. If offline, use bundled config
+    3. Try network (GitHub raw)
+    4. Fall back to bundled config
+
+    Args:
+        local_path: Path to local config file
+        offline: Skip network fetch, use bundled config
 
     Returns:
         ReposConfig if successful, None otherwise
@@ -69,6 +74,9 @@ def load_config(local_path: Path | None = None) -> ReposConfig | None:
     if local_path:
         console.print(f"[dim]Loading config from: {local_path}[/dim]")
         config_dict = load_from_file(local_path)
+    elif offline:
+        console.print("[dim]Using bundled config (offline mode)[/dim]")
+        config_dict = load_from_bundled()
     else:
         console.print("[dim]Fetching latest config from GitHub...[/dim]")
         config_dict = load_from_network()
