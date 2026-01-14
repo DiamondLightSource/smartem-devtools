@@ -2,11 +2,15 @@
 
 import json
 import os
+import shutil
+import subprocess
+import sys
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
 from typing import Literal
 
+import httpx
 from rich.console import Console
 
 from smartem_workspace.config.schema import ReposConfig
@@ -20,6 +24,7 @@ class CheckScope(str, Enum):
     CLAUDE = "claude"
     REPOS = "repos"
     SERENA = "serena"
+    PREREQS = "prereqs"
 
 
 @dataclass
@@ -105,6 +110,82 @@ def check_json_valid(file_path: Path, name: str) -> CheckResult:
         return CheckResult(name, "ok", "Valid JSON")
     except json.JSONDecodeError as e:
         return CheckResult(name, "error", f"Invalid JSON: {e}")
+
+
+def check_git_prerequisite() -> CheckResult:
+    """Check git is available and get version."""
+    git_path = shutil.which("git")
+    if not git_path:
+        return CheckResult("git", "error", "Not found in PATH")
+
+    try:
+        result = subprocess.run(
+            ["git", "--version"],
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        if result.returncode == 0:
+            version = result.stdout.strip()
+            return CheckResult("git", "ok", version)
+        return CheckResult("git", "error", "Failed to get version")
+    except (subprocess.TimeoutExpired, FileNotFoundError):
+        return CheckResult("git", "error", "Failed to execute")
+
+
+def check_python_version() -> CheckResult:
+    """Check Python version is 3.11+."""
+    version = sys.version_info
+    version_str = f"{version.major}.{version.minor}.{version.micro}"
+
+    if version.major == 3 and version.minor >= 11:
+        return CheckResult("Python", "ok", f"{version_str} (3.11+ required)")
+
+    return CheckResult("Python", "error", f"{version_str} (3.11+ required)")
+
+
+def check_uv_available() -> CheckResult:
+    """Check uv is available (warning if missing, not error)."""
+    uv_path = shutil.which("uv")
+    if not uv_path:
+        return CheckResult("uv", "warning", "Not found (recommended for installation)")
+
+    try:
+        result = subprocess.run(
+            ["uv", "--version"],
+            capture_output=True,
+            text=True,
+            timeout=5,
+        )
+        if result.returncode == 0:
+            version = result.stdout.strip()
+            return CheckResult("uv", "ok", version)
+        return CheckResult("uv", "warning", "Found but failed to get version")
+    except (subprocess.TimeoutExpired, FileNotFoundError):
+        return CheckResult("uv", "warning", "Found but failed to execute")
+
+
+def check_network_connectivity() -> CheckResult:
+    """Check can reach GitHub."""
+    try:
+        with httpx.Client(timeout=5.0) as client:
+            response = client.head("https://github.com")
+            if response.status_code < 400:
+                return CheckResult("Network", "ok", "GitHub reachable")
+            return CheckResult("Network", "warning", f"GitHub returned {response.status_code}")
+    except httpx.RequestError:
+        return CheckResult("Network", "warning", "Cannot reach GitHub (offline mode available)")
+
+
+def run_prereqs_checks() -> CheckReport:
+    """Run all prerequisite checks."""
+    results = [
+        check_git_prerequisite(),
+        check_python_version(),
+        check_uv_available(),
+        check_network_connectivity(),
+    ]
+    return CheckReport("prerequisites", results)
 
 
 def run_claude_checks(workspace_path: Path, config: ReposConfig) -> CheckReport:
@@ -202,19 +283,22 @@ def run_repos_checks(workspace_path: Path, config: ReposConfig) -> CheckReport:
 
 
 def run_checks(
-    workspace_path: Path,
-    config: ReposConfig,
+    workspace_path: Path | None,
+    config: ReposConfig | None,
     scope: CheckScope = CheckScope.ALL,
 ) -> list[CheckReport]:
     reports = []
 
-    if scope in (CheckScope.ALL, CheckScope.CLAUDE):
+    if scope in (CheckScope.ALL, CheckScope.PREREQS):
+        reports.append(run_prereqs_checks())
+
+    if scope in (CheckScope.ALL, CheckScope.CLAUDE) and workspace_path and config:
         reports.append(run_claude_checks(workspace_path, config))
 
-    if scope in (CheckScope.ALL, CheckScope.SERENA):
+    if scope in (CheckScope.ALL, CheckScope.SERENA) and workspace_path:
         reports.append(run_serena_checks(workspace_path))
 
-    if scope in (CheckScope.ALL, CheckScope.REPOS):
+    if scope in (CheckScope.ALL, CheckScope.REPOS) and workspace_path and config:
         reports.append(run_repos_checks(workspace_path, config))
 
     return reports
