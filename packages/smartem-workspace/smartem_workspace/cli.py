@@ -11,6 +11,7 @@ from smartem_workspace.commands.check import (
     apply_fixes,
     print_report,
     run_checks,
+    run_prereqs_checks,
 )
 from smartem_workspace.commands.sync import print_sync_results, sync_all_repos
 from smartem_workspace.config.loader import load_config
@@ -51,11 +52,24 @@ def init(
         bool,
         typer.Option("--skip-serena", help="Skip Serena MCP setup"),
     ] = False,
+    skip_prereqs: Annotated[
+        bool,
+        typer.Option("--skip-prereqs", help="Skip prerequisites check"),
+    ] = False,
 ) -> None:
     """Initialize a new SmartEM workspace."""
-    workspace_path = path or Path.cwd()
-
     console.print("[bold blue]SmartEM Workspace Setup[/bold blue]")
+
+    # Check prerequisites first
+    if not skip_prereqs:
+        prereqs_report = run_prereqs_checks()
+        print_report(prereqs_report)
+        if prereqs_report.has_errors:
+            console.print("\n[red]Prerequisites check failed. Fix the errors above before continuing.[/red]")
+            raise typer.Exit(1)
+        console.print()
+
+    workspace_path = path or Path.cwd()
     console.print(f"Target: {workspace_path.absolute()}")
 
     config = load_config()
@@ -78,7 +92,7 @@ def init(
 def check(
     scope: Annotated[
         str | None,
-        typer.Option("--scope", "-s", help="Check scope: claude, repos, serena, or all"),
+        typer.Option("--scope", "-s", help="Check scope: prereqs, claude, repos, serena, or all"),
     ] = None,
     fix: Annotated[
         bool,
@@ -94,26 +108,31 @@ def check(
     ] = False,
 ) -> None:
     """Verify workspace setup and optionally repair issues."""
-    workspace_path = path or find_workspace_root()
-    if workspace_path is None:
-        console.print("[red]Could not find workspace root. Run from within a workspace or specify --path.[/red]")
-        raise typer.Exit(1)
-
-    config = load_config(offline=offline)
-    if config is None:
-        console.print("[red]Failed to load configuration[/red]")
-        raise typer.Exit(1)
-
     check_scope = CheckScope.ALL
     if scope:
         try:
             check_scope = CheckScope(scope.lower())
         except ValueError:
-            console.print(f"[red]Invalid scope: {scope}. Use: claude, repos, serena, or all[/red]")
+            console.print(f"[red]Invalid scope: {scope}. Use: prereqs, claude, repos, serena, or all[/red]")
             raise typer.Exit(1) from None
 
-    console.print(f"[bold]Checking workspace at {workspace_path}...[/bold]")
-    reports = run_checks(workspace_path, config, check_scope)
+    # For prereqs-only check, don't require workspace or config
+    if check_scope == CheckScope.PREREQS:
+        console.print("[bold]Checking prerequisites...[/bold]")
+        reports = run_checks(None, None, check_scope)
+    else:
+        workspace_path = path or find_workspace_root()
+        if workspace_path is None:
+            console.print("[red]Could not find workspace root. Run from within a workspace or specify --path.[/red]")
+            raise typer.Exit(1)
+
+        config = load_config(offline=offline)
+        if config is None:
+            console.print("[red]Failed to load configuration[/red]")
+            raise typer.Exit(1)
+
+        console.print(f"[bold]Checking workspace at {workspace_path}...[/bold]")
+        reports = run_checks(workspace_path, config, check_scope)
 
     for report in reports:
         print_report(report)
@@ -131,16 +150,16 @@ def check(
             parts.append(f"[yellow]{total_warnings} warning(s)[/yellow]")
         console.print(f"Summary: {', '.join(parts)}")
 
-        if fix and total_fixable:
+        if fix and total_fixable and check_scope != CheckScope.PREREQS:
             console.print("\n[bold]Applying fixes...[/bold]")
             fixed, failed = apply_fixes(workspace_path, reports)
             console.print(f"\nFixed {fixed} issue(s), {failed} failed")
             if failed:
                 raise typer.Exit(1)
-        elif total_fixable and not fix:
+        elif total_fixable and not fix and check_scope != CheckScope.PREREQS:
             console.print(f"\n[dim]{total_fixable} issue(s) can be fixed with --fix[/dim]")
             raise typer.Exit(1)
-        else:
+        elif total_errors:
             raise typer.Exit(1)
     else:
         console.print("[green]All checks passed![/green]")
