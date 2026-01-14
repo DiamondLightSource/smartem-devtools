@@ -1,31 +1,49 @@
 version: 2
 updates:
-  # GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+    labels:
+      - "admin"
+      - "devops"
     groups:
       actions:
         patterns:
           - "*"
 
-  # npm (webui)
   - package-ecosystem: "npm"
     directory: "/webui"
     schedule:
       interval: "weekly"
+    labels:
+      - "admin"
+      - "devops"
     groups:
       npm-minor:
         update-types:
           - "minor"
           - "patch"
 
-  # pip (docs)
+  - package-ecosystem: "npm"
+    directory: "/claude-code/smartem-frontend/skills/playwright-skill"
+    schedule:
+      interval: "weekly"
+    labels:
+      - "admin"
+      - "devops"
+    groups:
+      playwright-skill:
+        patterns:
+          - "*"
+
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
       interval: "weekly"
+    labels:
+      - "admin"
+      - "devops"
     groups:
       pip:
         patterns:
