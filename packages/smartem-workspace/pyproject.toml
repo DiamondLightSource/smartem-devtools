@@ -44,7 +44,7 @@ smartem-workspace = "smartem_workspace.cli:app"
 
 [project.urls]
 Homepage = "https://github.com/DiamondLightSource/smartem-devtools"
-Documentation = "https://diamondlightsource.github.io/smartem-decisions/"
+Documentation = "https://diamondlightsource.github.io/smartem-devtools/"
 Repository = "https://github.com/DiamondLightSource/smartem-devtools"
 Issues = "https://github.com/DiamondLightSource/smartem-devtools/issues"
 
