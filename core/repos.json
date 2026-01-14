@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "version": "1.0.0",
   "links": {
-    "docs": "https://diamondlightsource.github.io/smartem-decisions/",
+    "docs": "https://diamondlightsource.github.io/smartem-devtools/",
     "projectBoard": "https://github.com/orgs/DiamondLightSource/projects/51/views/1"
   },
   "presets": {
