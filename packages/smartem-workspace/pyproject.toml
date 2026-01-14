@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "smartem-workspace"
-version = "0.2.0"
+version = "0.2.1"
 description = "CLI tool to automate SmartEM multi-repo workspace setup"
 readme = "README.md"
 license = "Apache-2.0"
@@ -44,7 +44,7 @@ smartem-workspace = "smartem_workspace.cli:app"
 
 [project.urls]
 Homepage = "https://github.com/DiamondLightSource/smartem-devtools"
-Documentation = "https://diamondlightsource.github.io/smartem-decisions/"
+Documentation = "https://diamondlightsource.github.io/smartem-devtools/"
 Repository = "https://github.com/DiamondLightSource/smartem-devtools"
 Issues = "https://github.com/DiamondLightSource/smartem-devtools/issues"
 
