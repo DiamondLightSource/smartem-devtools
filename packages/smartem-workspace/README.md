@@ -44,20 +44,44 @@ smartem-workspace init --preset full --no-interactive
 | `aria-reference` | ARIA ecosystem repos for reference |
 | `minimal` | Just smartem-devtools (workspace setup only) |
 
+### Verify workspace setup
+
+```bash
+# Check all configuration
+smartem-workspace check
+
+# Check specific scope
+smartem-workspace check --scope claude
+smartem-workspace check --scope repos
+smartem-workspace check --scope serena
+
+# Auto-repair fixable issues (broken symlinks, missing dirs)
+smartem-workspace check --fix
+```
+
+### Sync repositories
+
+```bash
+# Pull latest from all cloned repos
+smartem-workspace sync
+
+# Preview what would be pulled
+smartem-workspace sync --dry-run
+```
+
+Sync skips repos with uncommitted changes or not on main/master branch.
+
 ### Other commands
 
 ```bash
-# Sync existing repos (git pull)
-smartem-workspace sync
-
-# Show workspace status
+# Show workspace status (alias for check)
 smartem-workspace status
 
-# Add a single repo
+# Add a single repo (not yet implemented)
 smartem-workspace add DiamondLightSource/smartem-frontend
 ```
 
-### Options
+### Init options
 
 ```
 --path PATH         Target directory (default: current directory)
@@ -66,6 +90,20 @@ smartem-workspace add DiamondLightSource/smartem-frontend
 --ssh               Use SSH URLs (default: HTTPS)
 --skip-claude       Skip Claude Code setup
 --skip-serena       Skip Serena MCP setup
+```
+
+### Check options
+
+```
+--scope SCOPE       Check scope: claude, repos, serena, or all (default: all)
+--fix               Attempt to fix issues (recreate symlinks, dirs)
+--offline           Use bundled config instead of fetching from GitHub
+```
+
+### Sync options
+
+```
+--dry-run, -n       Show what would be done without making changes
 ```
 
 ## What it sets up
