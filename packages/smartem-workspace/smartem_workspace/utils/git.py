@@ -68,3 +68,75 @@ def has_uncommitted_changes(repo_path: Path) -> bool:
     if returncode == 0:
         return bool(stdout.strip())
     return False
+
+
+def fetch_remote(repo_path: Path, remote: str = "origin") -> bool:
+    """
+    Fetch latest changes from remote.
+
+    Returns:
+        True if successful
+    """
+    returncode, _, _ = run_git_command(
+        ["fetch", remote],
+        cwd=repo_path,
+        timeout=60,
+    )
+    return returncode == 0
+
+
+def get_commits_behind(repo_path: Path, remote: str = "origin") -> int:
+    """
+    Get the number of commits the local branch is behind the remote.
+
+    Returns:
+        Number of commits behind, or 0 if up to date or on error
+    """
+    branch = get_current_branch(repo_path)
+    if not branch:
+        return 0
+
+    returncode, stdout, _ = run_git_command(
+        ["rev-list", "--count", f"HEAD..{remote}/{branch}"],
+        cwd=repo_path,
+    )
+    if returncode == 0:
+        try:
+            return int(stdout.strip())
+        except ValueError:
+            return 0
+    return 0
+
+
+def get_commits_ahead(repo_path: Path, remote: str = "origin") -> int:
+    """
+    Get the number of commits the local branch is ahead of the remote.
+
+    Returns:
+        Number of commits ahead, or 0 if up to date or on error
+    """
+    branch = get_current_branch(repo_path)
+    if not branch:
+        return 0
+
+    returncode, stdout, _ = run_git_command(
+        ["rev-list", "--count", f"{remote}/{branch}..HEAD"],
+        cwd=repo_path,
+    )
+    if returncode == 0:
+        try:
+            return int(stdout.strip())
+        except ValueError:
+            return 0
+    return 0
+
+
+def has_remote(repo_path: Path, remote: str = "origin") -> bool:
+    """Check if a repository has the specified remote configured."""
+    returncode, stdout, _ = run_git_command(
+        ["remote"],
+        cwd=repo_path,
+    )
+    if returncode == 0:
+        return remote in stdout.split()
+    return False
