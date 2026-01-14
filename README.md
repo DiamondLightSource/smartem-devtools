@@ -1,4 +1,5 @@
 [![Built with Claude Code](https://img.shields.io/badge/Built%20with-Claude%20Code-6366f1?logo=claude)](https://claude.ai/code)
+[![PyPI - smartem-workspace](https://img.shields.io/pypi/v/smartem-workspace?label=smartem-workspace)](https://pypi.org/project/smartem-workspace/)
 
 # smartem-devtools
 
