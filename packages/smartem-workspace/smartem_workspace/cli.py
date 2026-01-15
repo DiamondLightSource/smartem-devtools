@@ -11,10 +11,11 @@ from smartem_workspace.commands.check import (
     apply_fixes,
     print_report,
     run_checks,
-    run_prereqs_checks,
+    run_dev_requirements_checks,
 )
+from smartem_workspace.commands.claude import setup as claude_setup_fn
 from smartem_workspace.commands.sync import print_sync_results, sync_all_repos
-from smartem_workspace.config.loader import load_config
+from smartem_workspace.config.loader import load_claude_code_config, load_config
 from smartem_workspace.setup.bootstrap import bootstrap_workspace
 from smartem_workspace.utils.paths import find_workspace_root
 
@@ -23,7 +24,48 @@ app = typer.Typer(
     help="CLI tool to automate SmartEM multi-repo workspace setup",
     no_args_is_help=True,
 )
+
+claude_app = typer.Typer(
+    name="claude",
+    help="Claude Code integration commands",
+    no_args_is_help=True,
+)
+app.add_typer(claude_app, name="claude")
+
 console = Console()
+
+
+class CliState:
+    """Global CLI state for color and interactivity settings."""
+
+    no_color: bool = False
+    plain: bool = False
+
+
+cli_state = CliState()
+
+
+def get_console() -> Console:
+    """Get a console instance respecting global color settings."""
+    if cli_state.no_color or cli_state.plain:
+        return Console(color_system=None)
+    return console
+
+
+@app.callback()
+def main(
+    no_color: Annotated[
+        bool,
+        typer.Option("--no-color", help="Disable colored output"),
+    ] = False,
+    plain: Annotated[
+        bool,
+        typer.Option("--plain", help="Plain mode: no color, no interactive prompts"),
+    ] = False,
+) -> None:
+    """SmartEM workspace CLI tool."""
+    cli_state.no_color = no_color
+    cli_state.plain = plain
 
 
 @app.command()
@@ -44,47 +86,58 @@ def init(
         bool,
         typer.Option("--ssh", help="Use SSH URLs instead of HTTPS"),
     ] = False,
-    skip_claude: Annotated[
+    with_claude: Annotated[
         bool,
-        typer.Option("--skip-claude", help="Skip Claude Code setup"),
+        typer.Option("--with-claude", help="Enable Claude Code integration setup"),
     ] = False,
     skip_serena: Annotated[
         bool,
         typer.Option("--skip-serena", help="Skip Serena MCP setup"),
     ] = False,
-    skip_prereqs: Annotated[
+    skip_dev_requirements: Annotated[
         bool,
-        typer.Option("--skip-prereqs", help="Skip prerequisites check"),
+        typer.Option("--skip-dev-requirements", help="Skip developer requirements check"),
     ] = False,
 ) -> None:
     """Initialize a new SmartEM workspace."""
-    console.print("[bold blue]SmartEM Workspace Setup[/bold blue]")
+    out = get_console()
+    out.print("[bold blue]SmartEM Workspace Setup[/bold blue]")
 
-    # Check prerequisites first
-    if not skip_prereqs:
-        prereqs_report = run_prereqs_checks()
-        print_report(prereqs_report)
-        if prereqs_report.has_errors:
-            console.print("\n[red]Prerequisites check failed. Fix the errors above before continuing.[/red]")
+    effective_interactive = interactive and not cli_state.plain
+
+    if not skip_dev_requirements:
+        dev_reqs_report = run_dev_requirements_checks()
+        print_report(dev_reqs_report)
+        if dev_reqs_report.has_errors:
+            out.print("\n[red]Developer requirements check failed. Fix the errors above before continuing.[/red]")
             raise typer.Exit(1)
-        console.print()
+        out.print()
 
     workspace_path = path or Path.cwd()
-    console.print(f"Target: {workspace_path.absolute()}")
+    out.print(f"Target: {workspace_path.absolute()}")
 
     config = load_config()
     if config is None:
-        console.print("[red]Failed to load configuration[/red]")
+        out.print("[red]Failed to load configuration[/red]")
         raise typer.Exit(1)
+
+    skip_claude = not with_claude
+    claude_config = None
+    if with_claude:
+        claude_config = load_claude_code_config()
+        if claude_config is None:
+            out.print("[red]Failed to load Claude Code configuration[/red]")
+            raise typer.Exit(1)
 
     bootstrap_workspace(
         config=config,
         workspace_path=workspace_path,
         preset=preset,
-        interactive=interactive,
+        interactive=effective_interactive,
         use_ssh=ssh,
         skip_claude=skip_claude,
         skip_serena=skip_serena,
+        claude_config=claude_config,
     )
 
 
@@ -92,7 +145,7 @@ def init(
 def check(
     scope: Annotated[
         str | None,
-        typer.Option("--scope", "-s", help="Check scope: prereqs, claude, repos, serena, or all"),
+        typer.Option("--scope", "-s", help="Check scope: dev-requirements, claude, repos, serena, or all"),
     ] = None,
     fix: Annotated[
         bool,
@@ -108,31 +161,35 @@ def check(
     ] = False,
 ) -> None:
     """Verify workspace setup and optionally repair issues."""
+    out = get_console()
     check_scope = CheckScope.ALL
     if scope:
         try:
             check_scope = CheckScope(scope.lower())
         except ValueError:
-            console.print(f"[red]Invalid scope: {scope}. Use: prereqs, claude, repos, serena, or all[/red]")
+            out.print(f"[red]Invalid scope: {scope}. Use: dev-requirements, claude, repos, serena, or all[/red]")
             raise typer.Exit(1) from None
 
-    # For prereqs-only check, don't require workspace or config
-    if check_scope == CheckScope.PREREQS:
-        console.print("[bold]Checking prerequisites...[/bold]")
+    if check_scope == CheckScope.DEV_REQUIREMENTS:
+        out.print("[bold]Checking developer requirements...[/bold]")
         reports = run_checks(None, None, check_scope)
     else:
         workspace_path = path or find_workspace_root()
         if workspace_path is None:
-            console.print("[red]Could not find workspace root. Run from within a workspace or specify --path.[/red]")
+            out.print("[red]Could not find workspace root. Run from within a workspace or specify --path.[/red]")
             raise typer.Exit(1)
 
         config = load_config(offline=offline)
         if config is None:
-            console.print("[red]Failed to load configuration[/red]")
+            out.print("[red]Failed to load configuration[/red]")
             raise typer.Exit(1)
 
-        console.print(f"[bold]Checking workspace at {workspace_path}...[/bold]")
-        reports = run_checks(workspace_path, config, check_scope)
+        claude_config = None
+        if check_scope in (CheckScope.ALL, CheckScope.CLAUDE):
+            claude_config = load_claude_code_config(offline=offline)
+
+        out.print(f"[bold]Checking workspace at {workspace_path}...[/bold]")
+        reports = run_checks(workspace_path, config, check_scope, claude_config)
 
     for report in reports:
         print_report(report)
@@ -141,28 +198,28 @@ def check(
     total_warnings = sum(r.has_warnings for r in reports)
     total_fixable = sum(r.fixable_count for r in reports)
 
-    console.print()
+    out.print()
     if total_errors or total_warnings:
         parts = []
         if total_errors:
             parts.append(f"[red]{total_errors} error(s)[/red]")
         if total_warnings:
             parts.append(f"[yellow]{total_warnings} warning(s)[/yellow]")
-        console.print(f"Summary: {', '.join(parts)}")
+        out.print(f"Summary: {', '.join(parts)}")
 
-        if fix and total_fixable and check_scope != CheckScope.PREREQS:
-            console.print("\n[bold]Applying fixes...[/bold]")
+        if fix and total_fixable and check_scope != CheckScope.DEV_REQUIREMENTS:
+            out.print("\n[bold]Applying fixes...[/bold]")
             fixed, failed = apply_fixes(workspace_path, reports)
-            console.print(f"\nFixed {fixed} issue(s), {failed} failed")
+            out.print(f"\nFixed {fixed} issue(s), {failed} failed")
             if failed:
                 raise typer.Exit(1)
-        elif total_fixable and not fix and check_scope != CheckScope.PREREQS:
-            console.print(f"\n[dim]{total_fixable} issue(s) can be fixed with --fix[/dim]")
+        elif total_fixable and not fix and check_scope != CheckScope.DEV_REQUIREMENTS:
+            out.print(f"\n[dim]{total_fixable} issue(s) can be fixed with --fix[/dim]")
             raise typer.Exit(1)
         elif total_errors:
             raise typer.Exit(1)
     else:
-        console.print("[green]All checks passed![/green]")
+        out.print("[green]All checks passed![/green]")
 
 
 @app.command()
@@ -177,18 +234,19 @@ def sync(
     ] = None,
 ) -> None:
     """Pull latest changes from all cloned repositories."""
+    out = get_console()
     workspace_path = path or find_workspace_root()
     if workspace_path is None:
-        console.print("[red]Could not find workspace root. Run from within a workspace or specify --path.[/red]")
+        out.print("[red]Could not find workspace root. Run from within a workspace or specify --path.[/red]")
         raise typer.Exit(1)
 
     config = load_config()
     if config is None:
-        console.print("[red]Failed to load configuration[/red]")
+        out.print("[red]Failed to load configuration[/red]")
         raise typer.Exit(1)
 
-    console.print("[bold blue]SmartEM Workspace Sync[/bold blue]")
-    console.print(f"Workspace: {workspace_path}")
+    out.print("[bold blue]SmartEM Workspace Sync[/bold blue]")
+    out.print(f"Workspace: {workspace_path}")
 
     results = sync_all_repos(workspace_path, config, dry_run=dry_run)
     print_sync_results(results)
@@ -200,7 +258,7 @@ def sync(
     if dry_run:
         would_update = sum(1 for r in results if r.status == "dry-run")
         if would_update:
-            console.print("\n[dim]Run without --dry-run to apply changes[/dim]")
+            out.print("\n[dim]Run without --dry-run to apply changes[/dim]")
 
 
 @app.command()
@@ -209,20 +267,27 @@ def status(
         Path | None,
         typer.Option("--path", "-p", help="Workspace path"),
     ] = None,
+    offline: Annotated[
+        bool,
+        typer.Option("--offline", help="Use bundled config instead of fetching from GitHub"),
+    ] = False,
 ) -> None:
     """Show workspace status (alias for check --scope all)."""
+    out = get_console()
     workspace_path = path or find_workspace_root()
     if workspace_path is None:
-        console.print("[red]Could not find workspace root.[/red]")
+        out.print("[red]Could not find workspace root.[/red]")
         raise typer.Exit(1)
 
-    config = load_config()
+    config = load_config(offline=offline)
     if config is None:
-        console.print("[red]Failed to load configuration[/red]")
+        out.print("[red]Failed to load configuration[/red]")
         raise typer.Exit(1)
 
-    console.print(f"[bold]Workspace Status: {workspace_path}[/bold]")
-    reports = run_checks(workspace_path, config, CheckScope.ALL)
+    claude_config = load_claude_code_config(offline=offline)
+
+    out.print(f"[bold]Workspace Status: {workspace_path}[/bold]")
+    reports = run_checks(workspace_path, config, CheckScope.ALL, claude_config)
 
     for report in reports:
         print_report(report)
@@ -233,8 +298,24 @@ def add(
     repo: Annotated[str, typer.Argument(help="Repository to add (e.g., DiamondLightSource/smartem-frontend)")],
 ) -> None:
     """Add a single repository to the workspace."""
-    console.print(f"[yellow]Not implemented yet: {repo}[/yellow]")
+    out = get_console()
+    out.print(f"[yellow]Not implemented yet: {repo}[/yellow]")
     raise typer.Exit(1)
+
+
+@claude_app.command("setup")
+def claude_setup(
+    path: Annotated[
+        Path | None,
+        typer.Option("--path", "-p", help="Workspace path (auto-detected if not specified)"),
+    ] = None,
+    offline: Annotated[
+        bool,
+        typer.Option("--offline", help="Use bundled config instead of fetching from GitHub"),
+    ] = False,
+) -> None:
+    """Set up Claude Code integration in the workspace."""
+    claude_setup_fn(path=path, offline=offline)
 
 
 if __name__ == "__main__":

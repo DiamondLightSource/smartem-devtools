@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "version": "1.0.0",
-  "description": "Development environment prerequisites for SmartEM workspace",
+  "description": "Developer requirements for SmartEM workspace local environment setup",
   "tools": [
     {
       "name": "git",

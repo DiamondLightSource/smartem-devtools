@@ -98,8 +98,20 @@ class McpConfig(BaseModel):
     serena: McpServerConfig
 
 
+class ClaudeCodeConfig(BaseModel):
+    """Claude Code integration configuration (from claude-code-config.json)."""
+
+    model_config = ConfigDict(populate_by_name=True)
+
+    version: str = "1.0.0"
+    description: str = ""
+    claudeConfig: ClaudeConfig = Field(alias="claudeConfig")
+    serenaConfig: SerenaConfig = Field(alias="serenaConfig")
+    mcpConfig: McpConfig = Field(alias="mcpConfig")
+
+
 class ReposConfig(BaseModel):
-    """Root configuration schema."""
+    """Repository configuration schema (from repos.json)."""
 
     model_config = ConfigDict(populate_by_name=True)
 
@@ -107,9 +119,6 @@ class ReposConfig(BaseModel):
     links: ExternalLinks
     presets: dict[str, Preset]
     organizations: list[Organization]
-    claudeConfig: ClaudeConfig = Field(alias="claudeConfig")
-    serenaConfig: SerenaConfig = Field(alias="serenaConfig")
-    mcpConfig: McpConfig = Field(alias="mcpConfig")
 
     def get_preset(self, name: str) -> Preset | None:
         """Get a preset by name."""
