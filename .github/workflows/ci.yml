@@ -10,6 +10,7 @@ jobs:
   webui:
     name: WebUI Lint & Typecheck
     runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false || github.event_name != 'pull_request'
     defaults:
       run:
         working-directory: webui
