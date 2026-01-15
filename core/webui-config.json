@@ -1,0 +1,17 @@
+{
+  "appTitle": "SmartEM Dev Dashboard",
+  "featureFlags": {
+    "repoStatsInDev": true,
+    "repoStatsInProd": true,
+    "connectionLineStyle": "bezier"
+  },
+  "header": {
+    "homeButton": { "tooltip": "Navigate to dashboard home" },
+    "docsButton": { "text": "docs", "tooltip": "Open project documentation" },
+    "boardButton": { "text": "board", "tooltip": "Open GitHub project board" },
+    "artefactsButton": { "text": "artefacts", "tooltip": "Download artefacts and releases" },
+    "menuButton": { "tooltip": "Open settings menu" },
+    "omniboxPlaceholder": "search..",
+    "repoSelectorLabel": "repos / codebases"
+  }
+}
