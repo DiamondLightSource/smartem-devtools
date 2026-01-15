@@ -82,9 +82,13 @@ def init(
         bool,
         typer.Option("--interactive/--no-interactive", help="Enable/disable interactive prompts"),
     ] = True,
-    ssh: Annotated[
+    git_ssh: Annotated[
         bool,
-        typer.Option("--ssh", help="Use SSH URLs instead of HTTPS"),
+        typer.Option("--git-ssh", help="Force SSH URLs for all repos"),
+    ] = False,
+    git_https: Annotated[
+        bool,
+        typer.Option("--git-https", help="Force HTTPS URLs (skip auto-detection)"),
     ] = False,
     with_claude: Annotated[
         bool,
@@ -129,12 +133,22 @@ def init(
             out.print("[red]Failed to load Claude Code configuration[/red]")
             raise typer.Exit(1)
 
+    # Determine use_ssh: True=force SSH, False=force HTTPS, None=auto-detect
+    use_ssh: bool | None = None
+    if git_ssh and git_https:
+        out.print("[red]Cannot specify both --git-ssh and --git-https[/red]")
+        raise typer.Exit(1)
+    elif git_ssh:
+        use_ssh = True
+    elif git_https:
+        use_ssh = False
+
     bootstrap_workspace(
         config=config,
         workspace_path=workspace_path,
         preset=preset,
         interactive=effective_interactive,
-        use_ssh=ssh,
+        use_ssh=use_ssh,
         skip_claude=skip_claude,
         skip_serena=skip_serena,
         claude_config=claude_config,
