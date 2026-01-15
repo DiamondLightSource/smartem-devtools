@@ -7,13 +7,35 @@ from rich.console import Console
 from rich.progress import Progress, SpinnerColumn, TextColumn
 
 from smartem_workspace.config.schema import Organization, Repository
+from smartem_workspace.utils.git import check_github_ssh_auth
 
 console = Console()
 
 
-def get_repo_url(repo: Repository, use_ssh: bool) -> str:
-    """Get the clone URL based on preference."""
-    return repo.urls.ssh if use_ssh else repo.urls.https
+def get_repo_url(repo: Repository, org: Organization, use_ssh: bool | None, github_ssh_ok: bool | None = None) -> str:
+    """Get the clone URL based on preference or auto-detection.
+
+    Args:
+        repo: Repository to get URL for
+        org: Organization the repo belongs to
+        use_ssh: True=force SSH, False=force HTTPS, None=auto-detect
+        github_ssh_ok: Cached result of GitHub SSH check (for auto-detect)
+
+    Returns:
+        Clone URL (SSH or HTTPS)
+    """
+    # Explicit override
+    if use_ssh is True:
+        return repo.urls.ssh
+    if use_ssh is False:
+        return repo.urls.https
+
+    # Auto-detect mode
+    if org.provider == "github" and github_ssh_ok:
+        return repo.urls.ssh
+
+    # Default to HTTPS (GitLab or GitHub without SSH)
+    return repo.urls.https
 
 
 def get_local_dir(org: Organization) -> str:
@@ -25,10 +47,18 @@ def clone_repo(
     repo: Repository,
     org: Organization,
     repos_dir: Path,
-    use_ssh: bool = False,
+    use_ssh: bool | None = None,
+    github_ssh_ok: bool | None = None,
 ) -> bool:
     """
     Clone a single repository.
+
+    Args:
+        repo: Repository to clone
+        org: Organization the repo belongs to
+        repos_dir: Directory to clone into
+        use_ssh: True=force SSH, False=force HTTPS, None=auto-detect
+        github_ssh_ok: Cached result of GitHub SSH check
 
     Returns:
         True if successful or already exists, False on error
@@ -42,7 +72,7 @@ def clone_repo(
         console.print(f"  [dim]Skipping {repo.name} (already exists)[/dim]")
         return True
 
-    url = get_repo_url(repo, use_ssh)
+    url = get_repo_url(repo, org, use_ssh, github_ssh_ok)
 
     try:
         result = subprocess.run(
@@ -67,7 +97,7 @@ def clone_repo(
 def clone_repos(
     repos: list[tuple[Organization, Repository]],
     workspace_path: Path,
-    use_ssh: bool = False,
+    use_ssh: bool | None = None,
     devtools_first: bool = True,
 ) -> tuple[int, int]:
     """
@@ -76,7 +106,7 @@ def clone_repos(
     Args:
         repos: List of (org, repo) tuples to clone
         workspace_path: Root workspace directory
-        use_ssh: Use SSH URLs instead of HTTPS
+        use_ssh: True=force SSH, False=force HTTPS, None=auto-detect for GitHub
         devtools_first: Clone smartem-devtools first (required for config)
 
     Returns:
@@ -84,6 +114,26 @@ def clone_repos(
     """
     repos_dir = workspace_path / "repos"
     repos_dir.mkdir(parents=True, exist_ok=True)
+
+    # Check SSH auth once at start for auto-detect mode
+    github_ssh_ok: bool | None = None
+    has_github_repos = any(org.provider == "github" for org, _ in repos)
+
+    if use_ssh is None and has_github_repos:
+        console.print()
+        console.print("[dim]Checking GitHub SSH authentication...[/dim]")
+        github_ssh_ok = check_github_ssh_auth()
+        if github_ssh_ok:
+            console.print("[green]SSH authentication successful - using SSH for GitHub repos[/green]")
+        else:
+            console.print("[yellow]SSH not configured for GitHub - using HTTPS (anonymous/read-only)[/yellow]")
+            console.print("[dim]To enable push access, configure SSH keys: https://docs.github.com/en/authentication/connecting-to-github-with-ssh[/dim]")
+    elif use_ssh is True:
+        console.print()
+        console.print("[dim]Using SSH URLs (--git-ssh)[/dim]")
+    elif use_ssh is False:
+        console.print()
+        console.print("[dim]Using HTTPS URLs (--git-https)[/dim]")
 
     success = 0
     failed = 0
@@ -101,7 +151,7 @@ def clone_repos(
             console.print()
             console.print("[bold]Cloning smartem-devtools (required)...[/bold]")
             org, repo = devtools
-            if clone_repo(repo, org, repos_dir, use_ssh):
+            if clone_repo(repo, org, repos_dir, use_ssh, github_ssh_ok):
                 success += 1
             else:
                 failed += 1
@@ -122,7 +172,7 @@ def clone_repos(
 
         for org, repo in repos:
             progress.update(task, description=f"Cloning {org.name}/{repo.name}...")
-            if clone_repo(repo, org, repos_dir, use_ssh):
+            if clone_repo(repo, org, repos_dir, use_ssh, github_ssh_ok):
                 success += 1
             else:
                 failed += 1

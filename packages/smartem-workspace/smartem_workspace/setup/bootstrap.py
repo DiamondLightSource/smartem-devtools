@@ -43,7 +43,7 @@ def bootstrap_workspace(
     workspace_path: Path,
     preset: str | None = None,
     interactive: bool = True,
-    use_ssh: bool = False,
+    use_ssh: bool | None = None,
     skip_claude: bool = False,
     skip_serena: bool = False,
     claude_config: ClaudeCodeConfig | None = None,
@@ -56,7 +56,7 @@ def bootstrap_workspace(
         workspace_path: Target directory for workspace
         preset: Preset name (if provided, skips repo selection)
         interactive: Enable interactive prompts
-        use_ssh: Use SSH URLs for cloning
+        use_ssh: True=force SSH, False=force HTTPS, None=auto-detect for GitHub
         skip_claude: Skip Claude Code setup
         skip_serena: Skip Serena MCP setup
         claude_config: Claude Code configuration (required if skip_claude is False)

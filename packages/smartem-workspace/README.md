@@ -97,11 +97,14 @@ smartem-workspace add DiamondLightSource/smartem-frontend
 --path PATH         Target directory (default: current directory)
 --preset NAME       Use preset: smartem-core, full, aria-reference, minimal
 --no-interactive    Skip prompts, use preset only
---ssh               Use SSH URLs (default: HTTPS)
+--git-ssh           Force SSH URLs for all repos
+--git-https         Force HTTPS URLs (skip auto-detection)
 --with-claude       Enable Claude Code integration setup
 --skip-serena       Skip Serena MCP setup
 --skip-dev-requirements  Skip developer requirements check
 ```
+
+**Git URL auto-detection:** By default, the CLI automatically detects if you have SSH authentication configured for GitHub. If SSH works, repos are cloned via SSH (enabling push); otherwise HTTPS is used (read-only). Use `--git-ssh` or `--git-https` to override.
 
 ### Check options
 
