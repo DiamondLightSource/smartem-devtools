@@ -127,7 +127,9 @@ def clone_repos(
             console.print("[green]SSH authentication successful - using SSH for GitHub repos[/green]")
         else:
             console.print("[yellow]SSH not configured for GitHub - using HTTPS (anonymous/read-only)[/yellow]")
-            console.print("[dim]To enable push access, configure SSH keys: https://docs.github.com/en/authentication/connecting-to-github-with-ssh[/dim]")
+            console.print(
+                "[dim]To enable push access, configure SSH keys: https://docs.github.com/en/authentication/connecting-to-github-with-ssh[/dim]"
+            )
     elif use_ssh is True:
         console.print()
         console.print("[dim]Using SSH URLs (--git-ssh)[/dim]")
