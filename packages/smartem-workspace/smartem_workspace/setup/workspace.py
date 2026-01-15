@@ -36,28 +36,6 @@ def setup_workspace_structure(workspace_path: Path) -> bool:
         else:
             console.print(f"  [dim]{dir_name}/ already exists[/dim]")
 
-    gitignore_path = workspace_path / ".gitignore"
-    if not gitignore_path.exists():
-        gitignore_content = """# Workspace directories (not versioned)
-tmp/
-testdata/
-
-# IDE
-.idea/
-.vscode/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Local Claude settings
-.claude/settings.local.json
-"""
-        gitignore_path.write_text(gitignore_content)
-        console.print("  [green]Created .gitignore[/green]")
-    else:
-        console.print("  [dim].gitignore already exists[/dim]")
-
     console.print("[green]Workspace structure complete[/green]")
     return True
 

@@ -1,4 +1,4 @@
-name: Publish smartem-workspace to PyPI
+name: smartem-workspace CLI tool PyPI package
 
 on:
   push:

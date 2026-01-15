@@ -4,7 +4,7 @@ from pathlib import Path
 
 from rich.console import Console
 
-from smartem_workspace.config.schema import Organization, ReposConfig, Repository
+from smartem_workspace.config.schema import ClaudeCodeConfig, Organization, ReposConfig, Repository
 from smartem_workspace.interactive.prompts import (
     confirm,
     display_selection_summary,
@@ -46,6 +46,7 @@ def bootstrap_workspace(
     use_ssh: bool = False,
     skip_claude: bool = False,
     skip_serena: bool = False,
+    claude_config: ClaudeCodeConfig | None = None,
 ) -> bool:
     """
     Main bootstrap function to set up a SmartEM workspace.
@@ -58,6 +59,7 @@ def bootstrap_workspace(
         use_ssh: Use SSH URLs for cloning
         skip_claude: Skip Claude Code setup
         skip_serena: Skip Serena MCP setup
+        claude_config: Claude Code configuration (required if skip_claude is False)
 
     Returns:
         True if setup completed successfully
@@ -108,8 +110,8 @@ def bootstrap_workspace(
     if failed > 0 and interactive and not confirm("Some repos failed to clone. Continue with setup?"):
         return False
 
-    if not skip_claude:
-        setup_claude_config(config, workspace_path)
+    if not skip_claude and claude_config:
+        setup_claude_config(claude_config, workspace_path)
 
     if not skip_serena:
         project_name = workspace_path.name or "smartem-workspace"

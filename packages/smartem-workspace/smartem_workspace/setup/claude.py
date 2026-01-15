@@ -6,13 +6,13 @@ from pathlib import Path
 
 from rich.console import Console
 
-from smartem_workspace.config.schema import ReposConfig
+from smartem_workspace.config.schema import ClaudeCodeConfig
 
 console = Console()
 
 
 def setup_claude_config(
-    config: ReposConfig,
+    config: ClaudeCodeConfig,
     workspace_path: Path,
 ) -> bool:
     """

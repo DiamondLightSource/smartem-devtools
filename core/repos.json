@@ -358,46 +358,5 @@
         }
       ]
     }
-  ],
-  "claudeConfig": {
-    "skills": [
-      { "name": "database-admin", "path": "claude-code/shared/skills/database-admin" },
-      { "name": "devops", "path": "claude-code/shared/skills/devops" },
-      { "name": "technical-writer", "path": "claude-code/shared/skills/technical-writer" },
-      { "name": "git", "path": "claude-code/shared/skills/git" },
-      { "name": "github", "path": "claude-code/shared/skills/github" },
-      { "name": "ascii-art", "path": "claude-code/shared/skills/ascii-art" },
-      { "name": "playwright-skill", "path": "claude-code/smartem-frontend/skills/playwright-skill" }
-    ],
-    "defaultPermissions": {
-      "allow": [
-        "Bash(git:*)",
-        "Bash(ls:*)",
-        "Bash(cat:*)",
-        "WebSearch",
-        "mcp__serena__*"
-      ]
-    }
-  },
-  "serenaConfig": {
-    "languages": ["typescript", "python"],
-    "encoding": "utf-8",
-    "ignoreAllFilesInGitignore": true,
-    "projectName": "smartem-workspace"
-  },
-  "mcpConfig": {
-    "serena": {
-      "command": "uvx",
-      "args": [
-        "--from",
-        "git+https://github.com/oraios/serena",
-        "serena",
-        "start-mcp-server",
-        "--context",
-        "ide-assistant",
-        "--project",
-        "${PWD}"
-      ]
-    }
-  }
+  ]
 }
