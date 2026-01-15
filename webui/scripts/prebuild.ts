@@ -19,6 +19,7 @@ const configFiles = [
   'repos.json',
   'microscope-list.ts',
   'webui-config.ts',
+  'artefacts.json',
 ]
 
 for (const file of configFiles) {
@@ -33,8 +34,10 @@ const githubLabelsContent = readFileSync(resolve(coreDir, 'github-labels-config.
 const reposJsonContent = readFileSync(resolve(coreDir, 'repos.json'), 'utf-8')
 const microscopeListContent = readFileSync(resolve(coreDir, 'microscope-list.ts'), 'utf-8')
 const webuiConfigContent = readFileSync(resolve(coreDir, 'webui-config.ts'), 'utf-8')
+const artefactsJsonContent = readFileSync(resolve(coreDir, 'artefacts.json'), 'utf-8')
 
 const reposJson = JSON.parse(reposJsonContent)
+const artefactsJson = JSON.parse(artefactsJsonContent)
 
 function generateReposAndRefsFromJson(): string {
   const diamondLightSourceOrg = reposJson.organizations.find(
@@ -118,6 +121,22 @@ const reposAndRefsConfig: ReposAndRefsConfig = {
 }`
 }
 
+function generateArtefactsFromJson(): string {
+  return `interface ArtefactItem {
+  id: string
+  label: string
+  url: string
+  description?: string
+  command?: string
+}
+
+interface ArtefactsConfig {
+  items: ArtefactItem[]
+}
+
+const artefactsConfig: ArtefactsConfig = ${JSON.stringify(artefactsJson, null, 2)}`
+}
+
 const aggregatedContent = `/**
  * AUTO-GENERATED FILE - DO NOT EDIT DIRECTLY
  *
@@ -126,6 +145,7 @@ const aggregatedContent = `/**
  * - core/repos.json (source of truth for repository definitions)
  * - core/microscope-list.ts
  * - core/webui-config.ts
+ * - core/artefacts.json (downloadable build artefacts)
  *
  * Edit the source files in core/ and run 'npm run prebuild' to regenerate.
  */
@@ -155,6 +175,12 @@ ${stripExportsAndComments(microscopeListContent, 'CryoEMInstrument', 'microscope
 ${stripExportsAndComments(webuiConfigContent, 'WebUiConfig', 'webUiConfig')}
 
 // =============================================================================
+// Artefacts Config (generated from artefacts.json)
+// =============================================================================
+
+${generateArtefactsFromJson()}
+
+// =============================================================================
 // Aggregated App Contents
 // =============================================================================
 
@@ -164,6 +190,7 @@ export interface WebUiAppContents {
   microscopes: CryoEMInstrument[]
   config: WebUiConfig
   featureFlags: FeatureFlags
+  artefacts: ArtefactsConfig
 }
 
 export const webUiAppContents: WebUiAppContents = {
@@ -172,6 +199,7 @@ export const webUiAppContents: WebUiAppContents = {
   microscopes: microscopeList,
   config: webUiConfig,
   featureFlags: featureFlags,
+  artefacts: artefactsConfig,
 }
 
 export default webUiAppContents

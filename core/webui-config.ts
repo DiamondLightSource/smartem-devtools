@@ -65,7 +65,6 @@ export interface ArtefactsConfig {
 export interface WebUiConfig {
   appTitle: string
   header: HeaderConfig
-  artefacts: ArtefactsConfig
 }
 
 export const webUiConfig: WebUiConfig = {
@@ -78,15 +77,6 @@ export const webUiConfig: WebUiConfig = {
     menuButton: { tooltip: 'Open settings menu' },
     omniboxPlaceholder: 'search..',
     repoSelectorLabel: 'repos / codebases',
-  },
-  artefacts: {
-    items: [
-      { id: 'workspace', label: 'SmartEM Dev Workspace', url: '#', description: 'Python CLI tool' },
-      { id: 'backend', label: 'SmartEM Backend (Container)', url: '#', description: 'Docker container image' },
-      { id: 'agent', label: 'SmartEM Agent (Win10)', url: '#', description: 'Windows 10 executable' },
-      { id: 'fsrecorder', label: 'FSRecorder (Win10)', url: '#', description: 'Windows 10 executable' },
-      { id: 'frontend', label: 'SmartEM Frontend', url: '#', description: 'Web UI package' },
-    ],
   },
 }
 
