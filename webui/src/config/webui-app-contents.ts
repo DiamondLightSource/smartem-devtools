@@ -6,6 +6,7 @@
  * - core/repos.json (source of truth for repository definitions)
  * - core/microscope-list.ts
  * - core/webui-config.ts
+ * - core/artefacts.json (downloadable build artefacts)
  *
  * Edit the source files in core/ and run 'npm run prebuild' to regenerate.
  */
@@ -694,7 +695,6 @@ interface ArtefactsConfig {
 interface WebUiConfig {
   appTitle: string
   header: HeaderConfig
-  artefacts: ArtefactsConfig
 }
 
 const webUiConfig: WebUiConfig = {
@@ -708,15 +708,62 @@ const webUiConfig: WebUiConfig = {
     omniboxPlaceholder: 'search..',
     repoSelectorLabel: 'repos / codebases',
   },
-  artefacts: {
-    items: [
-      { id: 'workspace', label: 'SmartEM Dev Workspace', url: '#', description: 'Python CLI tool' },
-      { id: 'backend', label: 'SmartEM Backend (Container)', url: '#', description: 'Docker container image' },
-      { id: 'agent', label: 'SmartEM Agent (Win10)', url: '#', description: 'Windows 10 executable' },
-      { id: 'fsrecorder', label: 'FSRecorder (Win10)', url: '#', description: 'Windows 10 executable' },
-      { id: 'frontend', label: 'SmartEM Frontend', url: '#', description: 'Web UI package' },
-    ],
-  },
+}
+
+// =============================================================================
+// Artefacts Config (generated from artefacts.json)
+// =============================================================================
+
+interface ArtefactItem {
+  id: string
+  label: string
+  url: string
+  description?: string
+  command?: string
+}
+
+interface ArtefactsConfig {
+  items: ArtefactItem[]
+}
+
+const artefactsConfig: ArtefactsConfig = {
+  "items": [
+    {
+      "id": "workspace",
+      "label": "SmartEM Dev Workspace",
+      "url": "#",
+      "description": "Python CLI tool",
+      "command": "echo 1"
+    },
+    {
+      "id": "backend",
+      "label": "SmartEM Backend (Container)",
+      "url": "#",
+      "description": "Docker container image",
+      "command": "echo 1"
+    },
+    {
+      "id": "agent",
+      "label": "SmartEM Agent (Win10)",
+      "url": "#",
+      "description": "Windows 10 executable",
+      "command": ""
+    },
+    {
+      "id": "fsrecorder",
+      "label": "FSRecorder (Win10)",
+      "url": "#",
+      "description": "Windows 10 executable",
+      "command": ""
+    },
+    {
+      "id": "frontend",
+      "label": "SmartEM Frontend",
+      "url": "#",
+      "description": "Web UI package",
+      "command": ""
+    }
+  ]
 }
 
 // =============================================================================
@@ -730,6 +777,7 @@ export interface WebUiAppContents {
   config: WebUiConfig
   featureFlags: FeatureFlags
   searchConfig: SearchConfig
+  artefacts: ArtefactsConfig
 }
 
 export const webUiAppContents: WebUiAppContents = {
@@ -739,6 +787,7 @@ export const webUiAppContents: WebUiAppContents = {
   config: webUiConfig,
   featureFlags: featureFlags,
   searchConfig: searchConfig,
+  artefacts: artefactsConfig,
 }
 
 export default webUiAppContents

@@ -1,0 +1,39 @@
+{
+  "items": [
+    {
+      "id": "workspace",
+      "label": "SmartEM Dev Workspace",
+      "url": "#",
+      "description": "Python CLI tool",
+      "command": "echo 1"
+    },
+    {
+      "id": "backend",
+      "label": "SmartEM Backend (Container)",
+      "url": "#",
+      "description": "Docker container image",
+      "command": "echo 1"
+    },
+    {
+      "id": "agent",
+      "label": "SmartEM Agent (Win10)",
+      "url": "#",
+      "description": "Windows 10 executable",
+      "command": ""
+    },
+    {
+      "id": "fsrecorder",
+      "label": "FSRecorder (Win10)",
+      "url": "#",
+      "description": "Windows 10 executable",
+      "command": ""
+    },
+    {
+      "id": "frontend",
+      "label": "SmartEM Frontend",
+      "url": "#",
+      "description": "Web UI package",
+      "command": ""
+    }
+  ]
+}
