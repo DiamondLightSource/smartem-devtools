@@ -19,6 +19,13 @@ uv tool install smartem-workspace
 
 ## Usage
 
+### Global options
+
+```
+--no-color          Disable colored output
+--plain             Plain mode: no color, no interactive prompts
+```
+
 ### Initialize a new workspace
 
 ```bash
@@ -77,6 +84,9 @@ Sync skips repos with uncommitted changes or not on main/master branch.
 # Show workspace status (alias for check)
 smartem-workspace status
 
+# Set up Claude Code integration (after init without --with-claude)
+smartem-workspace claude setup
+
 # Add a single repo (not yet implemented)
 smartem-workspace add DiamondLightSource/smartem-frontend
 ```
@@ -88,14 +98,15 @@ smartem-workspace add DiamondLightSource/smartem-frontend
 --preset NAME       Use preset: smartem-core, full, aria-reference, minimal
 --no-interactive    Skip prompts, use preset only
 --ssh               Use SSH URLs (default: HTTPS)
---skip-claude       Skip Claude Code setup
+--with-claude       Enable Claude Code integration setup
 --skip-serena       Skip Serena MCP setup
+--skip-dev-requirements  Skip developer requirements check
 ```
 
 ### Check options
 
 ```
---scope SCOPE       Check scope: claude, repos, serena, or all (default: all)
+--scope SCOPE       Check scope: dev-requirements, claude, repos, serena, or all (default: all)
 --fix               Attempt to fix issues (recreate symlinks, dirs)
 --offline           Use bundled config instead of fetching from GitHub
 ```
@@ -109,9 +120,9 @@ smartem-workspace add DiamondLightSource/smartem-frontend
 ## What it sets up
 
 1. **Repository clones** - Organized by organization (DiamondLightSource, FragmentScreen, GitlabAriaPHP)
-2. **Claude Code configuration** - Skills, settings, permissions
+2. **Claude Code configuration** (with `--with-claude`) - Skills, settings, permissions
 3. **Serena MCP server** - Semantic code navigation
-4. **Workspace structure** - CLAUDE.md, tmp/, testdata/ directories
+4. **Workspace structure** - tmp/, testdata/ directories
 
 ## Documentation
 
