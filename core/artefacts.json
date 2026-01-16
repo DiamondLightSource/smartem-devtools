@@ -1,38 +1,38 @@
 {
   "items": [
     {
-      "id": "workspace",
-      "label": "SmartEM Dev Workspace",
-      "url": "#",
-      "description": "Python CLI tool",
-      "command": "echo 1"
-    },
-    {
       "id": "backend",
-      "label": "SmartEM Backend (Container)",
-      "url": "#",
-      "description": "Docker container image",
-      "command": "echo 1"
+      "label": "SmartEM Backend",
+      "url": "https://github.com/DiamondLightSource/smartem-decisions/pkgs/container/smartem-decisions",
+      "description": "Docker container image of SmartEM Backend services for use in k8s deploys",
+      "command": "docker pull ghcr.io/diamondlightsource/smartem-decisions:latest"
     },
     {
       "id": "agent",
-      "label": "SmartEM Agent (Win10)",
-      "url": "#",
-      "description": "Windows 10 executable",
-      "command": ""
-    },
-    {
-      "id": "fsrecorder",
-      "label": "FSRecorder (Win10)",
-      "url": "#",
-      "description": "Windows 10 executable",
+      "label": "SmartEM Agent",
+      "url": "https://github.com/DiamondLightSource/smartem-decisions/actions/workflows/build_win_smartem_agent.yml",
+      "description": "SmartEM Agent packaged as a Windows 10 executable (download from workflow artifacts)",
       "command": ""
     },
     {
       "id": "frontend",
       "label": "SmartEM Frontend",
       "url": "#",
-      "description": "Web UI package",
+      "description": "SmartEM Web UI - deployed via backend container, no standalone bundle published",
+      "command": ""
+    },
+    {
+      "id": "workspace",
+      "label": "SmartEM Dev Workspace",
+      "url": "https://pypi.org/project/smartem-workspace/",
+      "description": "CLI tool to scaffold and manage a local development environment",
+      "command": "uvx smartem-workspace --help"
+    },
+    {
+      "id": "fsrecorder",
+      "label": "FSRecorder Util",
+      "url": "https://github.com/DiamondLightSource/smartem-devtools/actions/workflows/build_win_fsrecorder.yml",
+      "description": "FSRecorder Utility packaged as a Windows 10 executable (download from workflow artifacts)",
       "command": ""
     }
   ]
