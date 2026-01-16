@@ -3,7 +3,7 @@
  * GitHub Labels Sync Script
  *
  * Syncs GitHub labels across SmartEM repositories to match the configuration
- * in core/github-labels-config.ts.
+ * in core/github-labels.json.
  *
  * Usage:
  *   npx tsx tools/github/sync-labels.ts --check    # Check conformity (default)
@@ -16,12 +16,12 @@
  */
 
 import { $ } from 'zx'
-import { githubLabelsConfig, type GitHubLabel } from '../../core/github-labels-config.js'
+import { githubLabels, type GitHubLabel } from '../../core/index.js'
 
 // Suppress zx verbose output
 $.verbose = false
 
-const { owner: OWNER, repos: REPO_CONFIGS, typesOfWork, systemComponents } = githubLabelsConfig
+const { owner: OWNER, repos: REPO_CONFIGS, typesOfWork, systemComponents } = githubLabels
 
 interface ExistingLabel {
   name: string
