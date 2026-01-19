@@ -54,22 +54,22 @@ mkdir -p "$TEST_DIR/logs"
 mkdir -p "$EPU_DIR"
 rm -rf "$EPU_DIR"/*
 
-echo "[2/9] Activating virtual environment..."
-source "$SMARTEM_DECISIONS_DIR/.venv/bin/activate"
-
-echo "[3/9] Loading environment variables..."
+echo "[2/9] Loading environment variables..."
 set -a
 source "$WORKSPACE_ROOT/.env.local-test-run"
 set +a
 
-echo "[4/9] Resetting database..."
+# Change to smartem-decisions for uv commands
 cd "$SMARTEM_DECISIONS_DIR"
-python -m smartem_backend.model.database
 
-echo "[5/10] Running database migrations..."
-python -m alembic upgrade head
+echo "[3/9] Resetting database..."
+# Connect to 'postgres' admin database to drop/recreate smartem_db
+POSTGRES_DB=postgres uv run python -m smartem_backend.model.database
 
-echo "[6/10] Checking if port 8000 is free..."
+echo "[4/9] Running database migrations..."
+uv run python -m alembic upgrade head
+
+echo "[5/9] Checking if port 8000 is free..."
 if lsof -ti:8000 >/dev/null 2>&1; then
     echo "ERROR: Port 8000 is already in use!"
     echo "Killing process on port 8000..."
@@ -77,7 +77,8 @@ if lsof -ti:8000 >/dev/null 2>&1; then
     sleep 2
 fi
 
-python -m uvicorn smartem_backend.api_server:app \
+echo "[6/9] Starting API server..."
+uv run python -m uvicorn smartem_backend.api_server:app \
     --host 127.0.0.1 --port 8000 --log-level debug \
     > "$TEST_DIR/logs/api.log" 2>&1 &
 API_PID=$!
@@ -90,12 +91,14 @@ if ! curl -s http://127.0.0.1:8000/health >/dev/null 2>&1; then
 fi
 echo "API started successfully"
 
-python -m smartem_backend.consumer -vv \
+echo "[7/9] Starting consumer..."
+uv run python -m smartem_backend.consumer -vv \
     > "$TEST_DIR/logs/consumer.log" 2>&1 &
 CONSUMER_PID=$!
 sleep 2
 
-python -m smartem_agent watch \
+echo "[8/9] Starting agent..."
+uv run python -m smartem_agent watch \
     --api-url http://localhost:8000 \
     -vv \
     "$EPU_DIR" \
@@ -103,7 +106,8 @@ python -m smartem_agent watch \
 AGENT_PID=$!
 sleep 2
 
-python "$TOOLS_DIR/fsrecorder/fsrecorder.py" replay \
+echo "[9/9] Starting playback..."
+uv run python "$TOOLS_DIR/fsrecorder/fsrecorder.py" replay \
     --max-delay "$MAX_DELAY" \
     "$RECORDING" \
     "$EPU_DIR" \
@@ -123,7 +127,7 @@ echo "  GridSquare directories: $GRIDSQUARES"
 
 echo ""
 echo "Database Counts:"
-python -c "
+uv run python -c "
 import requests
 try:
     acq_response = requests.get('http://127.0.0.1:8000/acquisitions')

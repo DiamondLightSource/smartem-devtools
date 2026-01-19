@@ -80,22 +80,22 @@ for ((i=1; i<=NUM_MICROSCOPES; i++)); do
 done
 
 echo ""
-echo "[2/11] Activating virtual environment..."
-source "$SMARTEM_DECISIONS_DIR/.venv/bin/activate"
-
-echo "[3/11] Loading environment variables..."
+echo "[2/11] Loading environment variables..."
 set -a
 source "$WORKSPACE_ROOT/.env.local-test-run"
 set +a
 
-echo "[4/11] Resetting database..."
+# Change to smartem-decisions for uv commands
 cd "$SMARTEM_DECISIONS_DIR"
-python -m smartem_backend.model.database
 
-echo "[5/11] Running database migrations..."
-python -m alembic upgrade head
+echo "[3/11] Resetting database..."
+# Connect to 'postgres' admin database to drop/recreate smartem_db
+POSTGRES_DB=postgres uv run python -m smartem_backend.model.database
 
-echo "[6/11] Checking if port 8000 is free..."
+echo "[4/11] Running database migrations..."
+uv run python -m alembic upgrade head
+
+echo "[5/11] Checking if port 8000 is free..."
 if lsof -ti:8000 >/dev/null 2>&1; then
     echo "ERROR: Port 8000 is already in use!"
     echo "Killing process on port 8000..."
@@ -103,8 +103,8 @@ if lsof -ti:8000 >/dev/null 2>&1; then
     sleep 2
 fi
 
-echo "[7/11] Starting backend API server..."
-python -m uvicorn smartem_backend.api_server:app \
+echo "[6/11] Starting backend API server..."
+uv run python -m uvicorn smartem_backend.api_server:app \
     --host 127.0.0.1 --port 8000 --log-level debug \
     > "$TEST_DIR/logs/api.log" 2>&1 &
 API_PID=$!
@@ -117,21 +117,21 @@ if ! curl -s http://127.0.0.1:8000/health >/dev/null 2>&1; then
 fi
 echo "API started successfully (PID: $API_PID)"
 
-echo "[8/11] Starting backend consumer..."
-python -m smartem_backend.consumer -vv \
+echo "[7/11] Starting backend consumer..."
+uv run python -m smartem_backend.consumer -vv \
     > "$TEST_DIR/logs/consumer.log" 2>&1 &
 CONSUMER_PID=$!
 sleep 2
 echo "Consumer started (PID: $CONSUMER_PID)"
 
-echo "[9/11] Starting $NUM_MICROSCOPES agent instances..."
+echo "[8/11] Starting $NUM_MICROSCOPES agent instances..."
 for ((i=1; i<=NUM_MICROSCOPES; i++)); do
     agent_id="${AGENT_IDS[$((i-1))]}"
     session_id="${SESSION_IDS[$((i-1))]}"
     epu_dir="${EPU_DIRS[$((i-1))]}"
 
     echo "  Starting agent $i: $agent_id / $session_id"
-    python -m smartem_agent watch \
+    uv run python -m smartem_agent watch \
         --api-url http://localhost:8000 \
         --agent-id "$agent_id" \
         --session-id "$session_id" \
@@ -143,12 +143,12 @@ for ((i=1; i<=NUM_MICROSCOPES; i++)); do
     sleep 1
 done
 
-echo "[10/11] Starting $NUM_MICROSCOPES concurrent playback instances..."
+echo "[9/11] Starting $NUM_MICROSCOPES concurrent playback instances..."
 for ((i=1; i<=NUM_MICROSCOPES; i++)); do
     epu_dir="${EPU_DIRS[$((i-1))]}"
 
     echo "  Starting playback $i to $epu_dir"
-    python "$TOOLS_DIR/fsrecorder/fsrecorder.py" replay \
+    uv run python "$TOOLS_DIR/fsrecorder/fsrecorder.py" replay \
         --max-delay "$MAX_DELAY" \
         "$RECORDING" \
         "$epu_dir" \
@@ -171,7 +171,7 @@ echo "All playback complete. Waiting for agents to finish processing (60 seconds
 sleep 60
 
 echo ""
-echo "[11/11] Collecting test results..."
+echo "[10/11] Collecting test results..."
 echo ""
 echo "===== Test Results ====="
 
@@ -191,7 +191,7 @@ done
 
 echo ""
 echo "Database Counts (per acquisition):"
-python -c "
+uv run python -c "
 import requests
 import sys
 
@@ -228,7 +228,7 @@ except Exception as e:
 
 echo ""
 echo "Agent Session Information:"
-python -c "
+uv run python -c "
 import requests
 import sys
 
@@ -260,7 +260,7 @@ except Exception as e:
 echo ""
 echo "===== Data Separation Verification ====="
 echo ""
-python -c "
+uv run python -c "
 import requests
 import sys
 
@@ -308,6 +308,8 @@ except Exception as e:
     traceback.print_exc()
 "
 
+echo ""
+echo "[11/11] Test Summary"
 echo ""
 echo "===== Test Summary ====="
 echo ""
