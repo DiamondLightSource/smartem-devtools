@@ -5,7 +5,7 @@ set -e
 NAMESPACE="smartem-decisions"
 K8S_ENV_PATH="k8s/environments/development"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 DEPLOY_ENV="${DEPLOY_ENV:-development}"
 
 # Colors for output

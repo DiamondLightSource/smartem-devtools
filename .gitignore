@@ -25,6 +25,7 @@ Thumbs.db
 .env
 .env.local
 .env.*.local
+.env.k8s.*
 .venv/
 venv/
 
