@@ -62,10 +62,6 @@ cd ../smartem-devtools/webui && npm run dev
 # Database migrations
 python -m alembic upgrade head
 python -m alembic revision --autogenerate -m "Description"
-
-# Local Kubernetes operations
-./tools/k8s/dev-k8s.sh up      # Start local k3s cluster with services
-./tools/k8s/dev-k8s.sh down    # Stop cluster and cleanup
 ```
 
 ## Project Architecture

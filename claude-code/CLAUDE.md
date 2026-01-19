@@ -64,7 +64,6 @@ The primary repo of the workspace. Originally the only repo, now the hub of a mu
 **Contains:**
 - Multiple Python packages (backend, agent, common, athena_api, and others - see sub-repo structure)
 - Development documentation (auto-publishes to GitHub Pages)
-- Kubernetes manifests for dev/stage/prod
 - CI/CD pipelines and tooling
 
 **Key concepts:**
@@ -126,6 +125,8 @@ Developer tooling, documentation, and workspace configuration for the SmartEM ec
 - Developer WebUI for workspace management
 - Core TypeScript config for multi-repo management
 - API specs (SmartEM, Athena)
+- Kubernetes manifests for dev/stage/prod (k8s/)
+- K8s development scripts (tools/k8s/)
 
 **Key directories:**
 - `docs/` - Markdown documentation, ADRs, how-to guides (synced to webui as MDX)
