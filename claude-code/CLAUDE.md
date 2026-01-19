@@ -35,6 +35,7 @@ ERIC/
 ├── testdata/             # Unversioned test datasets (read unless instructed otherwise)
 ├── tmp/                  # Scratchpad for simulations, logs, volume mounts, etc.
 ├── claude-config/        # Claude Code customizations (skills, hooks, agents, commands)
+├── .env.local-test-run   # Environment config for E2E tests (connects to local k8s)
 └── CLAUDE.md
 ```
 
@@ -127,12 +128,16 @@ Developer tooling, documentation, and workspace configuration for the SmartEM ec
 - API specs (SmartEM, Athena)
 - Kubernetes manifests for dev/stage/prod (k8s/)
 - K8s development scripts (tools/k8s/)
+- E2E test scripts (tools/e2e/)
+- FSRecorder for EPU filesystem recording/playback (tools/fsrecorder/)
 
 **Key directories:**
 - `docs/` - Markdown documentation, ADRs, how-to guides (synced to webui as MDX)
 - `claude-code/` - Skills, repo guidelines, architecture docs
 - `webui/` - React developer dashboard
 - `core/` - Repository and workspace config definitions
+- `tools/e2e/` - E2E test runners for SmartEM (single and multi-microscope)
+- `tools/fsrecorder/` - EPU filesystem recording/playback for dev/test
 
 **Tech**: Python 3.11+, Node.js, React 19, Vite, TypeScript
 
