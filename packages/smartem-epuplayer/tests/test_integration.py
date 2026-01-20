@@ -35,7 +35,7 @@ class TestEPURecorder:
             watch_dir=str(watch_dir),
             output_file=str(recording_file),
         )
-        assert recorder.watch_dir == watch_dir
+        assert recorder.watch_dir == watch_dir.resolve()
         assert recorder.output_file == recording_file
         assert recorder.running is False
 
