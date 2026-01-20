@@ -134,6 +134,8 @@ async function searchGitHubIssues(
           state: item.state,
           author: item.user?.login,
           labels: item.labels,
+          date: item.updated_at,
+          repo: repoName,
         },
       }
     })
@@ -200,6 +202,7 @@ async function searchGitHubCommits(
           sha: item.sha,
           author: item.commit.author?.name,
           date: item.commit.author?.date,
+          repo: repoName,
         },
       }
     })
