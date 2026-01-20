@@ -627,6 +627,9 @@ interface SearchConfig {
     githubRepos: SearchRepoConfig[]
     enableGithubSearch: boolean
     shortcut: ShortcutConfig
+    placeholder: string
+    emptyStateHint: string
+    noResultsText: string
     rateLimitMessage: string
 }
 
@@ -646,6 +649,9 @@ const searchConfig: SearchConfig = {
     requireMeta: false,
     requireShift: false,
   },
+  placeholder: 'Search docs, issues, PRs, commits...',
+  emptyStateHint: 'Type to search documentation and GitHub',
+  noResultsText: 'No results found',
   rateLimitMessage: 'GitHub search unavailable (rate limit)',
 }
 
