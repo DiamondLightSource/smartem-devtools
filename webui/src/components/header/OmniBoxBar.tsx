@@ -26,6 +26,8 @@ export function OmniBoxBar() {
     <Box>
       <Box
         onClick={() => setIsOpen(true)}
+        role="button"
+        aria-label={placeholder}
         sx={{
           cursor: 'pointer',
           display: 'flex',
@@ -43,6 +45,19 @@ export function OmniBoxBar() {
           },
         }}
       >
+        <Box
+          component="svg"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+          aria-hidden="true"
+          sx={{ width: 16, height: 16, opacity: 0.7, flexShrink: 0 }}
+        >
+          <path
+            fillRule="evenodd"
+            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+            clipRule="evenodd"
+          />
+        </Box>
         <Box component="span" sx={{ fontSize: 14, opacity: 0.7 }}>
           {placeholder}
         </Box>
