@@ -12,6 +12,12 @@ import type {
 
 const { searchConfig } = webUiAppContents
 
+interface GitHubSearchResponse {
+  results: SearchResult[]
+  rateLimited: boolean
+  resetTime: Date | null
+}
+
 let miniSearchInstance: MiniSearch<SearchDocument> | null = null
 let searchIndexPromise: Promise<SearchIndex> | null = null
 
@@ -77,8 +83,10 @@ async function searchGitHubIssues(
   limit: number,
   type: 'issue' | 'pr',
   token?: string
-): Promise<SearchResult[]> {
-  if (!query.trim() || !searchConfig.enableGithubSearch) return []
+): Promise<GitHubSearchResponse> {
+  if (!query.trim() || !searchConfig.enableGithubSearch) {
+    return { results: [], rateLimited: false, resetTime: null }
+  }
 
   const repos = searchConfig.githubRepos.map((r) => `repo:${r.owner}/${r.repo}`).join(' ')
   const typeFilter = type === 'pr' ? 'is:pr' : 'is:issue'
@@ -102,7 +110,9 @@ async function searchGitHubIssues(
     if (!res.ok) {
       if (res.status === 403) {
         console.warn('GitHub API rate limit exceeded')
-        return []
+        const resetTimestamp = res.headers.get('X-RateLimit-Reset')
+        const resetTime = resetTimestamp ? new Date(parseInt(resetTimestamp, 10) * 1000) : null
+        return { results: [], rateLimited: true, resetTime }
       }
       throw new Error(`GitHub API error: ${res.status}`)
     }
@@ -110,7 +120,7 @@ async function searchGitHubIssues(
     const data = await res.json()
     const items = data.items as GitHubIssue[]
 
-    return items.map((item) => {
+    const results = items.map((item) => {
       const repoName = item.repository_url.split('/').slice(-2).join('/')
       return {
         id: `${type}-${item.id}`,
@@ -127,9 +137,10 @@ async function searchGitHubIssues(
         },
       }
     })
+    return { results, rateLimited: false, resetTime: null }
   } catch (err) {
     console.error(`GitHub ${type} search failed:`, err)
-    return []
+    return { results: [], rateLimited: false, resetTime: null }
   }
 }
 
@@ -137,8 +148,10 @@ async function searchGitHubCommits(
   query: string,
   limit: number,
   token?: string
-): Promise<SearchResult[]> {
-  if (!query.trim() || !searchConfig.enableGithubSearch) return []
+): Promise<GitHubSearchResponse> {
+  if (!query.trim() || !searchConfig.enableGithubSearch) {
+    return { results: [], rateLimited: false, resetTime: null }
+  }
 
   const repos = searchConfig.githubRepos.map((r) => `repo:${r.owner}/${r.repo}`).join(' ')
   const searchQuery = encodeURIComponent(`${query} ${repos}`)
@@ -161,7 +174,9 @@ async function searchGitHubCommits(
     if (!res.ok) {
       if (res.status === 403) {
         console.warn('GitHub API rate limit exceeded')
-        return []
+        const resetTimestamp = res.headers.get('X-RateLimit-Reset')
+        const resetTime = resetTimestamp ? new Date(parseInt(resetTimestamp, 10) * 1000) : null
+        return { results: [], rateLimited: true, resetTime }
       }
       throw new Error(`GitHub API error: ${res.status}`)
     }
@@ -169,7 +184,7 @@ async function searchGitHubCommits(
     const data = await res.json()
     const items = data.items as GitHubCommit[]
 
-    return items.map((item) => {
+    const results = items.map((item) => {
       const shortSha = item.sha.slice(0, 7)
       const message = item.commit.message.split('\n')[0]
       const repoName = item.repository?.full_name || 'unknown'
@@ -188,9 +203,10 @@ async function searchGitHubCommits(
         },
       }
     })
+    return { results, rateLimited: false, resetTime: null }
   } catch (err) {
     console.error('GitHub commits search failed:', err)
-    return []
+    return { results: [], rateLimited: false, resetTime: null }
   }
 }
 
@@ -209,6 +225,8 @@ export interface UseSearchReturn {
   toggleFilter: (source: SearchSourceType) => void
   groupedResults: Record<SearchSourceType, SearchResult[]>
   clearResults: () => void
+  githubRateLimited: boolean
+  rateLimitResetTime: Date | null
 }
 
 export function useSearch(options: UseSearchOptions = {}): UseSearchReturn {
@@ -219,6 +237,8 @@ export function useSearch(options: UseSearchOptions = {}): UseSearchReturn {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [activeFilters, setActiveFilters] = useState<SearchSourceType[]>(enabledSources)
+  const [githubRateLimited, setGithubRateLimited] = useState(false)
+  const [rateLimitResetTime, setRateLimitResetTime] = useState<Date | null>(null)
 
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const abortRef = useRef<AbortController | null>(null)
@@ -238,30 +258,50 @@ export function useSearch(options: UseSearchOptions = {}): UseSearchReturn {
       setError(null)
 
       const limit = searchConfig.resultsPerSource
-      const searches: Promise<SearchResult[]>[] = []
+      const docsSearches: Promise<SearchResult[]>[] = []
+      const githubSearches: Promise<GitHubSearchResponse>[] = []
 
       if (activeFilters.includes('docs')) {
-        searches.push(searchDocs(searchQuery, limit))
+        docsSearches.push(searchDocs(searchQuery, limit))
       }
 
       if (activeFilters.includes('issues')) {
-        searches.push(searchGitHubIssues(searchQuery, limit, 'issue', githubToken))
+        githubSearches.push(searchGitHubIssues(searchQuery, limit, 'issue', githubToken))
       }
 
       if (activeFilters.includes('prs')) {
-        searches.push(searchGitHubIssues(searchQuery, limit, 'pr', githubToken))
+        githubSearches.push(searchGitHubIssues(searchQuery, limit, 'pr', githubToken))
       }
 
       if (activeFilters.includes('commits')) {
-        searches.push(searchGitHubCommits(searchQuery, limit, githubToken))
+        githubSearches.push(searchGitHubCommits(searchQuery, limit, githubToken))
       }
 
       try {
-        const searchResults = await Promise.all(searches)
-        const flatResults = searchResults.flat()
+        const [docsResults, githubResults] = await Promise.all([
+          Promise.all(docsSearches),
+          Promise.all(githubSearches),
+        ])
 
         if (!abortRef.current?.signal.aborted) {
-          setResults(flatResults)
+          const flatDocsResults = docsResults.flat()
+          const flatGitHubResults = githubResults.flatMap((r) => r.results)
+          setResults([...flatDocsResults, ...flatGitHubResults])
+
+          const anyRateLimited = githubResults.some((r) => r.rateLimited)
+          const latestResetTime =
+            githubResults
+              .map((r) => r.resetTime)
+              .filter((t): t is Date => t !== null)
+              .sort((a, b) => b.getTime() - a.getTime())[0] ?? null
+
+          if (anyRateLimited) {
+            setGithubRateLimited(true)
+            setRateLimitResetTime(latestResetTime)
+          } else if (githubResults.length > 0) {
+            setGithubRateLimited(false)
+            setRateLimitResetTime(null)
+          }
         }
       } catch (err) {
         if (!abortRef.current?.signal.aborted) {
@@ -340,5 +380,7 @@ export function useSearch(options: UseSearchOptions = {}): UseSearchReturn {
     toggleFilter,
     groupedResults,
     clearResults,
+    githubRateLimited,
+    rateLimitResetTime,
   }
 }

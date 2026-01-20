@@ -1,9 +1,23 @@
 import { useNavigate } from '@tanstack/react-router'
 import type React from 'react'
 import { useCallback, useEffect, useId, useRef, useState } from 'react'
+import { webUiAppContents } from '~/config'
 import { useSearch } from '~/hooks/useSearch'
 import type { SearchResult, SearchSourceType } from '~/types/search'
 import './SearchPalette.css'
+
+const { searchConfig } = webUiAppContents
+
+const GITHUB_SOURCES: SearchSourceType[] = ['issues', 'prs', 'commits']
+
+function formatRelativeTime(date: Date): string {
+  const now = new Date()
+  const diffMs = date.getTime() - now.getTime()
+  const diffMins = Math.ceil(diffMs / 60000)
+  if (diffMins <= 0) return 'now'
+  if (diffMins === 1) return 'in 1 minute'
+  return `in ${diffMins} minutes`
+}
 
 const SOURCE_ICONS: Record<SearchSourceType, React.ReactNode> = {
   docs: (
@@ -89,6 +103,8 @@ export const SearchPalette: React.FC<SearchPaletteProps> = ({
     activeFilters,
     toggleFilter,
     clearResults,
+    githubRateLimited,
+    rateLimitResetTime,
   } = useSearch({
     githubToken,
     enabledSources: ['docs', 'issues', 'prs', 'commits'],
@@ -243,23 +259,39 @@ export const SearchPalette: React.FC<SearchPaletteProps> = ({
         </div>
 
         <div className="search-palette__filters">
-          {orderedSources.map((source) => (
-            <button
-              key={source}
-              type="button"
-              className={`search-palette__filter ${activeFilters.includes(source) ? 'search-palette__filter--active' : ''}`}
-              onClick={() => toggleFilter(source)}
-            >
-              <span className="search-palette__filter-icon">{SOURCE_ICONS[source]}</span>
-              {SOURCE_LABELS[source]}
-              {groupedResults[source].length > 0 && (
-                <span className="search-palette__filter-count">
-                  {groupedResults[source].length}
-                </span>
-              )}
-            </button>
-          ))}
+          {orderedSources.map((source) => {
+            const isGitHubSource = GITHUB_SOURCES.includes(source)
+            const isDisabled = isGitHubSource && githubRateLimited
+            return (
+              <button
+                key={source}
+                type="button"
+                className={`search-palette__filter ${activeFilters.includes(source) ? 'search-palette__filter--active' : ''} ${isDisabled ? 'search-palette__filter--disabled' : ''}`}
+                onClick={() => toggleFilter(source)}
+                disabled={isDisabled}
+              >
+                <span className="search-palette__filter-icon">{SOURCE_ICONS[source]}</span>
+                {SOURCE_LABELS[source]}
+                {groupedResults[source].length > 0 && (
+                  <span className="search-palette__filter-count">
+                    {groupedResults[source].length}
+                  </span>
+                )}
+              </button>
+            )
+          })}
         </div>
+
+        {githubRateLimited && (
+          <div className="search-palette__rate-limit-banner">
+            <span>{searchConfig.rateLimitMessage}</span>
+            {rateLimitResetTime && (
+              <span className="search-palette__rate-limit-reset">
+                Resets {formatRelativeTime(rateLimitResetTime)}
+              </span>
+            )}
+          </div>
+        )}
 
         <div
           ref={listRef}
