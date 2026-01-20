@@ -1,5 +1,5 @@
 import { useNavigate } from '@tanstack/react-router'
-import React, { useCallback, useEffect, useId, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import { webUiAppContents } from '~/config'
 import { useSearch } from '~/hooks/useSearch'
 import type { SearchResult, SearchSourceType } from '~/types/search'
@@ -8,6 +8,8 @@ import './SearchPalette.css'
 const { searchConfig } = webUiAppContents
 
 const GITHUB_SOURCES: SearchSourceType[] = ['issues', 'prs', 'commits']
+
+type SortOrder = 'relevance' | 'date' | 'alphabetical'
 
 function formatRelativeTime(date: Date): string {
   const now = new Date()
@@ -93,6 +95,8 @@ export const SearchPalette: React.FC<SearchPaletteProps> = ({
 }) => {
   const [internalIsOpen, setInternalIsOpen] = useState(false)
   const [selectedIndex, setSelectedIndex] = useState(0)
+  const [sortOrder, setSortOrder] = useState<SortOrder>('relevance')
+  const [selectedRepos, setSelectedRepos] = useState<string[]>([])
   const navigate = useNavigate()
 
   const inputRef = useRef<HTMLInputElement>(null)
@@ -131,7 +135,57 @@ export const SearchPalette: React.FC<SearchPaletteProps> = ({
     [controlledIsOpen, onClose, clearResults]
   )
 
-  const flatResults = results
+  const availableRepos = useMemo(() => {
+    return searchConfig.githubRepos.map((r) => `${r.owner}/${r.repo}`)
+  }, [])
+
+  const filteredAndSortedResults = useMemo(() => {
+    let filtered = results
+
+    if (selectedRepos.length > 0) {
+      filtered = results.filter((r) => {
+        if (r.source === 'docs') return true
+        const repo = r.metadata?.repo as string | undefined
+        return repo && selectedRepos.includes(repo)
+      })
+    }
+
+    const sorted = [...filtered]
+    switch (sortOrder) {
+      case 'date':
+        sorted.sort((a, b) => {
+          const dateA = a.metadata?.date as string | undefined
+          const dateB = b.metadata?.date as string | undefined
+          if (!dateA && !dateB) return 0
+          if (!dateA) return 1
+          if (!dateB) return -1
+          return new Date(dateB).getTime() - new Date(dateA).getTime()
+        })
+        break
+      case 'alphabetical':
+        sorted.sort((a, b) => a.title.localeCompare(b.title))
+        break
+      case 'relevance':
+      default:
+        break
+    }
+    return sorted
+  }, [results, sortOrder, selectedRepos])
+
+  const flatResults = filteredAndSortedResults
+
+  const sortedGroupedResults = useMemo(() => {
+    const groups: Record<SearchSourceType, SearchResult[]> = {
+      docs: [],
+      issues: [],
+      prs: [],
+      commits: [],
+    }
+    for (const result of filteredAndSortedResults) {
+      groups[result.source].push(result)
+    }
+    return groups
+  }, [filteredAndSortedResults])
 
   const handleSelect = useCallback(
     (result: SearchResult) => {
@@ -300,6 +354,45 @@ export const SearchPalette: React.FC<SearchPaletteProps> = ({
           })}
         </div>
 
+        <div className="search-palette__controls">
+          <div className="search-palette__control-group">
+            <label className="search-palette__control-label" htmlFor="sort-select">
+              Sort
+            </label>
+            <select
+              id="sort-select"
+              className="search-palette__select"
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value as SortOrder)}
+            >
+              <option value="relevance">Relevance</option>
+              <option value="date">Date</option>
+              <option value="alphabetical">A-Z</option>
+            </select>
+          </div>
+          <div className="search-palette__control-group">
+            <label className="search-palette__control-label" htmlFor="repo-select">
+              Repos
+            </label>
+            <select
+              id="repo-select"
+              className="search-palette__select"
+              value={selectedRepos.length === 0 ? '' : selectedRepos[0]}
+              onChange={(e) => {
+                const value = e.target.value
+                setSelectedRepos(value ? [value] : [])
+              }}
+            >
+              <option value="">All repos</option>
+              {availableRepos.map((repo) => (
+                <option key={repo} value={repo}>
+                  {repo.split('/')[1]}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
         {githubRateLimited && (
           <div className="search-palette__rate-limit-banner">
             <span>{searchConfig.rateLimitMessage}</span>
@@ -327,7 +420,8 @@ export const SearchPalette: React.FC<SearchPaletteProps> = ({
           ) : (
             orderedSources
               .filter(
-                (source) => activeFilters.includes(source) && groupedResults[source].length > 0
+                (source) =>
+                  activeFilters.includes(source) && sortedGroupedResults[source].length > 0
               )
               .map((source) => (
                 <div key={source} className="search-palette__group">
@@ -335,7 +429,7 @@ export const SearchPalette: React.FC<SearchPaletteProps> = ({
                     <span className="search-palette__group-icon">{SOURCE_ICONS[source]}</span>
                     {SOURCE_LABELS[source]}
                   </div>
-                  {groupedResults[source].map((result) => {
+                  {sortedGroupedResults[source].map((result) => {
                     globalIndex++
                     const isSelected = globalIndex === selectedIndex
                     const currentIndex = globalIndex

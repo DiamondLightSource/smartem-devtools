@@ -22,7 +22,7 @@
 
 .search-palette {
   width: 100%;
-  max-width: 680px;
+  max-width: 800px;
   background: #1e1e1e;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
@@ -196,6 +196,51 @@
 
 .search-palette__filter--active .search-palette__github-mark {
   opacity: 1;
+}
+
+.search-palette__controls {
+  display: flex;
+  gap: 16px;
+  padding: 8px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.search-palette__control-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.search-palette__control-label {
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.search-palette__select {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  color: #e5e7eb;
+  font-size: 12px;
+  padding: 4px 8px;
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.search-palette__select:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.search-palette__select:focus {
+  outline: none;
+  border-color: #90caf9;
+}
+
+.search-palette__select option {
+  background: #1e1e1e;
+  color: #e5e7eb;
 }
 
 .search-palette__rate-limit-banner {
