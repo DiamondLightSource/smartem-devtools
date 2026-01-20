@@ -1,4 +1,4 @@
-# 13. FSRecorder Release Strategy
+# 13. EPUPlayer Release Strategy
 
 Date: 2026-01-20
 
@@ -8,7 +8,7 @@ Accepted
 
 ## Context
 
-FSRecorder is a filesystem recording and replay tool used for development and testing of the SmartEM system. It records filesystem changes (file creations, modifications, deletions) and can replay them with configurable timing - essential for testing components that react to filesystem events without requiring real microscope sessions.
+EPUPlayer is a filesystem recording and replay tool used for development and testing of the SmartEM system. It records filesystem changes (file creations, modifications, deletions) and can replay them with configurable timing - essential for testing components that react to filesystem events without requiring real microscope sessions.
 
 The tool serves two distinct audiences with different requirements:
 
@@ -16,7 +16,7 @@ The tool serves two distinct audiences with different requirements:
 
 2. **Python developers** (SmartEM contributors, CI/CD pipelines): Need a pip-installable package for integration into development workflows, testing pipelines, and programmatic usage.
 
-Previously, FSRecorder existed as a single script in `tools/fsrecorder/` with a manual build process for Windows executables. This created challenges:
+Previously, EPUPlayer existed as a single script in `tools/fsrecorder/` with a manual build process for Windows executables. This created challenges:
 
 - No permanent URLs for Windows releases (artifacts expired)
 - No PyPI package for pip installation
@@ -26,47 +26,47 @@ Previously, FSRecorder existed as a single script in `tools/fsrecorder/` with a 
 
 ## Decision
 
-We will implement a dual-distribution release strategy for FSRecorder:
+We will implement a dual-distribution release strategy for EPUPlayer:
 
 ### Package Location
 
-Move FSRecorder from `tools/fsrecorder/` to `packages/smartem-fsrecorder/` as a proper Python package with:
+Move EPUPlayer from `tools/fsrecorder/` to `packages/smartem-epuplayer/` as a proper Python package with:
 - `pyproject.toml` using hatchling build backend
 - Modular code structure (models, recorder, replayer, cli)
-- Entry point: `fsrecorder` command
-- Package name: `smartem-fsrecorder`
+- Entry point: `epuplayer` command
+- Package name: `smartem-epuplayer`
 
 ### Version Strategy
 
 - Use semantic versioning starting at v1.0.0
-- Tag format: `fsrecorder-v*` (e.g., `fsrecorder-v1.0.0`)
+- Tag format: `epuplayer-v*` (e.g., `epuplayer-v1.0.0`)
 - RC releases: `{version}rc{run_number}` (e.g., `1.0.0rc42`)
 
 ### Release Triggers
 
 | Event | Condition | Result |
 |-------|-----------|--------|
-| Tag `fsrecorder-v*` | Always | Stable release to GitHub + PyPI |
-| Push to main | `packages/smartem-fsrecorder/**` changed | RC pre-release to GitHub only |
-| Pull request | `packages/smartem-fsrecorder/**` changed | Build + test only |
+| Tag `epuplayer-v*` | Always | Stable release to GitHub + PyPI |
+| Push to main | `packages/smartem-epuplayer/**` changed | RC pre-release to GitHub only |
+| Pull request | `packages/smartem-epuplayer/**` changed | Build + test only |
 
 ### Distribution Channels
 
 1. **GitHub Releases** (both stable and RC):
-   - Windows executable: `fsrecorder-windows-vX.Y.Z.exe`
-   - Python wheel: `smartem_fsrecorder-X.Y.Z-py3-none-any.whl`
-   - Source distribution: `smartem_fsrecorder-X.Y.Z.tar.gz`
+   - Windows executable: `epuplayer-windows-vX.Y.Z.exe`
+   - Python wheel: `smartem_epuplayer-X.Y.Z-py3-none-any.whl`
+   - Source distribution: `smartem_epuplayer-X.Y.Z.tar.gz`
    - Permanent URLs, never expire
 
 2. **PyPI** (stable releases only):
-   - Package: `smartem-fsrecorder`
+   - Package: `smartem-epuplayer`
    - Uses Trusted Publishers (OIDC) for secure publishing
    - RC releases excluded to keep PyPI clean
 
 ### Release Notes
 
 Hybrid approach for monorepo context:
-1. Query PRs with `component:fsrecorder` label merged since last tag
+1. Query PRs with `component:epuplayer` label merged since last tag
 2. Fallback to git log with path filter for any missed commits
 3. Auto-labeling via `pr-admin.yml` workflow using `labeler.yml`
 
@@ -81,7 +81,7 @@ Hybrid approach for monorepo context:
 ### Positive
 
 - **Permanent URLs**: Windows users can always download specific versions
-- **PyPI discoverability**: Python developers can `pip install smartem-fsrecorder`
+- **PyPI discoverability**: Python developers can `pip install smartem-epuplayer`
 - **Clean separation**: Package structure supports future growth
 - **Automated releases**: No manual steps required
 - **RC testing**: Changes merged to main are automatically released as RCs for testing

@@ -9,7 +9,7 @@ SmartEM is the core system. Everything inside the boundary is in scope; everythi
 | Component | Interface | Mock Strategy |
 |-----------|-----------|---------------|
 | Microscope | AthenaAPI (server) | Mock server from OpenAPI spec |
-| EPU Desktop | Filesystem output (.xml, .dm, .mrc) | FSRecorder + testdata/ |
+| EPU Desktop | Filesystem output (.xml, .dm, .mrc) | EPUPlayer + testdata/ |
 | ARIA | Deposition REST API (aria-php/data-deposition-api) | Mock server (aria-mock/) |
 | cryoem-services | RabbitMQ events | Mock MQ publisher |
 | ML plugins | RabbitMQ events | Mock MQ publisher |
@@ -96,7 +96,7 @@ smartem-backend API serves multiple consumers with different needs:
 
 | External Dependency | Mock Strategy | Status |
 |---------------------|---------------|--------|
-| EPU filesystem output | FSRecorder + testdata/ | Exists |
+| EPU filesystem output | EPUPlayer + testdata/ | Exists |
 | AthenaAPI (microscope) | Mock server from OpenAPI spec | Partial (athena_api/mock/) |
 | cryoem-services MQ events | Mock MQ publisher | Needs work |
 | ARIA deposition endpoint | aria-mock/ (graphql-faker) | Ready |
@@ -107,7 +107,7 @@ Components needed for full E2E testing in tmp/ or containers:
 
 | Component | Type | Feeds |
 |-----------|------|-------|
-| FSRecorder | Mock | smartem-agent (EPU simulation) |
+| EPUPlayer | Mock | smartem-agent (EPU simulation) |
 | AthenaAPI Mock | Mock | smartem-agent (microscope simulation) |
 | ARIA Mock | Mock | fandanGO-cryoem-dls |
 | MQ Event Simulator | Mock | RabbitMQ (simulates cryoem-services) |

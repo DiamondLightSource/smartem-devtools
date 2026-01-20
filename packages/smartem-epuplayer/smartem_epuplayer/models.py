@@ -3,7 +3,7 @@ from typing import Any
 
 
 @dataclass
-class FSEvent:
+class EPUEvent:
     timestamp: float
     event_type: str  # created, modified, deleted, moved, appended, truncated, patched
     src_path: str

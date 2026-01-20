@@ -1,6 +1,6 @@
-component:fsrecorder:
+component:epuplayer:
   - changed-files:
-      - any-glob-to-any-file: packages/smartem-fsrecorder/**
+      - any-glob-to-any-file: packages/smartem-epuplayer/**
 
 component:smartem-workspace:
   - changed-files:

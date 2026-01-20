@@ -7,14 +7,14 @@ import tempfile
 import time
 from pathlib import Path, PurePosixPath
 
-from .models import FSEvent
+from .models import EPUEvent
 
 
-class FSReplayer:
+class EPUReplayer:
     def __init__(self, recording_file: str, target_dir: str):
         self.recording_file = Path(recording_file)
         self.target_dir = Path(target_dir)
-        self.events: list[FSEvent] = []
+        self.events: list[EPUEvent] = []
         self.chunks_dir: Path | None = None
         self.temp_dir: Path | None = None
         self.metadata: dict = {}
@@ -37,7 +37,7 @@ class FSReplayer:
 
     def _load_from_archive(self):
         print("\nUnpacking recording archive...")
-        self.temp_dir = Path(tempfile.mkdtemp(prefix="fsreplayer_"))
+        self.temp_dir = Path(tempfile.mkdtemp(prefix="epureplayer_"))
 
         print("Extracting archive contents...")
         with tarfile.open(self.recording_file, "r:gz") as tar:
@@ -62,7 +62,7 @@ class FSReplayer:
 
         print("Processing events...")
         for event_data in data["events"]:
-            event = FSEvent(**event_data)
+            event = EPUEvent(**event_data)
             self.events.append(event)
 
         print(f"Unpacking complete: {len(self.events)} events loaded")
@@ -72,7 +72,7 @@ class FSReplayer:
         self.metadata = data["metadata"]
 
         for event_data in data["events"]:
-            event = FSEvent(**event_data)
+            event = EPUEvent(**event_data)
             self.events.append(event)
 
     def _normalize_target_path(self, src_path: str) -> Path:
@@ -90,7 +90,7 @@ class FSReplayer:
 
         return chunk_file.read_bytes()
 
-    def _is_unreadable_file(self, event: FSEvent) -> bool:
+    def _is_unreadable_file(self, event: EPUEvent) -> bool:
         return event.content_hash is not None and event.content_hash.startswith("unreadable_")
 
     def replay(
@@ -184,7 +184,7 @@ class FSReplayer:
             if self.temp_dir and self.temp_dir.exists():
                 shutil.rmtree(self.temp_dir, ignore_errors=True)
 
-    def _verify_file_integrity(self, event: FSEvent) -> str | None:
+    def _verify_file_integrity(self, event: EPUEvent) -> str | None:
         if not event.content_hash:
             return None
 
@@ -212,7 +212,7 @@ class FSReplayer:
                 hash_sha256.update(chunk)
         return hash_sha256.hexdigest()
 
-    def _replay_event(self, event: FSEvent, skip_unreadable: bool = False) -> bool:
+    def _replay_event(self, event: EPUEvent, skip_unreadable: bool = False) -> bool:
         target_path = self._normalize_target_path(event.src_path)
 
         # Skip unreadable files if requested
@@ -257,7 +257,7 @@ class FSReplayer:
 
         return False
 
-    def _replay_file_creation(self, event: FSEvent, target_path: Path):
+    def _replay_file_creation(self, event: EPUEvent, target_path: Path):
         target_path.parent.mkdir(parents=True, exist_ok=True)
 
         if getattr(event, "is_placeholder", False):
@@ -291,7 +291,7 @@ class FSReplayer:
             except Exception as e:
                 print(f"Warning: Could not set timestamps for {event.src_path}: {e}")
 
-    def _replay_file_modification(self, event: FSEvent, target_path: Path):
+    def _replay_file_modification(self, event: EPUEvent, target_path: Path):
         if not target_path.exists():
             print(f"Warning: Cannot modify non-existent file {event.src_path}")
             return
@@ -316,7 +316,7 @@ class FSReplayer:
         else:
             print(f"Modified file: {event.src_path}")
 
-    def _replay_file_append(self, event: FSEvent, target_path: Path):
+    def _replay_file_append(self, event: EPUEvent, target_path: Path):
         if not target_path.exists():
             print(f"Warning: Cannot append to non-existent file {event.src_path}")
             return
@@ -344,7 +344,7 @@ class FSReplayer:
         append_size = event.operation_data.get("append_size", 0) if event.operation_data else 0
         print(f"Appended to file: {event.src_path} (+{append_size} bytes)")
 
-    def _replay_file_truncate(self, event: FSEvent, target_path: Path):
+    def _replay_file_truncate(self, event: EPUEvent, target_path: Path):
         if not target_path.exists():
             print(f"Warning: Cannot truncate non-existent file {event.src_path}")
             return

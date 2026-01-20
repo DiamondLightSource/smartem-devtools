@@ -14,10 +14,10 @@ from typing import Any
 from watchdog.events import FileSystemEvent, FileSystemEventHandler
 from watchdog.observers import Observer
 
-from .models import FSEvent
+from .models import EPUEvent
 
 
-class FSRecorder(FileSystemEventHandler):
+class EPURecorder(FileSystemEventHandler):
     def __init__(
         self,
         watch_dir: str,
@@ -28,7 +28,7 @@ class FSRecorder(FileSystemEventHandler):
     ):
         self.watch_dir = Path(watch_dir).resolve()
         self.output_file = Path(output_file)
-        self.events: list[FSEvent] = []
+        self.events: list[EPUEvent] = []
         self.observer = Observer()
         self.running = False
 
@@ -49,7 +49,7 @@ class FSRecorder(FileSystemEventHandler):
         self.placeholder_files: list[str] = []
 
         # Create temp directory for binary chunks
-        self.temp_dir = Path(tempfile.mkdtemp(prefix="fsrecorder_"))
+        self.temp_dir = Path(tempfile.mkdtemp(prefix="epurecorder_"))
 
         # Capture initial state
         self._capture_initial_state()
@@ -224,7 +224,7 @@ class FSRecorder(FileSystemEventHandler):
             if root_path != self.watch_dir:
                 rel_path = root_path.relative_to(self.watch_dir)
                 norm_path = self._normalize_path(rel_path)
-                event = FSEvent(timestamp=time.time(), event_type="initial_dir", src_path=norm_path, is_directory=True)
+                event = EPUEvent(timestamp=time.time(), event_type="initial_dir", src_path=norm_path, is_directory=True)
                 self.events.append(event)
 
             # Record file creation
@@ -277,7 +277,7 @@ class FSRecorder(FileSystemEventHandler):
                 # Get file timestamps
                 stat = file_path.stat()
 
-                event = FSEvent(
+                event = EPUEvent(
                     timestamp=time.time(),
                     event_type="initial_file",
                     src_path=norm_path,
@@ -311,7 +311,7 @@ class FSRecorder(FileSystemEventHandler):
         if src_norm in self.file_states:
             self.file_states[dest_norm] = self.file_states.pop(src_norm)
 
-        fs_event = FSEvent(
+        fs_event = EPUEvent(
             timestamp=time.time(),
             event_type="moved",
             src_path=src_norm,
@@ -328,7 +328,7 @@ class FSRecorder(FileSystemEventHandler):
 
         if event.is_directory:
             # Handle directory events
-            fs_event = FSEvent(
+            fs_event = EPUEvent(
                 timestamp=time.time(),
                 event_type=event_type,
                 src_path=norm_path,
@@ -342,7 +342,7 @@ class FSRecorder(FileSystemEventHandler):
         if event_type == "deleted":
             # Remove from state tracking
             self.file_states.pop(norm_path, None)
-            fs_event = FSEvent(
+            fs_event = EPUEvent(
                 timestamp=time.time(),
                 event_type=event_type,
                 src_path=norm_path,
@@ -401,7 +401,7 @@ class FSRecorder(FileSystemEventHandler):
         # Update state tracking
         self.file_states[norm_path] = {"size": size, "hash": content_hash, "content": content}
 
-        fs_event = FSEvent(
+        fs_event = EPUEvent(
             timestamp=time.time(),
             event_type="created",
             src_path=norm_path,
@@ -462,7 +462,7 @@ class FSRecorder(FileSystemEventHandler):
             # Update state
             self.file_states[norm_path].update({"size": new_size, "hash": new_hash})
 
-            fs_event = FSEvent(
+            fs_event = EPUEvent(
                 timestamp=time.time(),
                 event_type="appended",
                 src_path=norm_path,
@@ -485,7 +485,7 @@ class FSRecorder(FileSystemEventHandler):
         # Update state
         self.file_states[norm_path].update({"size": new_size, "hash": new_hash})
 
-        fs_event = FSEvent(
+        fs_event = EPUEvent(
             timestamp=time.time(),
             event_type="truncated",
             src_path=norm_path,
@@ -534,7 +534,7 @@ class FSRecorder(FileSystemEventHandler):
         # Update state
         self.file_states[norm_path].update({"size": size, "hash": content_hash})
 
-        fs_event = FSEvent(
+        fs_event = EPUEvent(
             timestamp=time.time(),
             event_type="modified",
             src_path=norm_path,

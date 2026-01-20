@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "smartem-fsrecorder"
+name = "smartem-epuplayer"
 version = "1.0.0"
 description = "Filesystem Recording and Replay Tool for cryo-EM development and testing"
 readme = "README.md"
@@ -38,16 +38,16 @@ dev = [
 ]
 
 [project.scripts]
-fsrecorder = "smartem_fsrecorder.cli:main"
+epuplayer = "smartem_epuplayer.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/DiamondLightSource/smartem-devtools"
 Repository = "https://github.com/DiamondLightSource/smartem-devtools"
-Documentation = "https://github.com/DiamondLightSource/smartem-devtools#fsrecorder"
+Documentation = "https://github.com/DiamondLightSource/smartem-devtools#epuplayer"
 Issues = "https://github.com/DiamondLightSource/smartem-devtools/issues"
 
 [tool.hatch.build.targets.wheel]
-packages = ["smartem_fsrecorder"]
+packages = ["smartem_epuplayer"]
 
 [tool.ruff]
 line-length = 120

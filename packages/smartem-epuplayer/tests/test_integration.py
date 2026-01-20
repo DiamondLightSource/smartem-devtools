@@ -2,13 +2,13 @@ import time
 
 import pytest
 
-from smartem_fsrecorder import FSRecorder, FSReplayer
-from smartem_fsrecorder.models import FSEvent
+from smartem_epuplayer import EPURecorder, EPUReplayer
+from smartem_epuplayer.models import EPUEvent
 
 
-class TestFSEvent:
+class TestEPUEvent:
     def test_create_event(self):
-        event = FSEvent(
+        event = EPUEvent(
             timestamp=time.time(),
             event_type="created",
             src_path="test/file.txt",
@@ -18,7 +18,7 @@ class TestFSEvent:
         assert event.is_directory is False
 
     def test_event_with_content(self):
-        event = FSEvent(
+        event = EPUEvent(
             timestamp=time.time(),
             event_type="created",
             src_path="test/file.txt",
@@ -29,9 +29,9 @@ class TestFSEvent:
         assert event.size == 13
 
 
-class TestFSRecorder:
+class TestEPURecorder:
     def test_recorder_init(self, watch_dir, recording_file):
-        recorder = FSRecorder(
+        recorder = EPURecorder(
             watch_dir=str(watch_dir),
             output_file=str(recording_file),
         )
@@ -47,7 +47,7 @@ class TestFSRecorder:
         subdir.mkdir()
         (subdir / "file3.txt").write_text("content3")
 
-        recorder = FSRecorder(
+        recorder = EPURecorder(
             watch_dir=str(watch_dir),
             output_file=str(recording_file),
         )
@@ -60,10 +60,10 @@ class TestFSRecorder:
         assert "subdir/file3.txt" in event_paths
 
 
-class TestFSReplayer:
+class TestEPUReplayer:
     def test_replayer_file_not_found(self, temp_dir):
         with pytest.raises(FileNotFoundError):
-            FSReplayer(
+            EPUReplayer(
                 recording_file=str(temp_dir / "nonexistent.tar.gz"),
                 target_dir=str(temp_dir / "target"),
             )
@@ -79,7 +79,7 @@ class TestRoundTrip:
         (subdir / "deep.txt").write_text("Deep content")
 
         # Record
-        recorder = FSRecorder(
+        recorder = EPURecorder(
             watch_dir=str(watch_dir),
             output_file=str(recording_file),
         )
@@ -88,7 +88,7 @@ class TestRoundTrip:
         assert recording_file.exists()
 
         # Replay
-        replayer = FSReplayer(
+        replayer = EPUReplayer(
             recording_file=str(recording_file),
             target_dir=str(target_dir),
         )
@@ -109,7 +109,7 @@ class TestRoundTrip:
         (watch_dir / "text.txt").write_text("Plain text")
 
         # Record with binary placeholder mode (default)
-        recorder = FSRecorder(
+        recorder = EPURecorder(
             watch_dir=str(watch_dir),
             output_file=str(recording_file),
             skip_binary_content=True,
@@ -122,7 +122,7 @@ class TestRoundTrip:
         assert binary_events[0].is_placeholder is True
 
         # Replay
-        replayer = FSReplayer(
+        replayer = EPUReplayer(
             recording_file=str(recording_file),
             target_dir=str(target_dir),
         )

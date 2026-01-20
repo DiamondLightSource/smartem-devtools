@@ -90,7 +90,7 @@ wheels = [
 ]
 
 [[package]]
-name = "smartem-fsrecorder"
+name = "smartem-epuplayer"
 version = "1.0.0"
 source = { editable = "." }
 dependencies = [

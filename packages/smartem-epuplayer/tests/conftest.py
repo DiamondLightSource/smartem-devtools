@@ -6,7 +6,7 @@ import pytest
 
 @pytest.fixture
 def temp_dir():
-    with tempfile.TemporaryDirectory(prefix="fsrecorder_test_") as d:
+    with tempfile.TemporaryDirectory(prefix="epuplayer_test_") as d:
         yield Path(d)
 
 

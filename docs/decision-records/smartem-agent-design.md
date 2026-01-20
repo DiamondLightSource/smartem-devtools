@@ -34,7 +34,7 @@ The agent operates in two modes:
 - **Dry-run mode**: In-memory data store only, no API persistence
 - **Production mode**: Persistent data store with REST API synchronisation and SSE instruction streaming
 
-Deployment occurs as a Windows executable, with testing facilitated by fsrecorder playback simulation of EPU output
+Deployment occurs as a Windows executable, with testing facilitated by epuplayer playback simulation of EPU output
 patterns.
 
 ### Historical Problem Statement
@@ -654,7 +654,7 @@ the original in `src/smartem_agent/`.
 - `event_processor.py`: Batch processing orchestration with Parser and Data Store integration
 - Integration of Event Classifier, Event Queue, Event Processor, and Orphan Manager
 - Adaptation of `fs_watcher.py` to delegate events to Event Classifier (minimal changes to existing class)
-- Integration tests using fsrecorder playback with small datasets (10-20 GridSquares)
+- Integration tests using epuplayer playback with small datasets (10-20 GridSquares)
 
 **Validation**:
 - Event Processor correctly processes batches with known file sets
@@ -666,7 +666,7 @@ the original in `src/smartem_agent/`.
 
 **Context**: Production environment differs significantly from dev/test:
 - Production: Windows binary, live microscope, real-time file writes over 4-48 hours
-- Dev/Test: Linux interpreted Python, fsrecorder simulation with accelerated timing (100-1000x speed)
+- Dev/Test: Linux interpreted Python, epuplayer simulation with accelerated timing (100-1000x speed)
 - Primary goal: Address dev/test brittleness from accelerated playback whilst improving production reliability
 
 **Deliverables**:
@@ -676,21 +676,21 @@ the original in `src/smartem_agent/`.
 - Enhanced error categorization (transient vs permanent failures)
 - Structured metrics: processing latency percentiles (p50, p95, p99), retry distributions, error counts
 - Enhanced SSE instructions: detailed statistics, orphan inspection, error reporting
-- End-to-end tests using fsrecorder playback with multiple timing modes (--fast, --dev-mode, --exact)
+- End-to-end tests using epuplayer playback with multiple timing modes (--fast, --dev-mode, --exact)
 - Full-scale E2E test with bi37708-42 dataset (8,389 events)
 
 **Validation**:
 - Exponential backoff correctly retries transient errors without blocking event processing
 - Permanent errors (corrupt files, missing parents after timeout) logged appropriately without retry
 - Orphan timeout detection generates warnings but does NOT evict orphans (supports 48h+ sessions)
-- End-to-end tests pass with all fsrecorder timing modes (100x fast, 1000x dev-mode, 1x exact)
+- End-to-end tests pass with all epuplayer timing modes (100x fast, 1000x dev-mode, 1x exact)
 - Agent logs successfully stream to backend for centralized monitoring
 - Processing metrics visible in logs and SSE instruction responses
 
 #### Phase 4: Performance Optimisation and Production Hardening (Week 7-8)
 
 **Deliverables**:
-- Performance profiling and optimisation based on fsrecorder playback results
+- Performance profiling and optimisation based on epuplayer playback results
 - Configuration externalisation (queue sizes, retry parameters, batch sizes)
 - Comprehensive error recovery testing (API failures, parser errors, corrupted files)
 - Documentation updates (README, API documentation, deployment guides)
@@ -724,10 +724,10 @@ coverage with mocked dependencies. Focus areas:
 
 #### Integration Tests
 
-Integration tests use fsrecorder playback to simulate EPU filesystem output patterns with controlled file ordering
+Integration tests use epuplayer playback to simulate EPU filesystem output patterns with controlled file ordering
 and multiple timing modes:
 
-**Timing modes** (fsrecorder replay options):
+**Timing modes** (epuplayer replay options):
 - `--fast` (100x speed, 1s max delays): Balanced mode for realistic testing, DEFAULT
 - `--dev-mode` (1000x speed, burst): Maximum acceleration for rapid iteration and stress testing
 - `--exact` (1x speed): Preserve original timing for debugging timing-dependent issues
@@ -747,7 +747,7 @@ and multiple timing modes:
 
 #### End-to-End Tests
 
-End-to-end tests use full-scale fsrecorder datasets (100+ GridSquares, 1000+ FoilHoles) with realistic EPU output
+End-to-end tests use full-scale epuplayer datasets (100+ GridSquares, 1000+ FoilHoles) with realistic EPU output
 patterns. Primary test dataset: bi37708-42 (8,389 events). Tests validate:
 
 - Complete entity persistence to backend database
@@ -761,7 +761,7 @@ patterns. Primary test dataset: bi37708-42 (8,389 events). Tests validate:
 - Orphan timeout warning scenarios (no eviction)
 - Transient error recovery with exponential backoff
 - Long-running sessions (48+ hours simulated via extended playback)
-- All three fsrecorder timing modes (fast, dev-mode, exact)
+- All three epuplayer timing modes (fast, dev-mode, exact)
 
 ## Open Questions and Future Considerations
 
@@ -772,7 +772,7 @@ patterns. Primary test dataset: bi37708-42 (8,389 events). Tests validate:
 **Question**: Is 50 events/batch optimal for throughput and orphan resolution trade-off?
 
 **Investigation Plan**: Benchmark processing latency and orphan resolution time across batch sizes: 10, 25, 50, 100,
-200 events/batch using fsrecorder playback with large datasets. Measure:
+200 events/batch using epuplayer playback with large datasets. Measure:
 - Total processing time for complete dataset
 - 95th percentile orphan resolution time
 - Memory consumption during processing
@@ -861,7 +861,7 @@ Key innovations implemented:
 - **Error Handler** with categorisation and exponential backoff retry
 - **Preservation of proven components** (Parser, Data Store)
 
-The implementation supports existing deployment patterns (Windows executable, fsrecorder testing), and provides clear
+The implementation supports existing deployment patterns (Windows executable, epuplayer testing), and provides clear
 extension points for future features (Athena API integration, session completion detection, multi-agent coordination).
 
 The system has been validated with comprehensive testing demonstrating zero-entity-loss reliability across all test
