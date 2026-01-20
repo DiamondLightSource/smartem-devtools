@@ -1,5 +1,6 @@
 [![Built with Claude Code](https://img.shields.io/badge/Built%20with-Claude%20Code-6366f1?logo=claude)](https://claude.ai/code)
 [![PyPI - smartem-workspace](https://img.shields.io/pypi/v/smartem-workspace?label=smartem-workspace)](https://pypi.org/project/smartem-workspace/)
+[![PyPI - smartem-epuplayer](https://img.shields.io/pypi/v/smartem-epuplayer?label=smartem-epuplayer)](https://pypi.org/project/smartem-epuplayer/)
 
 # smartem-devtools
 
@@ -19,6 +20,7 @@ Project Board   | <https://github.com/orgs/DiamondLightSource/projects/51/views/
 - **claude-code/**: AI-assisted development configuration
 - **core/**: Shared TypeScript configuration
 - **packages/smartem-workspace/**: CLI tool for workspace setup
+- **packages/smartem-epuplayer/**: EPU filesystem recording and replay tool
 
 ## Quick Start
 

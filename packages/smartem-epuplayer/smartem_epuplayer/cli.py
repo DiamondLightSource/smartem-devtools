@@ -6,8 +6,8 @@ import tarfile
 import tempfile
 from pathlib import Path
 
-from .recorder import EPURecorder
-from .replayer import EPUReplayer
+from smartem_epuplayer.recorder import EPURecorder
+from smartem_epuplayer.replayer import EPUReplayer
 
 
 def main():

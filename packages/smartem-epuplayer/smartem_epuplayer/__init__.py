@@ -1,4 +1,4 @@
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 from .models import EPUEvent
 from .recorder import EPURecorder
