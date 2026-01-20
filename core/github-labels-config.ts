@@ -68,6 +68,7 @@ const systemComponents: GitHubLabel[] = [
   { name: 'smartem-devtools:webui', description: 'Developer dashboard web interface', color: 'bf3989' },
   { name: 'smartem-devtools:claude', description: 'Claude Code configuration, skills, and prompts', color: 'db61a2' },
   { name: 'smartem-devtools:e2e-test', description: 'End-to-end testing infrastructure and scenarios', color: 'f09bc8' },
+  { name: 'component:epuplayer', description: 'EPUPlayer filesystem recording and replay tool', color: 'f09bc8' },
 ]
 
 /**

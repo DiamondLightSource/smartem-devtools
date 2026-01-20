@@ -187,7 +187,7 @@ export ARIA_GQL_LOCAL=http://localhost:9002/graphql
 - Schema drift checking (Alembic vs SQLModel)
 - Security scanning (detect-secrets)
 - Versioned docs to GitHub Pages
-- Windows .exe builds (PyInstaller) for agent and fsrecorder
+- Windows .exe builds (PyInstaller) for agent and epuplayer
 
 ## Infrastructure
 
