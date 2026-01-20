@@ -631,6 +631,7 @@ interface SearchConfig {
     emptyStateHint: string
     noResultsText: string
     rateLimitMessage: string
+    githubChipDisplay: 'divider' | 'label' | 'icon'
 }
 
 const searchConfig: SearchConfig = {
@@ -653,6 +654,7 @@ const searchConfig: SearchConfig = {
   emptyStateHint: 'Type to search documentation and GitHub',
   noResultsText: 'No results found',
   rateLimitMessage: 'GitHub search unavailable (rate limit)',
+  githubChipDisplay: 'icon',
 }
 
 // =============================================================================
