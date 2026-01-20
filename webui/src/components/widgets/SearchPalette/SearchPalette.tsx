@@ -236,7 +236,7 @@ export const SearchPalette: React.FC<SearchPaletteProps> = ({
             ref={inputRef}
             type="text"
             className="search-palette__input"
-            placeholder="Search docs, issues, PRs, commits..."
+            placeholder={searchConfig.placeholder}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleInputKeyDown}
@@ -291,9 +291,11 @@ export const SearchPalette: React.FC<SearchPaletteProps> = ({
           role="listbox"
         >
           {!query.trim() ? (
-            <div className="search-palette__empty">Type to search documentation and GitHub</div>
+            <div className="search-palette__empty">{searchConfig.emptyStateHint}</div>
           ) : flatResults.length === 0 && !isLoading ? (
-            <div className="search-palette__empty">No results found for "{query}"</div>
+            <div className="search-palette__empty">
+              {searchConfig.noResultsText} for "{query}"
+            </div>
           ) : (
             orderedSources
               .filter(

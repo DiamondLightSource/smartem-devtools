@@ -61,6 +61,12 @@ export interface SearchConfig {
   enableGithubSearch: boolean
   /** Keyboard shortcut configuration */
   shortcut: ShortcutConfig
+  /** Placeholder text for the search input */
+  placeholder: string
+  /** Hint shown when search input is empty */
+  emptyStateHint: string
+  /** Message shown when no results are found (query appended) */
+  noResultsText: string
   /** Message shown when GitHub API rate limit is exceeded */
   rateLimitMessage: string
 }
@@ -81,6 +87,9 @@ export const searchConfig: SearchConfig = {
     requireMeta: false,
     requireShift: false,
   },
+  placeholder: 'Search docs, issues, PRs, commits...',
+  emptyStateHint: 'Type to search documentation and GitHub',
+  noResultsText: 'No results found',
   rateLimitMessage: 'GitHub search unavailable (rate limit)',
 }
 
