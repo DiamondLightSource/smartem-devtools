@@ -24,6 +24,9 @@ jobs:
   add-to-project:
     name: Add to project board
     runs-on: ubuntu-latest
+    # Disabled until PROJECT_TOKEN secret is configured at org level
+    # See: https://github.com/DiamondLightSource/smartem-devtools/issues/121
+    if: false
     permissions:
       contents: read
 
