@@ -1,5 +1,5 @@
 import type React from 'react'
-import { useState, useEffect, useRef, useCallback, useMemo, useId } from 'react'
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import './CommandPalette.css'
 
 export interface CommandItem {

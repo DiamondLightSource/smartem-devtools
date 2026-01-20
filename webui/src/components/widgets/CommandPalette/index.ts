@@ -1,2 +1,2 @@
+export type { CommandGroup, CommandItem, CommandPaletteProps } from './CommandPalette'
 export { CommandPalette } from './CommandPalette'
-export type { CommandItem, CommandGroup, CommandPaletteProps } from './CommandPalette'

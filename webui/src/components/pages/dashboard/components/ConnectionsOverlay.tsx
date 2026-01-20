@@ -1,5 +1,5 @@
-import { useLayoutEffect, useRef, useState, type RefObject } from 'react'
 import { Tooltip } from '@mui/material'
+import { type RefObject, useLayoutEffect, useRef, useState } from 'react'
 import { webUiAppContents } from '~/config'
 import type { Connection } from './connectionConfig'
 
