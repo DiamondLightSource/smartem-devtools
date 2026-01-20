@@ -308,7 +308,7 @@ python -m smartem_agent watch ../test-dir --dry-run
 >
 > **Missing `EpuSession.dm`**: Will prevent proper grid instantiation and data processing.
 
-> **fsrecorder Tool**: The `packages/smartem-epuplayer/` utility provides accurate simulation of EPU file writing patterns with proper timing and ordering, making it ideal for development and testing scenarios.
+> **EPUPlayer Tool**: The `packages/smartem-epuplayer/` utility provides accurate simulation of EPU file writing patterns with proper timing and ordering, making it ideal for development and testing scenarios.
 
 ### Real-Time Communication Features
 

@@ -21,7 +21,7 @@ SMARTEM_DECISIONS_DIR="$WORKSPACE_ROOT/repos/DiamondLightSource/smartem-decision
 #   <workspace>/testdata/recordings/                   (test recordings)
 #   <workspace>/tmp/                                   (scratch space)
 # Override with env vars: SMARTEM_TEST_RECORDING, SMARTEM_EPU_DIR
-DEFAULT_RECORDING="$WORKSPACE_ROOT/testdata/recordings/bi37708-42_fsrecord.tar.gz"
+DEFAULT_RECORDING="$WORKSPACE_ROOT/testdata/recordings/bi37708-42_epurecording.tar.gz"
 DEFAULT_EPU_DIR="$WORKSPACE_ROOT/tmp/epu-test-dir"
 
 RECORDING="${1:-${SMARTEM_TEST_RECORDING:-$DEFAULT_RECORDING}}"

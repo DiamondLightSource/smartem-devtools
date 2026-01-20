@@ -15,7 +15,7 @@ For the simplest test execution, use the automated test runner script:
 
 # With custom parameters (paths relative to workspace root)
 ./tools/run-e2e-test.sh \
-  ../../testdata/recordings/bi37708-42_fsrecord.tar.gz \
+  ../../testdata/recordings/bi37708-42_epurecording.tar.gz \
   ../../tmp/epu-test-dir \
   0.1
 
@@ -26,7 +26,7 @@ SMARTEM_EPU_DIR=/path/to/epu-dir \
 ```
 
 **Script parameters** (all optional):
-1. Recording file path (default: `<workspace>/testdata/recordings/bi37708-42_fsrecord.tar.gz`)
+1. Recording file path (default: `<workspace>/testdata/recordings/bi37708-42_epurecording.tar.gz`)
 2. EPU output directory (default: `<workspace>/tmp/epu-test-dir`)
 3. Max delay in seconds (default: `0.1`)
 
@@ -98,7 +98,7 @@ sleep 3
 
 # Run playback (default is --fast mode, no flag needed)
 epuplayer replay \
-  ../../testdata/recordings/bi37708-42_fsrecord.tar.gz \
+  ../../testdata/recordings/bi37708-42_epurecording.tar.gz \
   ../epu-test-dir 2>&1 | tee "$TEST_DIR/logs/playback.log"
 
 # Start agent after playback completes
@@ -123,7 +123,7 @@ For testing multiple concurrent microscopes and acquisition sessions simultaneou
 # With custom parameters (paths relative to workspace root)
 ./tools/run-e2e-test-multi-microscope.sh \
   3 \
-  ../../testdata/recordings/bi37708-42_fsrecord.tar.gz \
+  ../../testdata/recordings/bi37708-42_epurecording.tar.gz \
   ../../tmp/epu-test-dir \
   0.1
 
@@ -135,7 +135,7 @@ SMARTEM_EPU_DIR=/path/to/epu-dir \
 
 **Script parameters** (all optional):
 1. Number of microscopes (default: `3`)
-2. Recording file path (default: `<workspace>/testdata/recordings/bi37708-42_fsrecord.tar.gz`)
+2. Recording file path (default: `<workspace>/testdata/recordings/bi37708-42_epurecording.tar.gz`)
 3. EPU base directory (default: `<workspace>/tmp/epu-test-dir`)
    - Each microscope gets a separate directory: `epu-test-dir-microscope-1`, `epu-test-dir-microscope-2`, etc.
 4. Max delay in seconds (default: `0.1`)
@@ -244,8 +244,8 @@ The test setup simulates a complete SmartEM workflow:
 
 ### Test Data
 Pre-recorded microscope sessions are stored in `<workspace>/testdata/recordings/`:
-- `bi37600-29_fsrecord.tar.gz`
-- `bi37708-42_fsrecord.tar.gz` (recommended for testing, 8389 events)
+- `bi37600-29_epurecording.tar.gz`
+- `bi37708-42_epurecording.tar.gz` (recommended for testing, 8389 events)
 
 **Note**: Scripts auto-detect workspace structure. Override with `SMARTEM_TEST_RECORDING` env var if needed.
 
@@ -438,7 +438,7 @@ python -m smartem_agent watch \
 ```bash
 source .venv/bin/activate
 epuplayer replay \
-  ../../testdata/recordings/bi37708-42_fsrecord.tar.gz \
+  ../../testdata/recordings/bi37708-42_epurecording.tar.gz \
   ../epu-test-dir 2>&1 | tee logs/e2e-tests/TIMESTAMP/logs/playback.log
 ```
 
@@ -549,9 +549,9 @@ python -m smartem_backend.consumer -vv 2>&1 | tee "$TEST_DIR/logs/consumer.log" 
 sleep 3
 
 # 2. Run playback to completion (no agent watching yet)
-# NOTE: Recording must be a .tar.gz file (e.g., bi37708-42_fsrecord.tar.gz)
+# NOTE: Recording must be a .tar.gz file (e.g., bi37708-42_epurecording.tar.gz)
 epuplayer replay \
-  ../../testdata/recordings/bi37708-42_fsrecord.tar.gz \
+  ../../testdata/recordings/bi37708-42_epurecording.tar.gz \
   ../epu-test-dir 2>&1 | tee "$TEST_DIR/logs/playback.log"
 
 # 3. Wait for playback to finish, then start agent
@@ -581,9 +581,9 @@ python -m smartem_agent watch \
   ../epu-test-dir 2>&1 | tee "$TEST_DIR/logs/agent.log" &
 
 # 3. Begin playback after agent is watching
-# NOTE: Recording must be a .tar.gz file (e.g., bi37708-42_fsrecord.tar.gz)
+# NOTE: Recording must be a .tar.gz file (e.g., bi37708-42_epurecording.tar.gz)
 epuplayer replay \
-  ../../testdata/recordings/bi37708-42_fsrecord.tar.gz \
+  ../../testdata/recordings/bi37708-42_epurecording.tar.gz \
   ../epu-test-dir 2>&1 | tee "$TEST_DIR/logs/playback.log"
 ```
 
@@ -605,9 +605,9 @@ python -m smartem_backend.consumer -vv 2>&1 | tee "$TEST_DIR/logs/consumer.log" 
 sleep 3
 
 # 2. Start playback first
-# NOTE: Recording must be a .tar.gz file (e.g., bi37708-42_fsrecord.tar.gz)
+# NOTE: Recording must be a .tar.gz file (e.g., bi37708-42_epurecording.tar.gz)
 epuplayer replay \
-  ../../testdata/recordings/bi37708-42_fsrecord.tar.gz \
+  ../../testdata/recordings/bi37708-42_epurecording.tar.gz \
   ../epu-test-dir 2>&1 | tee "$TEST_DIR/logs/playback.log" &
 
 # 3. Monitor file creation to choose optimal start time
@@ -639,7 +639,7 @@ python -m smartem_agent watch \
 
 2. **Wrong recording path**: Must use .tar.gz file, NOT directory:
    - `../../testdata/recordings/pre-acquisition`
-   - `../../testdata/recordings/bi37708-42_fsrecord.tar.gz`
+   - `../../testdata/recordings/bi37708-42_epurecording.tar.gz`
 
 3. **FastAPI dev server**: Use uvicorn for e2e tests, NOT `python -m fastapi dev`:
    - `python -m fastapi dev src/smartem_backend/api_server.py`
@@ -683,7 +683,7 @@ cat > "$TEST_DIR/test-params.json" << EOF
 {
   "test_type": "post-acquisition",
   "timestamp": "$(date -Iseconds)",
-  "recording": "bi37708-42_fsrecord.tar.gz",
+  "recording": "bi37708-42_epurecording.tar.gz",
   "playback_mode": "fast",
   "agent_verbosity": "debug",
   "consumer_verbosity": "debug",
