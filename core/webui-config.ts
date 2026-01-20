@@ -61,6 +61,8 @@ export interface SearchConfig {
   enableGithubSearch: boolean
   /** Keyboard shortcut configuration */
   shortcut: ShortcutConfig
+  /** Message shown when GitHub API rate limit is exceeded */
+  rateLimitMessage: string
 }
 
 export const searchConfig: SearchConfig = {
@@ -79,6 +81,7 @@ export const searchConfig: SearchConfig = {
     requireMeta: false,
     requireShift: false,
   },
+  rateLimitMessage: 'GitHub search unavailable (rate limit)',
 }
 
 // =============================================================================

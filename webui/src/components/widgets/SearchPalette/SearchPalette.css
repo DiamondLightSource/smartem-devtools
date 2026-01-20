@@ -160,6 +160,33 @@
   background: rgba(144, 202, 249, 0.3);
 }
 
+.search-palette__filter--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.search-palette__filter--disabled:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #9ca3af;
+}
+
+.search-palette__rate-limit-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background-color: rgba(255, 193, 7, 0.15);
+  border-bottom: 1px solid rgba(255, 193, 7, 0.3);
+  font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+  color: #ffc107;
+}
+
+.search-palette__rate-limit-reset {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
 .search-palette__list {
   overflow-y: auto;
   padding: 8px;

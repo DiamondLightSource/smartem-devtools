@@ -627,6 +627,7 @@ interface SearchConfig {
     githubRepos: SearchRepoConfig[]
     enableGithubSearch: boolean
     shortcut: ShortcutConfig
+    rateLimitMessage: string
 }
 
 const searchConfig: SearchConfig = {
@@ -645,6 +646,7 @@ const searchConfig: SearchConfig = {
     requireMeta: false,
     requireShift: false,
   },
+  rateLimitMessage: 'GitHub search unavailable (rate limit)',
 }
 
 // =============================================================================
