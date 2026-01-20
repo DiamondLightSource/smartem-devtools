@@ -52,8 +52,10 @@ const SOURCE_LABELS: Record<SearchSourceType, string> = {
 export interface SearchPaletteProps {
   isOpen?: boolean
   onClose?: () => void
+  shortcutEnabled?: boolean
   shortcutKey?: string
   requireMeta?: boolean
+  requireShift?: boolean
   maxHeight?: number
   githubToken?: string
 }
@@ -61,8 +63,10 @@ export interface SearchPaletteProps {
 export const SearchPalette: React.FC<SearchPaletteProps> = ({
   isOpen: controlledIsOpen,
   onClose,
-  shortcutKey = 'k',
-  requireMeta = true,
+  shortcutEnabled = true,
+  shortcutKey = '/',
+  requireMeta = false,
+  requireShift = false,
   maxHeight = 480,
   githubToken,
 }) => {
@@ -120,22 +124,24 @@ export const SearchPalette: React.FC<SearchPaletteProps> = ({
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      const metaPressed = e.metaKey || e.ctrlKey
-
-      if (e.key.toLowerCase() === shortcutKey && (!requireMeta || metaPressed)) {
-        e.preventDefault()
-        setIsOpen(!isOpen)
-      }
-
       if (e.key === 'Escape' && isOpen) {
         e.preventDefault()
         setIsOpen(false)
+        return
+      }
+
+      if (!shortcutEnabled) return
+
+      const metaPressed = e.metaKey || e.ctrlKey
+      if (e.key === shortcutKey && (!requireMeta || metaPressed) && (!requireShift || e.shiftKey)) {
+        e.preventDefault()
+        setIsOpen(!isOpen)
       }
     }
 
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [isOpen, setIsOpen, shortcutKey, requireMeta])
+  }, [isOpen, setIsOpen, shortcutEnabled, shortcutKey, requireMeta, requireShift])
 
   useEffect(() => {
     if (isOpen) {

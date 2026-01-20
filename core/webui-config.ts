@@ -38,6 +38,18 @@ export interface SearchRepoConfig {
   label: string
 }
 
+
+export interface ShortcutConfig {
+  /** Enable keyboard shortcut */
+  enabled: boolean
+  /** Key to press (e.g., '/', 'k') */
+  key: string
+  /** Require Cmd (Mac) or Ctrl (Win/Linux) */
+  requireMeta: boolean
+  /** Require Shift modifier */
+  requireShift: boolean
+}
+
 export interface SearchConfig {
   /** Debounce delay in milliseconds for search queries */
   debounceMs: number
@@ -47,6 +59,8 @@ export interface SearchConfig {
   githubRepos: SearchRepoConfig[]
   /** Enable GitHub search (requires auth) */
   enableGithubSearch: boolean
+  /** Keyboard shortcut configuration */
+  shortcut: ShortcutConfig
 }
 
 export const searchConfig: SearchConfig = {
@@ -59,6 +73,12 @@ export const searchConfig: SearchConfig = {
     { owner: 'DiamondLightSource', repo: 'fandanGO-cryoem-dls', label: 'fandanGO-cryoem-dls' },
   ],
   enableGithubSearch: true,
+  shortcut: {
+    enabled: false, // known bug: "/" shortcut doesn't work in Firefox
+    key: '/',
+    requireMeta: false,
+    requireShift: false,
+  },
 }
 
 // =============================================================================
