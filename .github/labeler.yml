@@ -1,0 +1,30 @@
+component:fsrecorder:
+  - changed-files:
+      - any-glob-to-any-file: packages/smartem-fsrecorder/**
+
+component:smartem-workspace:
+  - changed-files:
+      - any-glob-to-any-file: packages/smartem-workspace/**
+
+docs:
+  - changed-files:
+      - any-glob-to-any-file:
+          - docs/**
+          - '**/*.md'
+
+ci:
+  - changed-files:
+      - any-glob-to-any-file:
+          - .github/**
+
+tools:
+  - changed-files:
+      - any-glob-to-any-file: tools/**
+
+webui:
+  - changed-files:
+      - any-glob-to-any-file: webui/**
+
+claude-code:
+  - changed-files:
+      - any-glob-to-any-file: claude-code/**
