@@ -170,6 +170,34 @@
   color: #9ca3af;
 }
 
+.search-palette__filter-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 0 4px;
+}
+
+.search-palette__filter-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-right: 4px;
+  padding: 4px 8px;
+}
+
+.search-palette__github-mark {
+  width: 12px;
+  height: 12px;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+.search-palette__filter--active .search-palette__github-mark {
+  opacity: 1;
+}
+
 .search-palette__rate-limit-banner {
   display: flex;
   align-items: center;

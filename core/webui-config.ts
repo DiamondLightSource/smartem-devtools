@@ -69,6 +69,8 @@ export interface SearchConfig {
   noResultsText: string
   /** Message shown when GitHub API rate limit is exceeded */
   rateLimitMessage: string
+  /** Display mode for GitHub filter chips: 'divider' | 'label' | 'icon' */
+  githubChipDisplay: 'divider' | 'label' | 'icon'
 }
 
 export const searchConfig: SearchConfig = {
@@ -91,6 +93,7 @@ export const searchConfig: SearchConfig = {
   emptyStateHint: 'Type to search documentation and GitHub',
   noResultsText: 'No results found',
   rateLimitMessage: 'GitHub search unavailable (rate limit)',
+  githubChipDisplay: 'icon',
 }
 
 // =============================================================================
