@@ -1,11 +1,26 @@
 import { Box } from '@mui/material'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { SearchPalette } from '~/components/widgets'
 import { webUiAppContents } from '~/config'
+
+function getShortcutHint(key: string, requireMeta: boolean, requireShift: boolean): string {
+  const isMac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad|iPod/.test(navigator.platform)
+  const parts: string[] = []
+  if (requireMeta) parts.push(isMac ? '\u2318' : 'Ctrl')
+  if (requireShift) parts.push('Shift')
+  parts.push(key.toUpperCase())
+  return parts.join('+')
+}
 
 export function OmniBoxBar() {
   const [isOpen, setIsOpen] = useState(false)
   const placeholder = webUiAppContents.config.header.omniboxPlaceholder
+  const { shortcut } = webUiAppContents.searchConfig
+
+  const shortcutHint = useMemo(
+    () => getShortcutHint(shortcut.key, shortcut.requireMeta, shortcut.requireShift),
+    [shortcut.key, shortcut.requireMeta, shortcut.requireShift]
+  )
 
   return (
     <Box>
@@ -31,11 +46,20 @@ export function OmniBoxBar() {
         <Box component="span" sx={{ fontSize: 14, opacity: 0.7 }}>
           {placeholder}
         </Box>
-        <Box component="kbd" sx={{ ml: 'auto', fontSize: 11, color: 'text.secondary' }}>
-          Ctrl+K
-        </Box>
+        {shortcut.enabled && (
+          <Box component="kbd" sx={{ ml: 'auto', fontSize: 11, color: 'text.secondary' }}>
+            {shortcutHint}
+          </Box>
+        )}
       </Box>
-      <SearchPalette isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <SearchPalette
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        shortcutEnabled={shortcut.enabled}
+        shortcutKey={shortcut.key}
+        requireMeta={shortcut.requireMeta}
+        requireShift={shortcut.requireShift}
+      />
     </Box>
   )
 }

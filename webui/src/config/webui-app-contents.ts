@@ -613,11 +613,20 @@ interface SearchRepoConfig {
   label: string
 }
 
+
+interface ShortcutConfig {
+    enabled: boolean
+    key: string
+    requireMeta: boolean
+    requireShift: boolean
+}
+
 interface SearchConfig {
     debounceMs: number
     resultsPerSource: number
     githubRepos: SearchRepoConfig[]
     enableGithubSearch: boolean
+    shortcut: ShortcutConfig
 }
 
 const searchConfig: SearchConfig = {
@@ -630,6 +639,12 @@ const searchConfig: SearchConfig = {
     { owner: 'DiamondLightSource', repo: 'fandanGO-cryoem-dls', label: 'fandanGO-cryoem-dls' },
   ],
   enableGithubSearch: true,
+  shortcut: {
+    enabled: false, // known bug: "/" shortcut doesn't work in Firefox
+    key: '/',
+    requireMeta: false,
+    requireShift: false,
+  },
 }
 
 // =============================================================================
