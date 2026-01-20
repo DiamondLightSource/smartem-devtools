@@ -315,6 +315,12 @@
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.1s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.search-palette__item:visited {
+  color: inherit;
 }
 
 .search-palette__item:hover {

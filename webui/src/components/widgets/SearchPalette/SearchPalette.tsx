@@ -433,20 +433,33 @@ export const SearchPalette: React.FC<SearchPaletteProps> = ({
                     globalIndex++
                     const isSelected = globalIndex === selectedIndex
                     const currentIndex = globalIndex
+                    const isExternal = result.source !== 'docs'
 
                     return (
-                      <div
+                      <a
                         key={result.id}
+                        href={result.href}
+                        target={isExternal ? '_blank' : undefined}
+                        rel={isExternal ? 'noopener noreferrer' : undefined}
                         className={`search-palette__item ${isSelected ? 'search-palette__item--selected' : ''}`}
                         data-selected={isSelected}
                         role="option"
                         aria-selected={isSelected}
                         tabIndex={isSelected ? 0 : -1}
-                        onClick={() => handleSelect(result)}
+                        onClick={(e) => {
+                          if (!isExternal) {
+                            e.preventDefault()
+                            navigate({ to: result.href })
+                          }
+                          setIsOpen(false)
+                        }}
                         onKeyDown={(e) => {
                           if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault()
-                            handleSelect(result)
+                            if (!isExternal) {
+                              e.preventDefault()
+                              navigate({ to: result.href })
+                            }
+                            setIsOpen(false)
                           }
                         }}
                         onMouseEnter={() => setSelectedIndex(currentIndex)}
@@ -460,7 +473,7 @@ export const SearchPalette: React.FC<SearchPaletteProps> = ({
                           )}
                         </div>
                         <span className="search-palette__item-source">{result.sourceLabel}</span>
-                        {result.source !== 'docs' && (
+                        {isExternal && (
                           <svg
                             className="search-palette__external-icon"
                             viewBox="0 0 20 20"
@@ -471,7 +484,7 @@ export const SearchPalette: React.FC<SearchPaletteProps> = ({
                             <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
                           </svg>
                         )}
-                      </div>
+                      </a>
                     )
                   })}
                 </div>
