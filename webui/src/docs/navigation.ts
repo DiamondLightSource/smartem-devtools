@@ -112,6 +112,10 @@ export const docsNavigation: NavItem[] = [
             title: '12. Audience-Based Documentation Structure',
             href: '/docs/decision-records/decisions/0012-audience-based-documentation-structure',
           },
+          {
+            title: '13. EPUPlayer Release Strategy',
+            href: '/docs/decision-records/decisions/0013-epuplayer-release-strategy',
+          },
         ],
       },
       {

@@ -5,9 +5,11 @@ import { fileURLToPath } from 'node:url'
 // Sync documentation from docs/ to webui/src/docs/
 import { syncDocs } from './generate-mdx-docs.js'
 import { generateNavigation } from './generate-nav-from-docs.js'
+import { generateSearchIndex } from './generate-search-index.js'
 
 syncDocs()
 generateNavigation()
+generateSearchIndex()
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const projectRoot = resolve(__dirname, '..')
@@ -164,6 +166,7 @@ export interface WebUiAppContents {
   microscopes: CryoEMInstrument[]
   config: WebUiConfig
   featureFlags: FeatureFlags
+  searchConfig: SearchConfig
 }
 
 export const webUiAppContents: WebUiAppContents = {
@@ -172,6 +175,7 @@ export const webUiAppContents: WebUiAppContents = {
   microscopes: microscopeList,
   config: webUiConfig,
   featureFlags: featureFlags,
+  searchConfig: searchConfig,
 }
 
 export default webUiAppContents
