@@ -1,2 +1,2 @@
+export { CardGrid, DocCard } from './Card'
 export { MDXProvider } from './MDXProvider'
-export { DocCard, CardGrid } from './Card'
