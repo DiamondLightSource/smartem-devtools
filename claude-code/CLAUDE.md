@@ -21,7 +21,7 @@ ERIC is a multi-repo workspace for cryo-electron microscopy (cryo-EM) research s
 - **EPU**: Proprietary desktop software from ThermoFisher shipped with microscopes. Runs on EPU workstations. Users interact with EPU directly; SmartEM is an optional enhancement alongside it.
 - **EPU Workstation**: Windows machine running EPU software, located near the microscope.
 - **AthenaAPI**: REST API exposed by ThermoFisher microscopes. Agent is the client; microscope is the server. Used to relay recommendations as instructions to the microscope.
-- **FSRecorder**: Tool that records/simulates EPU filesystem output for dev/test purposes.
+- **EPUPlayer**: Tool that records/simulates EPU filesystem output for dev/test purposes.
 
 ## Top-Level Structure
 
@@ -129,7 +129,7 @@ Developer tooling, documentation, and workspace configuration for the SmartEM ec
 - Kubernetes manifests for dev/stage/prod (k8s/)
 - K8s development scripts (tools/k8s/)
 - E2E test scripts (tools/e2e/)
-- FSRecorder for EPU filesystem recording/playback (tools/fsrecorder/)
+- EPUPlayer for EPU filesystem recording/playback (packages/smartem-epuplayer/)
 
 **Key directories:**
 - `docs/` - Markdown documentation, ADRs, how-to guides (synced to webui as MDX)
@@ -137,7 +137,7 @@ Developer tooling, documentation, and workspace configuration for the SmartEM ec
 - `webui/` - React developer dashboard
 - `core/` - Repository and workspace config definitions
 - `tools/e2e/` - E2E test runners for SmartEM (single and multi-microscope)
-- `tools/fsrecorder/` - EPU filesystem recording/playback for dev/test
+- `packages/smartem-epuplayer/` - EPU filesystem recording/playback for dev/test
 
 **Tech**: Python 3.11+, Node.js, React 19, Vite, TypeScript
 

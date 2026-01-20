@@ -265,12 +265,12 @@ The watch command is designed to gracefully handle different timing scenarios re
 
 ### Testing with Simulated EPU Data
 
-For development and testing, use the fsrecorder tool to simulate realistic EPU file writing patterns:
+For development and testing, use the epuplayer tool to simulate realistic EPU file writing patterns:
 
 #### Recording EPU Patterns
 ```bash
 # Record filesystem events from an existing EPU dataset
-python tools/fsrecorder/fsrecorder.py record \
+epuplayer record \
   ../smartem-decisions-test-datasets/epu-Supervisor_20250326_145351_30_nt33824-10_grid2_1in5dil \
   ../test-recording.tar.gz
 ```
@@ -278,7 +278,7 @@ python tools/fsrecorder/fsrecorder.py record \
 #### Replaying EPU Patterns
 ```bash
 # Replay recorded events with accelerated timing
-python tools/fsrecorder/fsrecorder.py replay \
+epuplayer replay \
   ../test-recording.tar.gz \
   ../test-dir \
   --fast
@@ -308,7 +308,7 @@ python -m smartem_agent watch ../test-dir --dry-run
 >
 > **Missing `EpuSession.dm`**: Will prevent proper grid instantiation and data processing.
 
-> **fsrecorder Tool**: The `tools/fsrecorder/` utility provides accurate simulation of EPU file writing patterns with proper timing and ordering, making it ideal for development and testing scenarios.
+> **fsrecorder Tool**: The `packages/smartem-epuplayer/` utility provides accurate simulation of EPU file writing patterns with proper timing and ordering, making it ideal for development and testing scenarios.
 
 ### Real-Time Communication Features
 

@@ -77,7 +77,7 @@ TEST_DIR="logs/e2e-tests/$(date +%Y-%m-%d_%H%M%S)_test-type-name"
 mkdir -p "$TEST_DIR/logs"
 
 # 4. Kill any running processes
-pkill -f "smartem_backend\|smartem_agent\|fsrecorder\|uvicorn\|fastapi" || true
+pkill -f "smartem_backend\|smartem_agent\|epuplayer\|uvicorn\|fastapi" || true
 
 # 5. Restart RabbitMQ (ensures empty queue)
 kubectl rollout restart deployment/rabbitmq -n smartem-decisions
@@ -97,7 +97,7 @@ python -m smartem_backend.consumer -vv 2>&1 | tee "$TEST_DIR/logs/consumer.log" 
 sleep 3
 
 # Run playback (default is --fast mode, no flag needed)
-python ./tools/fsrecorder/fsrecorder.py replay \
+epuplayer replay \
   ../../testdata/recordings/bi37708-42_fsrecord.tar.gz \
   ../epu-test-dir 2>&1 | tee "$TEST_DIR/logs/playback.log"
 
@@ -430,14 +430,14 @@ python -m smartem_agent watch \
 - `--sse-timeout INTEGER`: SSE connection timeout in seconds (default: 30)
 - `--heartbeat-interval INTEGER`: Agent heartbeat interval in seconds (default: 60)
 
-### Microscope Playback (fsrecorder)
+### Microscope Playback (epuplayer)
 
-**Tool location**: `./tools/fsrecorder/fsrecorder.py` (relative to repo root)
+**Tool location**: `epuplayer` CLI (install via `pip install smartem-epuplayer`)
 
 **Command syntax**:
 ```bash
 source .venv/bin/activate
-python ./tools/fsrecorder/fsrecorder.py replay \
+epuplayer replay \
   ../../testdata/recordings/bi37708-42_fsrecord.tar.gz \
   ../epu-test-dir 2>&1 | tee logs/e2e-tests/TIMESTAMP/logs/playback.log
 ```
@@ -464,13 +464,13 @@ python ./tools/fsrecorder/fsrecorder.py replay \
 **Example usage**:
 ```bash
 # Default fast mode (no flag needed)
-python ./tools/fsrecorder/fsrecorder.py replay recording.tar.gz ../output-dir
+epuplayer replay recording.tar.gz ../output-dir
 
 # Dev mode for rapid testing
-python ./tools/fsrecorder/fsrecorder.py replay --dev-mode recording.tar.gz ../output-dir
+epuplayer replay --dev-mode recording.tar.gz ../output-dir
 
 # Exact timing for debugging
-python ./tools/fsrecorder/fsrecorder.py replay --exact recording.tar.gz ../output-dir
+epuplayer replay --exact recording.tar.gz ../output-dir
 ```
 
 ## Test Preparation Workflow
@@ -501,7 +501,7 @@ mkdir -p "$TEST_DIR/logs"
 pkill -f smartem_backend.api
 pkill -f smartem_backend.consumer
 pkill -f smartem_agent
-pkill -f fsrecorder
+pkill -f epuplayer
 pkill -f uvicorn
 pkill -f fastapi
 
@@ -550,7 +550,7 @@ sleep 3
 
 # 2. Run playback to completion (no agent watching yet)
 # NOTE: Recording must be a .tar.gz file (e.g., bi37708-42_fsrecord.tar.gz)
-python ./tools/fsrecorder/fsrecorder.py replay \
+epuplayer replay \
   ../../testdata/recordings/bi37708-42_fsrecord.tar.gz \
   ../epu-test-dir 2>&1 | tee "$TEST_DIR/logs/playback.log"
 
@@ -582,7 +582,7 @@ python -m smartem_agent watch \
 
 # 3. Begin playback after agent is watching
 # NOTE: Recording must be a .tar.gz file (e.g., bi37708-42_fsrecord.tar.gz)
-python ./tools/fsrecorder/fsrecorder.py replay \
+epuplayer replay \
   ../../testdata/recordings/bi37708-42_fsrecord.tar.gz \
   ../epu-test-dir 2>&1 | tee "$TEST_DIR/logs/playback.log"
 ```
@@ -606,7 +606,7 @@ sleep 3
 
 # 2. Start playback first
 # NOTE: Recording must be a .tar.gz file (e.g., bi37708-42_fsrecord.tar.gz)
-python ./tools/fsrecorder/fsrecorder.py replay \
+epuplayer replay \
   ../../testdata/recordings/bi37708-42_fsrecord.tar.gz \
   ../epu-test-dir 2>&1 | tee "$TEST_DIR/logs/playback.log" &
 
@@ -761,10 +761,10 @@ A successful test should demonstrate:
 pkill -f smartem_backend.api
 pkill -f smartem_backend.consumer
 pkill -f smartem_agent
-pkill -f fsrecorder
+pkill -f epuplayer
 
 # Verify processes stopped
-pgrep -f "smartem_backend|smartem_agent|fsrecorder"
+pgrep -f "smartem_backend|smartem_agent|epuplayer"
 ```
 
 ### Optional: Full Teardown

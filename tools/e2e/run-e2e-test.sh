@@ -40,7 +40,7 @@ echo "===================================="
 cleanup() {
     echo ""
     echo "Cleaning up background processes..."
-    pkill -f "smartem_backend|smartem_agent|fsrecorder|uvicorn" || true
+    pkill -f "smartem_backend|smartem_agent|epuplayer|uvicorn" || true
     echo "Cleaning up playback data directory..."
     rm -rf "$EPU_DIR" || true
     echo "Cleanup complete"
@@ -107,7 +107,7 @@ AGENT_PID=$!
 sleep 2
 
 echo "[9/9] Starting playback..."
-uv run python "$TOOLS_DIR/fsrecorder/fsrecorder.py" replay \
+uv run epuplayer replay \
     --max-delay "$MAX_DELAY" \
     "$RECORDING" \
     "$EPU_DIR" \

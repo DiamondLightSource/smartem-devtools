@@ -48,7 +48,7 @@ declare -a AGENT_PIDS
 cleanup() {
     echo ""
     echo "Cleaning up background processes..."
-    pkill -f "smartem_backend|smartem_agent|fsrecorder|uvicorn" || true
+    pkill -f "smartem_backend|smartem_agent|epuplayer|uvicorn" || true
 
     echo "Cleaning up playback data directories..."
     for epu_dir in "${EPU_DIRS[@]}"; do
@@ -148,7 +148,7 @@ for ((i=1; i<=NUM_MICROSCOPES; i++)); do
     epu_dir="${EPU_DIRS[$((i-1))]}"
 
     echo "  Starting playback $i to $epu_dir"
-    uv run python "$TOOLS_DIR/fsrecorder/fsrecorder.py" replay \
+    uv run epuplayer replay \
         --max-delay "$MAX_DELAY" \
         "$RECORDING" \
         "$epu_dir" \

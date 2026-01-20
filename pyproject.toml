@@ -7,6 +7,6 @@ requires-python = ">=3.12"
 dependencies = []
 
 [project.optional-dependencies]
-fsrecorder = [
+epuplayer = [
     "watchdog>=4.0.0,<7.0.0",
 ]

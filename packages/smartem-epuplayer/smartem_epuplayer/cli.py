@@ -6,8 +6,8 @@ import tarfile
 import tempfile
 from pathlib import Path
 
-from .recorder import FSRecorder
-from .replayer import FSReplayer
+from .recorder import EPURecorder
+from .replayer import EPUReplayer
 
 
 def main():
@@ -93,7 +93,7 @@ def main():
     args = parser.parse_args()
 
     if args.command == "record":
-        recorder = FSRecorder(
+        recorder = EPURecorder(
             args.directory,
             args.output,
             args.skip_binary_content,
@@ -120,7 +120,7 @@ def main():
         recorder.start_recording()
 
     elif args.command == "replay":
-        replayer = FSReplayer(args.recording, args.target)
+        replayer = EPUReplayer(args.recording, args.target)
 
         # Handle preset modes
         if args.dev_mode:

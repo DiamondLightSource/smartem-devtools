@@ -4,7 +4,7 @@ import sys
 
 def test_cli_help():
     result = subprocess.run(
-        [sys.executable, "-m", "smartem_fsrecorder", "--help"],
+        [sys.executable, "-m", "smartem_epuplayer", "--help"],
         capture_output=True,
         text=True,
     )
@@ -14,7 +14,7 @@ def test_cli_help():
 
 def test_cli_record_help():
     result = subprocess.run(
-        [sys.executable, "-m", "smartem_fsrecorder", "record", "--help"],
+        [sys.executable, "-m", "smartem_epuplayer", "record", "--help"],
         capture_output=True,
         text=True,
     )
@@ -25,7 +25,7 @@ def test_cli_record_help():
 
 def test_cli_replay_help():
     result = subprocess.run(
-        [sys.executable, "-m", "smartem_fsrecorder", "replay", "--help"],
+        [sys.executable, "-m", "smartem_epuplayer", "replay", "--help"],
         capture_output=True,
         text=True,
     )
@@ -38,7 +38,7 @@ def test_cli_replay_help():
 
 def test_cli_info_help():
     result = subprocess.run(
-        [sys.executable, "-m", "smartem_fsrecorder", "info", "--help"],
+        [sys.executable, "-m", "smartem_epuplayer", "info", "--help"],
         capture_output=True,
         text=True,
     )
@@ -47,9 +47,9 @@ def test_cli_info_help():
 
 
 def test_module_import():
-    from smartem_fsrecorder import FSEvent, FSRecorder, FSReplayer, __version__
+    from smartem_epuplayer import EPUEvent, EPURecorder, EPUReplayer, __version__
 
     assert __version__ == "1.0.0"
-    assert FSEvent is not None
-    assert FSRecorder is not None
-    assert FSReplayer is not None
+    assert EPUEvent is not None
+    assert EPURecorder is not None
+    assert EPUReplayer is not None
