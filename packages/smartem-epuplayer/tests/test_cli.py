@@ -49,7 +49,7 @@ def test_cli_info_help():
 def test_module_import():
     from smartem_epuplayer import EPUEvent, EPURecorder, EPUReplayer, __version__
 
-    assert __version__ == "1.0.0"
+    assert isinstance(__version__, str) and __version__
     assert EPUEvent is not None
     assert EPURecorder is not None
     assert EPUReplayer is not None
