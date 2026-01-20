@@ -1,3 +1,7 @@
+# Auto-labeling configuration for PRs based on changed files
+# Labels must exist in core/github-labels-config.ts to be synced properly
+
+# Component labels (packages)
 component:epuplayer:
   - changed-files:
       - any-glob-to-any-file: packages/smartem-epuplayer/**
@@ -6,25 +10,30 @@ component:smartem-workspace:
   - changed-files:
       - any-glob-to-any-file: packages/smartem-workspace/**
 
-docs:
+# Devtools sub-component labels
+smartem-devtools:webui:
+  - changed-files:
+      - any-glob-to-any-file: webui/**
+
+smartem-devtools:claude:
+  - changed-files:
+      - any-glob-to-any-file: claude-code/**
+
+smartem-devtools:e2e-test:
+  - changed-files:
+      - any-glob-to-any-file: tools/e2e/**
+
+# Type-of-work labels
+documentation:
   - changed-files:
       - any-glob-to-any-file:
           - docs/**
           - '**/*.md'
 
-ci:
+devops:
   - changed-files:
       - any-glob-to-any-file:
           - .github/**
-
-tools:
-  - changed-files:
-      - any-glob-to-any-file: tools/**
-
-webui:
-  - changed-files:
-      - any-glob-to-any-file: webui/**
-
-claude-code:
-  - changed-files:
-      - any-glob-to-any-file: claude-code/**
+          - tools/k8s/**
+          - tools/github/**
+          - k8s/**
