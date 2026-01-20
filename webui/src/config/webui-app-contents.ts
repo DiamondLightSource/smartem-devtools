@@ -65,6 +65,10 @@ const systemComponents: GitHubLabel[] = [
   { name: 'smartem-devtools:webui', description: 'Developer dashboard web interface', color: 'bf3989' },
   { name: 'smartem-devtools:claude', description: 'Claude Code configuration, skills, and prompts', color: 'db61a2' },
   { name: 'smartem-devtools:e2e-test', description: 'End-to-end testing infrastructure and scenarios', color: 'f09bc8' },
+
+  // Package component labels
+  { name: 'component:epuplayer', description: 'EPUPlayer filesystem recording and replay tool', color: 'f09bc8' },
+  { name: 'component:smartem-workspace', description: 'smartem-workspace CLI tool for multi-repo management', color: 'f09bc8' },
 ]
 
 const repos: RepoLabelConfig[] = [
@@ -117,7 +121,7 @@ interface ReposAndRefsConfig {
 
 const reposAndRefsConfig: ReposAndRefsConfig = {
   links: {
-    docs: "https://diamondlightsource.github.io/smartem-decisions/",
+    docs: "https://diamondlightsource.github.io/smartem-devtools/",
     projectBoard: "https://github.com/orgs/DiamondLightSource/projects/51/views/1",
   },
   repositories: [
@@ -600,6 +604,35 @@ const featureFlags: FeatureFlags = {
 }
 
 // =============================================================================
+// Search Configuration
+// =============================================================================
+
+interface SearchRepoConfig {
+  owner: string
+  repo: string
+  label: string
+}
+
+interface SearchConfig {
+    debounceMs: number
+    resultsPerSource: number
+    githubRepos: SearchRepoConfig[]
+    enableGithubSearch: boolean
+}
+
+const searchConfig: SearchConfig = {
+  debounceMs: 300,
+  resultsPerSource: 10,
+  githubRepos: [
+    { owner: 'DiamondLightSource', repo: 'smartem-decisions', label: 'smartem-decisions' },
+    { owner: 'DiamondLightSource', repo: 'smartem-frontend', label: 'smartem-frontend' },
+    { owner: 'DiamondLightSource', repo: 'smartem-devtools', label: 'smartem-devtools' },
+    { owner: 'DiamondLightSource', repo: 'fandanGO-cryoem-dls', label: 'fandanGO-cryoem-dls' },
+  ],
+  enableGithubSearch: true,
+}
+
+// =============================================================================
 // Header Configuration
 // =============================================================================
 
@@ -644,6 +677,7 @@ export interface WebUiAppContents {
   microscopes: CryoEMInstrument[]
   config: WebUiConfig
   featureFlags: FeatureFlags
+  searchConfig: SearchConfig
 }
 
 export const webUiAppContents: WebUiAppContents = {
@@ -652,6 +686,7 @@ export const webUiAppContents: WebUiAppContents = {
   microscopes: microscopeList,
   config: webUiConfig,
   featureFlags: featureFlags,
+  searchConfig: searchConfig,
 }
 
 export default webUiAppContents

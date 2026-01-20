@@ -32,6 +32,7 @@
     "@tanstack/router-devtools": "^1.151.6",
     "@tanstack/router-vite-plugin": "^1.151.6",
     "@vitejs/plugin-react": "^5.1.2",
+    "minisearch": "^7.2.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "rehype-pretty-code": "^0.14.1",

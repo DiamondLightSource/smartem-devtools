@@ -29,6 +29,39 @@ export const featureFlags: FeatureFlags = {
 }
 
 // =============================================================================
+// Search Configuration
+// =============================================================================
+
+export interface SearchRepoConfig {
+  owner: string
+  repo: string
+  label: string
+}
+
+export interface SearchConfig {
+  /** Debounce delay in milliseconds for search queries */
+  debounceMs: number
+  /** Maximum results to return per source */
+  resultsPerSource: number
+  /** GitHub repositories to search */
+  githubRepos: SearchRepoConfig[]
+  /** Enable GitHub search (requires auth) */
+  enableGithubSearch: boolean
+}
+
+export const searchConfig: SearchConfig = {
+  debounceMs: 300,
+  resultsPerSource: 10,
+  githubRepos: [
+    { owner: 'DiamondLightSource', repo: 'smartem-decisions', label: 'smartem-decisions' },
+    { owner: 'DiamondLightSource', repo: 'smartem-frontend', label: 'smartem-frontend' },
+    { owner: 'DiamondLightSource', repo: 'smartem-devtools', label: 'smartem-devtools' },
+    { owner: 'DiamondLightSource', repo: 'fandanGO-cryoem-dls', label: 'fandanGO-cryoem-dls' },
+  ],
+  enableGithubSearch: true,
+}
+
+// =============================================================================
 // Header Configuration
 // =============================================================================
 

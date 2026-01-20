@@ -1,32 +1,7 @@
 import { Box } from '@mui/material'
 import { useState } from 'react'
-import { CommandPalette, type CommandGroup } from '~/components/widgets'
+import { SearchPalette } from '~/components/widgets'
 import { webUiAppContents } from '~/config'
-
-const placeholderCommands: CommandGroup[] = [
-  {
-    id: 'actions',
-    label: 'Quick Actions',
-    items: [
-      {
-        id: 'new',
-        label: 'New Item',
-        onSelect: () => {},
-      },
-      {
-        id: 'save',
-        label: 'Save Changes',
-        shortcut: ['Ctrl', 'S'],
-        onSelect: () => {},
-      },
-      {
-        id: 'share',
-        label: 'Share...',
-        onSelect: () => {},
-      },
-    ],
-  },
-]
 
 export function OmniBoxBar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -60,12 +35,7 @@ export function OmniBoxBar() {
           Ctrl+K
         </Box>
       </Box>
-      <CommandPalette
-        groups={placeholderCommands}
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        placeholder={placeholder}
-      />
+      <SearchPalette isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </Box>
   )
 }
