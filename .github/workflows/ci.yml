@@ -31,6 +31,9 @@ jobs:
       - name: Lint
         run: npm run lint
 
+      - name: Prebuild (generate navigation)
+        run: npm run prebuild
+
       - name: Type check
         run: npm run typecheck
 
