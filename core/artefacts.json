@@ -23,17 +23,24 @@
     },
     {
       "id": "workspace",
-      "label": "SmartEM Dev Workspace",
+      "label": "SmartEM Workspace CLI",
       "url": "https://pypi.org/project/smartem-workspace/",
-      "description": "CLI tool to scaffold and manage a local development environment",
-      "command": "uvx smartem-workspace --help"
+      "description": "CLI tool to automate multi-repo workspace setup",
+      "command": "uvx smartem-workspace --help",
+      "links": [
+        { "label": "PyPI", "url": "https://pypi.org/project/smartem-workspace/" }
+      ]
     },
     {
-      "id": "fsrecorder",
-      "label": "FSRecorder Util",
-      "url": "https://github.com/DiamondLightSource/smartem-devtools/actions/workflows/build_win_fsrecorder.yml",
-      "description": "FSRecorder Utility packaged as a Windows 10 executable (download from workflow artifacts)",
-      "command": ""
+      "id": "epuplayer",
+      "label": "EPU Player",
+      "url": "https://github.com/DiamondLightSource/smartem-devtools/releases",
+      "description": "Filesystem recorder/replayer for EPU output",
+      "command": "uvx smartem-epuplayer --help",
+      "links": [
+        { "label": "GitHub Releases", "url": "https://github.com/DiamondLightSource/smartem-devtools/releases" },
+        { "label": "PyPI", "url": "https://pypi.org/project/smartem-epuplayer/" }
+      ]
     }
   ]
 }

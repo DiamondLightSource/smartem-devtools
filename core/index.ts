@@ -67,12 +67,18 @@ export interface ReposConfig {
 // Artefacts Types (artefacts.json)
 // =============================================================================
 
+export interface ArtefactLink {
+  label: string
+  url: string
+}
+
 export interface ArtefactItem {
   id: string
   label: string
   url: string
   description?: string
   command?: string
+  links?: ArtefactLink[]
 }
 
 export interface ArtefactsConfig {

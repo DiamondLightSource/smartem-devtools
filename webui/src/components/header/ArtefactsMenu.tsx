@@ -104,11 +104,7 @@ export function ArtefactsMenu() {
         {items.map((item) => (
           <MenuItem
             key={item.id}
-            component="a"
-            href={item.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={handleClose}
+            disableRipple
             sx={{
               display: 'flex',
               flexDirection: 'column',
@@ -116,16 +112,28 @@ export function ArtefactsMenu() {
               py: 1.5,
               px: 2,
               color: 'white',
+              cursor: 'default',
+              userSelect: 'text',
               '&:hover': {
                 backgroundColor: 'rgba(255, 255, 255, 0.1)',
               },
             }}
           >
             <Box
+              component="a"
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={handleClose}
               sx={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: 0.75,
+                color: 'inherit',
+                textDecoration: 'none',
+                '&:hover': {
+                  textDecoration: 'underline',
+                },
               }}
             >
               <Box
@@ -157,6 +165,32 @@ export function ArtefactsMenu() {
                 sx={{ mt: 1, opacity: 0.7 }}
               >
                 <CopyCodeBox code={item.command} />
+              </Box>
+            )}
+            {item.links && item.links.length > 0 && (
+              <Box sx={{ display: 'flex', gap: 1, mt: 1, pl: 2.5 }}>
+                {item.links.map((link) => (
+                  <Box
+                    key={link.label}
+                    component="a"
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={handleClose}
+                    sx={{
+                      fontSize: '0.7rem',
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      textDecoration: 'none',
+                      px: 1,
+                      py: 0.25,
+                      borderRadius: 0.5,
+                      border: '1px solid rgba(255, 255, 255, 0.3)',
+                      '&:hover': { backgroundColor: 'rgba(255, 255, 255, 0.1)' },
+                    }}
+                  >
+                    {link.label}
+                  </Box>
+                ))}
               </Box>
             )}
           </MenuItem>
