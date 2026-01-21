@@ -1,11 +1,11 @@
 ---
-name: Database Admin
+name: Database
 description: PostgreSQL administration, Alembic migrations, schema design, and database troubleshooting for smartem-decisions
 version: 1.0.0
 tags: [database, postgresql, alembic, migrations, schema]
 ---
 
-# Database Admin Skill
+# Database Skill
 
 PostgreSQL database administration and Alembic migration management for the SmartEM system.
 
