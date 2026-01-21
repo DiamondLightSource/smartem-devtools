@@ -4,14 +4,50 @@ import signal
 import sys
 import tarfile
 import tempfile
+from dataclasses import dataclass
 from pathlib import Path
 
+from smartem_epuplayer import __version__
 from smartem_epuplayer.recorder import EPURecorder
 from smartem_epuplayer.replayer import EPUReplayer
 
 
+@dataclass
+class OutputConfig:
+    no_colors: bool = False
+    plain: bool = False
+    verbose: bool = False
+    quiet: bool = False
+
+
+output_config = OutputConfig()
+
+
+def print_msg(msg: str, verbose_only: bool = False) -> None:
+    if output_config.quiet:
+        return
+    if verbose_only and not output_config.verbose:
+        return
+    print(msg)
+
+
 def main():
     parser = argparse.ArgumentParser(description="Filesystem Recording and Replay Tool")
+    parser.add_argument(
+        "--version",
+        "-V",
+        action="version",
+        version=f"epuplayer {__version__}",
+    )
+
+    output_group = parser.add_argument_group("output options")
+    output_group.add_argument("--no-colors", action="store_true", help="Disable colored output")
+    output_group.add_argument("--plain", action="store_true", help="Plain mode: no color, minimal output")
+
+    verbosity = output_group.add_mutually_exclusive_group()
+    verbosity.add_argument("-v", "--verbose", action="store_true", help="Verbose output")
+    verbosity.add_argument("-q", "--quiet", action="store_true", help="Suppress non-essential output")
+
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
 
     # Record command
@@ -92,6 +128,11 @@ def main():
 
     args = parser.parse_args()
 
+    output_config.no_colors = getattr(args, "no_colors", False)
+    output_config.plain = getattr(args, "plain", False)
+    output_config.verbose = getattr(args, "verbose", False)
+    output_config.quiet = getattr(args, "quiet", False)
+
     if args.command == "record":
         recorder = EPURecorder(
             args.directory,
@@ -101,15 +142,14 @@ def main():
             args.force_binary_extensions,
         )
 
-        # Print binary content handling info
         if args.skip_binary_content:
-            print("Binary content handling: Skip binary files (replace with placeholders)")
+            print_msg("Binary content handling: Skip binary files (replace with placeholders)")
             if args.force_text_extensions:
-                print(f"Force text extensions: {', '.join(args.force_text_extensions)}")
+                print_msg(f"Force text extensions: {', '.join(args.force_text_extensions)}")
             if args.force_binary_extensions:
-                print(f"Force binary extensions: {', '.join(args.force_binary_extensions)}")
+                print_msg(f"Force binary extensions: {', '.join(args.force_binary_extensions)}")
         else:
-            print("Binary content handling: Store full content of all files")
+            print_msg("Binary content handling: Store full content of all files")
 
         # Handle Ctrl+C gracefully
         def signal_handler(sig, frame):
@@ -122,9 +162,8 @@ def main():
     elif args.command == "replay":
         replayer = EPUReplayer(args.recording, args.target)
 
-        # Handle preset modes
         if args.dev_mode:
-            print("Development mode: maximum acceleration for fast testing")
+            print_msg("Development mode: maximum acceleration for fast testing")
             replayer.replay(
                 speed_multiplier=1000.0,
                 verify_integrity=not args.no_verify,
@@ -133,7 +172,7 @@ def main():
                 skip_unreadable=args.skip_unreadable,
             )
         elif args.fast:
-            print("Fast mode: 100x speed with reasonable delays")
+            print_msg("Fast mode: 100x speed with reasonable delays")
             replayer.replay(
                 speed_multiplier=100.0,
                 verify_integrity=not args.no_verify,
@@ -142,7 +181,7 @@ def main():
                 skip_unreadable=args.skip_unreadable,
             )
         elif args.exact:
-            print("Exact mode: preserving original timing")
+            print_msg("Exact mode: preserving original timing")
             replayer.replay(
                 speed_multiplier=1.0,
                 verify_integrity=not args.no_verify,
@@ -155,8 +194,7 @@ def main():
             has_custom_settings = args.speed != 1.0 or args.max_delay is not None or args.burst
 
             if has_custom_settings:
-                # User specified custom settings - use them
-                print(f"Custom mode: {args.speed}x speed")
+                print_msg(f"Custom mode: {args.speed}x speed")
                 replayer.replay(
                     speed_multiplier=args.speed,
                     verify_integrity=not args.no_verify,
@@ -165,8 +203,7 @@ def main():
                     skip_unreadable=args.skip_unreadable,
                 )
             else:
-                # No preset or custom settings specified - default to fast mode
-                print("Fast mode (default): 100x speed with reasonable delays")
+                print_msg("Fast mode (default): 100x speed with reasonable delays")
                 replayer.replay(
                     speed_multiplier=100.0,
                     verify_integrity=not args.no_verify,
@@ -177,7 +214,7 @@ def main():
 
     elif args.command == "info":
         if not Path(args.recording).exists():
-            print(f"Recording file not found: {args.recording}")
+            print(f"Recording file not found: {args.recording}", file=sys.stderr)
             sys.exit(1)
 
         # Load recording data
@@ -192,7 +229,7 @@ def main():
 
                 recording_file = temp_path / "recording.json"
                 if not recording_file.exists():
-                    print("Invalid archive: missing recording.json")
+                    print("Invalid archive: missing recording.json", file=sys.stderr)
                     sys.exit(1)
 
                 data = json.loads(recording_file.read_text())
