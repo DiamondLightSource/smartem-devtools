@@ -1,5 +1,10 @@
 # smartem-epuplayer
 
+[![PyPI version](https://img.shields.io/pypi/v/smartem-epuplayer)](https://pypi.org/project/smartem-epuplayer/)
+[![Python Versions](https://img.shields.io/pypi/pyversions/smartem-epuplayer)](https://pypi.org/project/smartem-epuplayer/)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![CI](https://github.com/DiamondLightSource/smartem-devtools/actions/workflows/release-smartem-epuplayer.yml/badge.svg)](https://github.com/DiamondLightSource/smartem-devtools/actions/workflows/release-smartem-epuplayer.yml)
+
 EPU Recording and Replay Tool for cryo-EM development and testing.
 
 Records all filesystem changes in a directory and can replay them elsewhere with configurable timing. Cross-platform support for Windows and Linux with diff-based incremental recording.

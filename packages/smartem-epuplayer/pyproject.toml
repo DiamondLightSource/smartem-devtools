@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "smartem-epuplayer"
-version = "1.0.2"
+version = "1.1.0"
 description = "Filesystem Recording and Replay Tool for cryo-EM development and testing"
 readme = "README.md"
 license = "Apache-2.0"
