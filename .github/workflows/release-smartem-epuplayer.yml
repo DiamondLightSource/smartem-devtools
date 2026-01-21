@@ -1,4 +1,4 @@
-name: EPUPlayer Release
+name: Release smartem-epuplayer
 
 on:
   push:
@@ -6,11 +6,11 @@ on:
     tags: ['epuplayer-v*']
     paths:
       - 'packages/smartem-epuplayer/**'
-      - '.github/workflows/release-epuplayer.yml'
+      - '.github/workflows/release-smartem-epuplayer.yml'
   pull_request:
     paths:
       - 'packages/smartem-epuplayer/**'
-      - '.github/workflows/release-epuplayer.yml'
+      - '.github/workflows/release-smartem-epuplayer.yml'
   workflow_dispatch:
     inputs:
       release_type:
@@ -41,6 +41,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Determine version
         id: version
@@ -48,6 +50,16 @@ jobs:
           # Extract base version from pyproject.toml
           BASE_VERSION=$(grep -m1 'version = ' $PACKAGE_DIR/pyproject.toml | sed 's/version = "\(.*\)"/\1/')
           echo "Base version: $BASE_VERSION"
+
+          # Validate version matches __init__.py
+          INIT_VERSION=$(grep -m1 '__version__ = ' $PACKAGE_DIR/smartem_epuplayer/__init__.py | sed 's/__version__ = "\(.*\)"/\1/')
+          echo "Init version: $INIT_VERSION"
+
+          if [[ "$BASE_VERSION" != "$INIT_VERSION" ]]; then
+            echo "::error::Version mismatch! pyproject.toml=$BASE_VERSION, __init__.py=$INIT_VERSION"
+            exit 1
+          fi
+          echo "Version validation passed: $BASE_VERSION"
 
           IS_STABLE="false"
           IS_RC="false"
@@ -64,10 +76,20 @@ jobs:
             IS_STABLE="true"
             SHOULD_RELEASE="true"
           elif [[ "$GITHUB_REF" == refs/heads/main ]]; then
-            # RC release on push to main
-            VERSION="${BASE_VERSION}rc${{ github.run_number }}"
-            IS_RC="true"
-            SHOULD_RELEASE="true"
+            # Check if stable tag already exists for this version
+            STABLE_TAG="epuplayer-v${BASE_VERSION}"
+            if git tag -l "$STABLE_TAG" | grep -q "$STABLE_TAG"; then
+              echo "Stable tag $STABLE_TAG already exists. Skipping RC release."
+              VERSION="$BASE_VERSION"
+              IS_RC="false"
+              IS_STABLE="false"
+              SHOULD_RELEASE="false"
+            else
+              # RC release on push to main
+              VERSION="${BASE_VERSION}rc${{ github.run_number }}"
+              IS_RC="true"
+              SHOULD_RELEASE="true"
+            fi
           elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             if [[ "${{ inputs.release_type }}" == "stable" ]]; then
               VERSION="$BASE_VERSION"
