@@ -165,7 +165,6 @@ export const SearchPalette: React.FC<SearchPaletteProps> = ({
       case 'alphabetical':
         sorted.sort((a, b) => a.title.localeCompare(b.title))
         break
-      case 'relevance':
       default:
         break
     }

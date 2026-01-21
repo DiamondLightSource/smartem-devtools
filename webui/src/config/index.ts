@@ -104,6 +104,13 @@ export const webUiAppContents: WebUiAppContents = {
 }
 
 // Re-export types that components might need
-export type { GitHubLabelsConfig, ArtefactsConfig, FeatureFlags, CryoEMInstrument, Repository, SearchConfig }
+export type {
+  GitHubLabelsConfig,
+  ArtefactsConfig,
+  FeatureFlags,
+  CryoEMInstrument,
+  Repository,
+  SearchConfig,
+}
 
 export default webUiAppContents
