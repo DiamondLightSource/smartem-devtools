@@ -6,6 +6,7 @@ from typing import Annotated
 import typer
 from rich.console import Console
 
+from smartem_workspace import __version__
 from smartem_workspace.commands.check import (
     CheckScope,
     apply_fixes,
@@ -52,8 +53,24 @@ def get_console() -> Console:
     return console
 
 
+def version_callback(value: bool) -> None:
+    if value:
+        typer.echo(f"smartem-workspace {__version__}")
+        raise typer.Exit()
+
+
 @app.callback()
 def main(
+    version: Annotated[
+        bool,
+        typer.Option(
+            "--version",
+            "-V",
+            callback=version_callback,
+            is_eager=True,
+            help="Show version and exit",
+        ),
+    ] = False,
     no_color: Annotated[
         bool,
         typer.Option("--no-color", help="Disable colored output"),
