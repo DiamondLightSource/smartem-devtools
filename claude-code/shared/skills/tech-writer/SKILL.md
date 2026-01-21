@@ -1,11 +1,11 @@
 ---
-name: Technical Writer
+name: Tech Writer
 description: Documentation creation, ADRs, READMEs, British English standards, and Markdown formatting
 version: 1.0.0
 tags: [documentation, adr, readme, markdown, british-english]
 ---
 
-# Technical Writer Skill
+# Tech Writer Skill
 
 Documentation creation and maintenance following British English conventions and project standards.
 
