@@ -1,9 +1,9 @@
 # smartem-workspace
 
-[![PyPI version](https://badge.fury.io/py/smartem-workspace.svg)](https://pypi.org/project/smartem-workspace/)
+[![PyPI version](https://img.shields.io/pypi/v/smartem-workspace)](https://pypi.org/project/smartem-workspace/)
 [![Python Versions](https://img.shields.io/pypi/pyversions/smartem-workspace.svg)](https://pypi.org/project/smartem-workspace/)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![CI](https://github.com/DiamondLightSource/smartem-devtools/actions/workflows/publish-smartem-workspace.yml/badge.svg)](https://github.com/DiamondLightSource/smartem-devtools/actions/workflows/publish-smartem-workspace.yml)
+[![CI](https://github.com/DiamondLightSource/smartem-devtools/actions/workflows/release-smartem-workspace.yml/badge.svg)](https://github.com/DiamondLightSource/smartem-devtools/actions/workflows/release-smartem-workspace.yml)
 
 CLI tool to automate SmartEM multi-repo workspace setup.
 
