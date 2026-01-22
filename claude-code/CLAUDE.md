@@ -290,6 +290,7 @@ Refer to `claude-config/smartem-decisions/REPO-GUIDELINES.md` for:
 
 ## Git Commit Guidelines
 
-- **No Claude attribution**: Do NOT add `Co-Authored-By: Claude` or any similar attribution lines to commit messages. Commits should appear as normal developer commits.
+- **No Claude attribution**: Do NOT add `Co-Authored-By: Claude` or any similar attribution lines to commit messages.
+  Commits should appear as normal developer commits. Same goes for PR descriptions, Github Issue descriptions, etc.
 - Write clear, concise commit messages following conventional commits format when appropriate (feat, fix, docs, refactor, etc.)
 - Focus on the "why" not the "what" in commit body
