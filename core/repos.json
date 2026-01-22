@@ -88,6 +88,26 @@
           },
           "tags": ["reference", "python"],
           "ownership": "reference-only"
+        },
+        {
+          "name": "pato-frontend",
+          "description": "PATo web UI - particle analysis and tomography visualization (reference-only)",
+          "urls": {
+            "https": "https://github.com/DiamondLightSource/pato-frontend.git",
+            "ssh": "git@github.com:DiamondLightSource/pato-frontend.git"
+          },
+          "tags": ["reference", "typescript", "frontend"],
+          "ownership": "reference-only"
+        },
+        {
+          "name": "pato-backend",
+          "description": "PATo backend API - particle analysis and tomography services (reference-only)",
+          "urls": {
+            "https": "https://github.com/DiamondLightSource/pato-backend.git",
+            "ssh": "git@github.com:DiamondLightSource/pato-backend.git"
+          },
+          "tags": ["reference", "python", "backend"],
+          "ownership": "reference-only"
         }
       ]
     },
