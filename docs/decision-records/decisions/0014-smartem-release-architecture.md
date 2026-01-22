@@ -53,15 +53,14 @@ Publish `smartem-decisions` to PyPI with optional dependency groups:
 ### Version Strategy
 
 - **Package version**: Derived from git tags using setuptools_scm
-- **Agent releases**: Tagged with `smartem-agent-v*` format
-- **Backend releases**: Future work with `smartem-backend-v*` tags
+- **Releases**: Tagged with `smartem-decisions-v*` format (unified for all components)
 - **Shared versioning**: All components share the same version for API compatibility
 
 ### Release Triggers
 
 | Event | Condition | Result |
 |-------|-----------|--------|
-| Tag `smartem-agent-v*` | Always | Stable release to GitHub + PyPI |
+| Tag `smartem-decisions-v*` | Always | Stable release to GitHub + PyPI |
 | Push to main | Agent paths changed | RC pre-release to GitHub only |
 | Pull request | Agent paths changed | Build + test validation only |
 
