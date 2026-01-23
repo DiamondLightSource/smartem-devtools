@@ -1,0 +1,3 @@
+[[IgnoredVulns]]
+id = "GHSA-73rr-hh4g-fpgx"
+reason = "Dev tooling only - diff is used by @tanstack/router-utils for build-time code generation, no user input reaches parsePatch/applyPatch"
