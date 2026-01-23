@@ -127,8 +127,8 @@ Developer tooling, documentation, and workspace configuration for the SmartEM ec
 - Core TypeScript config for multi-repo management
 - API specs (SmartEM, Athena)
 - Kubernetes manifests for dev/stage/prod (k8s/)
-- K8s development scripts (tools/k8s/)
-- E2E test scripts (tools/e2e/)
+- K8s development scripts (scripts/k8s/)
+- E2E test scripts (tests/e2e/)
 - EPUPlayer for EPU filesystem recording/playback (packages/smartem-epuplayer/)
 
 **Key directories:**
@@ -136,7 +136,7 @@ Developer tooling, documentation, and workspace configuration for the SmartEM ec
 - `claude-code/` - Skills, repo guidelines, architecture docs
 - `webui/` - React developer dashboard
 - `core/` - Repository and workspace config definitions
-- `tools/e2e/` - E2E test runners for SmartEM (single and multi-microscope)
+- `tests/e2e/` - E2E test runners for SmartEM (single and multi-microscope)
 - `packages/smartem-epuplayer/` - EPU filesystem recording/playback for dev/test
 
 **Tech**: Python 3.11+, Node.js, React 19, Vite, TypeScript

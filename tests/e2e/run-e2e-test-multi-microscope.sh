@@ -5,13 +5,13 @@ set -euo pipefail
 # This script automates concurrent e2e test execution simulating multiple microscopes
 #
 # Run from workspace root:
-#   ./repos/DiamondLightSource/smartem-devtools/tools/e2e/run-e2e-test-multi-microscope.sh
+#   ./repos/DiamondLightSource/smartem-devtools/tests/e2e/run-e2e-test-multi-microscope.sh
 #
 # Or with arguments:
-#   ./repos/DiamondLightSource/smartem-devtools/tools/e2e/run-e2e-test-multi-microscope.sh <num_microscopes> <recording> <epu_base_dir> <max_delay>
+#   ./repos/DiamondLightSource/smartem-devtools/tests/e2e/run-e2e-test-multi-microscope.sh <num_microscopes> <recording> <epu_base_dir> <max_delay>
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-TOOLS_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+TESTS_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 WORKSPACE_ROOT="$(cd "$SCRIPT_DIR/../../../../.." && pwd)"
 
 # smartem-decisions repo location

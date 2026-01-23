@@ -21,7 +21,7 @@ smartem-devtools:claude:
 
 smartem-devtools:e2e-test:
   - changed-files:
-      - any-glob-to-any-file: tools/e2e/**
+      - any-glob-to-any-file: tests/e2e/**
 
 # Type-of-work labels
 documentation:
@@ -34,6 +34,6 @@ devops:
   - changed-files:
       - any-glob-to-any-file:
           - .github/**
-          - tools/k8s/**
-          - tools/github/**
+          - scripts/k8s/**
+          - scripts/github/**
           - k8s/**

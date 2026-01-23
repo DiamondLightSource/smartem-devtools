@@ -15,7 +15,7 @@ on:
     branches: [main]
     paths:
       - 'core/github-tags-config.ts'
-      - 'tools/github/**'
+      - 'scripts/github/**'
 
 jobs:
   check-labels:
@@ -38,7 +38,7 @@ jobs:
       - name: Check labels
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx tsx tools/github/sync-labels.ts --check --verbose
+        run: npx tsx scripts/github/sync-labels.ts --check --verbose
 
   sync-labels:
     name: Sync Labels
@@ -60,4 +60,4 @@ jobs:
       - name: Sync labels
         env:
           GH_TOKEN: ${{ secrets.LABEL_SYNC_TOKEN }}
-        run: npx tsx tools/github/sync-labels.ts --sync --verbose
+        run: npx tsx scripts/github/sync-labels.ts --sync --verbose
