@@ -2,8 +2,8 @@
 
 ## Development Environment
 - **Python Version**: 3.12+ (strict requirement - utilize modern typing features)
-- **venv**: Use `source .venv/bin/activate` for tools such as pip, ruff or tox
-- **Package Management**: Use `pip install -e .[all]` for full development setup
+- **Package Manager**: uv (https://docs.astral.sh/uv/)
+- **Package Management**: Use `uv sync --extra all` for full development setup
 - **Code Style**: Ruff (120 char line length) with pyright type checking
 
 ## Code Standards
@@ -41,17 +41,17 @@ This applies to ALL files: Python code, Markdown documentation, configuration fi
 ## Common Commands
 ```bash
 # Development setup
-pip install -e .[all]
+uv sync --extra all
 
 # Testing
-pytest
+uv run pytest
 
-# Type checking  
-pyright src tests
+# Type checking
+uv run pyright src tests
 
 # Linting and formatting
-ruff check
-ruff format
+uv run ruff check
+uv run ruff format
 
 # Pre-commit checks
 pre-commit run --all-files
@@ -60,8 +60,8 @@ pre-commit run --all-files
 cd ../smartem-devtools/webui && npm run dev
 
 # Database migrations
-python -m alembic upgrade head
-python -m alembic revision --autogenerate -m "Description"
+uv run alembic upgrade head
+uv run alembic revision --autogenerate -m "Description"
 ```
 
 ## Project Architecture
@@ -88,7 +88,6 @@ python -m alembic revision --autogenerate -m "Description"
 ## Testing & Quality
 - **Coverage**: Tests run with coverage reporting
 - **Doctests**: Documentation examples are executable
-- **Multiple environments**: tox for cross-environment testing
 - **CI/CD**: GitHub Actions with pre-commit hooks
 
 ## Documentation
