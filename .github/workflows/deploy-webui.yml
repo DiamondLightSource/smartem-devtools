@@ -2,6 +2,12 @@ name: Deploy WebUI to GitHub Pages
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'webui/**'
+      - 'core/**'
+      - 'docs/**'
 
 permissions:
   contents: read

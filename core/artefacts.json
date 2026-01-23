@@ -4,15 +4,25 @@
       "id": "backend",
       "label": "SmartEM Backend",
       "url": "https://github.com/DiamondLightSource/smartem-decisions/pkgs/container/smartem-decisions",
-      "description": "Docker container image of SmartEM Backend services for use in k8s deploys",
-      "command": "docker pull ghcr.io/diamondlightsource/smartem-decisions:latest"
+      "description": "Central controller for SmartEM - handles persistence, messaging, and coordination between microscope agents and ML plugins",
+      "command": "docker pull ghcr.io/diamondlightsource/smartem-decisions:latest",
+      "links": [
+        { "label": "GitHub Releases", "url": "https://github.com/DiamondLightSource/smartem-decisions/releases" },
+        { "label": "PyPI", "url": "https://pypi.org/project/smartem-decisions/" },
+        { "label": "Docker", "url": "https://github.com/DiamondLightSource/smartem-decisions/pkgs/container/smartem-decisions" }
+      ]
     },
     {
       "id": "agent",
       "label": "SmartEM Agent",
       "url": "https://github.com/DiamondLightSource/smartem-decisions/actions/workflows/build_win_smartem_agent.yml",
-      "description": "SmartEM Agent packaged as a Windows 10 executable (download from workflow artifacts)",
-      "command": ""
+      "description": "Bridge between EPU workstations and SmartEM backend - watches EPU filesystem output and relays ML recommendations to microscopes",
+      "command": "",
+      "links": [
+        { "label": "GitHub Releases", "url": "https://github.com/DiamondLightSource/smartem-decisions/releases" },
+        { "label": "PyPI", "url": "https://pypi.org/project/smartem-decisions/" },
+        { "label": "Windows .exe", "url": "https://github.com/DiamondLightSource/smartem-decisions/actions/workflows/build_win_smartem_agent.yml" }
+      ]
     },
     {
       "id": "frontend",
@@ -28,6 +38,7 @@
       "description": "CLI tool to automate multi-repo workspace setup",
       "command": "uvx smartem-workspace --help",
       "links": [
+        { "label": "GitHub Releases", "url": "https://github.com/DiamondLightSource/smartem-devtools/releases" },
         { "label": "PyPI", "url": "https://pypi.org/project/smartem-workspace/" }
       ]
     },
@@ -39,7 +50,8 @@
       "command": "uvx smartem-epuplayer --help",
       "links": [
         { "label": "GitHub Releases", "url": "https://github.com/DiamondLightSource/smartem-devtools/releases" },
-        { "label": "PyPI", "url": "https://pypi.org/project/smartem-epuplayer/" }
+        { "label": "PyPI", "url": "https://pypi.org/project/smartem-epuplayer/" },
+        { "label": "Windows .exe", "url": "https://github.com/DiamondLightSource/smartem-devtools/releases" }
       ]
     }
   ]
