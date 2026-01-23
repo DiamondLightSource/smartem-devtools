@@ -4,7 +4,7 @@ metadata:
   name: smartem-config
   namespace: smartem-decisions
 data:
-  # These are fallback values used if ./tools/k8s/dev-k8s.sh is not used
+  # These are fallback values used if ./scripts/k8s/dev-k8s.sh is not used
   # The script will dynamically override these with values from .dev.env
   POSTGRES_HOST: "postgres-service"
   POSTGRES_PORT: "5432"

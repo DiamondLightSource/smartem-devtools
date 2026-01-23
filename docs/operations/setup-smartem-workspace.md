@@ -575,7 +575,7 @@ For smartem-decisions (backend):
 cd repos/DiamondLightSource/smartem-decisions
 uv sync --all-extras
 source .venv/bin/activate
-./tools/k8s/dev-k8s.sh up  # Starts PostgreSQL, RabbitMQ
+./scripts/k8s/dev-k8s.sh up  # Starts PostgreSQL, RabbitMQ
 ```
 
 For smartem-frontend:
@@ -894,7 +894,7 @@ After setting up your workspace:
 
 1. **Read CLAUDE.md** for workspace overview and conventions
 2. **Explore docs/how-to/** for development guides
-3. **Run the backend** with `./tools/k8s/dev-k8s.sh up`
+3. **Run the backend** with `./scripts/k8s/dev-k8s.sh up`
 4. **Run the frontend** with `npm run dev`
 5. **Run tests** to verify everything works
 6. **Join discussions** on GitHub for questions

@@ -1,8 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "labels:check": "npx tsx tools/github/sync-labels.ts --check",
-    "labels:sync": "npx tsx tools/github/sync-labels.ts --sync"
+    "labels:check": "npx tsx scripts/github/sync-labels.ts --check",
+    "labels:sync": "npx tsx scripts/github/sync-labels.ts --sync"
   },
   "devDependencies": {
     "tsx": "^4.19.2",

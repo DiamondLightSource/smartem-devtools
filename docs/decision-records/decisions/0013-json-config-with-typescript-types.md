@@ -96,7 +96,7 @@ React components
 ### Modified
 - `webui/src/config/index.ts` - now imports from `core/index.ts` and transforms
 - `webui/scripts/prebuild.ts` - simplified to docs sync only
-- `tools/github/sync-labels.ts` - updated import path
+- `scripts/github/sync-labels.ts` - updated import path
 
 ### Deleted
 - `core/github-labels-config.ts`

@@ -8,11 +8,11 @@ validation errors.
 
 Usage (from workspace root, with smartem-decisions venv activated):
     cd repos/DiamondLightSource/smartem-decisions
-    python ../smartem-devtools/tools/e2e/setup-test-agent-session.py [--agent-id AGENT_ID] [--session-id SESSION_ID]
+    python ../smartem-devtools/tests/e2e/setup-test-agent-session.py [--agent-id AGENT_ID] [--session-id SESSION_ID]
 
 Or with PYTHONPATH:
     PYTHONPATH=repos/DiamondLightSource/smartem-decisions \
-        python repos/DiamondLightSource/smartem-devtools/tools/e2e/setup-test-agent-session.py
+        python repos/DiamondLightSource/smartem-devtools/tests/e2e/setup-test-agent-session.py
 
 Examples:
     python setup-test-agent-session.py

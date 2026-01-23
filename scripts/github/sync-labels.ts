@@ -6,9 +6,9 @@
  * in core/github-labels.json.
  *
  * Usage:
- *   npx tsx tools/github/sync-labels.ts --check    # Check conformity (default)
- *   npx tsx tools/github/sync-labels.ts --sync     # Sync labels to all repos
- *   npx tsx tools/github/sync-labels.ts --sync --repo smartem-decisions
+ *   npx tsx scripts/github/sync-labels.ts --check    # Check conformity (default)
+ *   npx tsx scripts/github/sync-labels.ts --sync     # Sync labels to all repos
+ *   npx tsx scripts/github/sync-labels.ts --sync --repo smartem-decisions
  *
  * Backends:
  *   - Primary: gh CLI (requires `gh auth login`)

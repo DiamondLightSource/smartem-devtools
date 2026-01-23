@@ -8,22 +8,22 @@ For local development, use the convenient script that provides a docker-compose-
 
 ```bash
 # Start the development environment (equivalent to docker-compose up -d)
-./tools/k8s/dev-k8s.sh
+./scripts/k8s/dev-k8s.sh
 
 # Check status (equivalent to docker ps)
-./tools/k8s/dev-k8s.sh status
+./scripts/k8s/dev-k8s.sh status
 
 # View logs for a service
-./tools/k8s/dev-k8s.sh logs smartem-http-api
+./scripts/k8s/dev-k8s.sh logs smartem-http-api
 
 # Stop the environment (equivalent to docker-compose down)
-./tools/k8s/dev-k8s.sh down
+./scripts/k8s/dev-k8s.sh down
 
 # Restart everything
-./tools/k8s/dev-k8s.sh restart
+./scripts/k8s/dev-k8s.sh restart
 
 # Get help
-./tools/k8s/dev-k8s.sh --help
+./scripts/k8s/dev-k8s.sh --help
 ```
 
 ### Access URLs
@@ -55,14 +55,14 @@ deploying to any environment, you must generate the appropriate sealed secrets:
 
 ```bash
 # Auto-generate secure credentials for development
-./tools/k8s/generate-sealed-secrets.sh development
+./scripts/k8s/generate-sealed-secrets.sh development
 ```
 
 ### Generate Secrets for Production
 
 ```bash
 # Interactive credential input for production security
-./tools/k8s/generate-sealed-secrets.sh production
+./scripts/k8s/generate-sealed-secrets.sh production
 ```
 
 Sealed secrets are encrypted with the cluster's public key and safe to commit to version control. The sealed-secrets

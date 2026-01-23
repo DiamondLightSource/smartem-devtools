@@ -8,13 +8,13 @@ For the simplest test execution, use the automated test runner script:
 
 ```bash
 # Check k3s status first (DO NOT restart if already running)
-./tools/k8s/dev-k8s.sh status
+./scripts/k8s/dev-k8s.sh status
 
 # Run automated test (Test Type 2: Pre-Acquisition Agent Setup)
-./tools/run-e2e-test.sh
+./tests/e2e/run-e2e-test.sh
 
 # With custom parameters (paths relative to workspace root)
-./tools/run-e2e-test.sh \
+./tests/e2e/run-e2e-test.sh \
   ../../testdata/recordings/bi37708-42_epurecording.tar.gz \
   ../../tmp/epu-test-dir \
   0.1
@@ -22,7 +22,7 @@ For the simplest test execution, use the automated test runner script:
 # Or override via environment variables
 SMARTEM_TEST_RECORDING=/path/to/recording.tar.gz \
 SMARTEM_EPU_DIR=/path/to/epu-dir \
-./tools/run-e2e-test.sh
+./tests/e2e/run-e2e-test.sh
 ```
 
 **Script parameters** (all optional):
@@ -64,7 +64,7 @@ If you've already set up once and just need to run another test:
 
 ```bash
 # 1. Check k3s status (DO NOT restart if already running)
-./tools/k8s/dev-k8s.sh status
+./scripts/k8s/dev-k8s.sh status
 
 # 2. Prepare clean environment
 unset POSTGRES_HOST POSTGRES_PORT POSTGRES_DB POSTGRES_USER POSTGRES_PASSWORD
@@ -115,13 +115,13 @@ For testing multiple concurrent microscopes and acquisition sessions simultaneou
 
 ```bash
 # Check k3s status first (DO NOT restart if already running)
-./tools/k8s/dev-k8s.sh status
+./scripts/k8s/dev-k8s.sh status
 
 # Run multi-microscope test with 3 microscopes (default)
-./tools/run-e2e-test-multi-microscope.sh
+./tests/e2e/run-e2e-test-multi-microscope.sh
 
 # With custom parameters (paths relative to workspace root)
-./tools/run-e2e-test-multi-microscope.sh \
+./tests/e2e/run-e2e-test-multi-microscope.sh \
   3 \
   ../../testdata/recordings/bi37708-42_epurecording.tar.gz \
   ../../tmp/epu-test-dir \
@@ -130,7 +130,7 @@ For testing multiple concurrent microscopes and acquisition sessions simultaneou
 # Or override via environment variables
 SMARTEM_TEST_RECORDING=/path/to/recording.tar.gz \
 SMARTEM_EPU_DIR=/path/to/epu-dir \
-./tools/run-e2e-test-multi-microscope.sh 3
+./tests/e2e/run-e2e-test-multi-microscope.sh 3
 ```
 
 **Script parameters** (all optional):
@@ -239,7 +239,7 @@ The test setup simulates a complete SmartEM workflow:
 ### Environment Setup
 - Python 3.12+ with venv activated: `source .venv/bin/activate`
 - Full development install: `pip install -e .[all]`
-- Local k3s cluster running: `./tools/k8s/dev-k8s.sh up`
+- Local k3s cluster running: `./scripts/k8s/dev-k8s.sh up`
 - Environment file: `.env` (created from `.env.example` - see Environment File Setup below)
 
 ### Test Data
@@ -298,7 +298,7 @@ ADMINER_PORT=8080
 CORS_ALLOWED_ORIGINS=*
 ```
 
-**Usage**: Automatically loaded by `./tools/run-e2e-test.sh` script
+**Usage**: Automatically loaded by `./tests/e2e/run-e2e-test.sh` script
 
 ## Database Operations
 
@@ -506,7 +506,7 @@ pkill -f uvicorn
 pkill -f fastapi
 
 # 5. Verify k3s services are running (DO NOT restart if already running)
-./tools/k8s/dev-k8s.sh status
+./scripts/k8s/dev-k8s.sh status
 
 # 6. Clean RabbitMQ (restart to ensure empty queue)
 kubectl rollout restart deployment/rabbitmq -n smartem-decisions
@@ -773,7 +773,7 @@ pgrep -f "smartem_backend|smartem_agent|epuplayer"
 rm -rf ../epu-test-dir
 
 # Stop k3s cluster (if needed)
-./tools/k8s/dev-k8s.sh down
+./scripts/k8s/dev-k8s.sh down
 ```
 
 ## Troubleshooting

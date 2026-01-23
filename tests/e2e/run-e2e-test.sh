@@ -5,13 +5,13 @@ set -euo pipefail
 # This script automates the e2e test execution for the SmartEM Agent
 #
 # Run from workspace root:
-#   ./repos/DiamondLightSource/smartem-devtools/tools/e2e/run-e2e-test.sh
+#   ./repos/DiamondLightSource/smartem-devtools/tests/e2e/run-e2e-test.sh
 #
 # Or with arguments:
-#   ./repos/DiamondLightSource/smartem-devtools/tools/e2e/run-e2e-test.sh <recording> <epu_dir> <max_delay>
+#   ./repos/DiamondLightSource/smartem-devtools/tests/e2e/run-e2e-test.sh <recording> <epu_dir> <max_delay>
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-TOOLS_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+TESTS_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 WORKSPACE_ROOT="$(cd "$SCRIPT_DIR/../../../../.." && pwd)"
 
 # smartem-decisions repo location

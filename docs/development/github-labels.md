@@ -11,7 +11,7 @@ The SmartEM ecosystem uses a standardised set of GitHub labels across four repos
 - `DiamondLightSource/smartem-devtools`
 - `DiamondLightSource/fandanGO-cryoem-dls`
 
-Labels are defined in `core/github-labels-config.ts` and synced using `tools/github/sync-labels.ts`.
+Labels are defined in `core/github-labels-config.ts` and synced using `scripts/github/sync-labels.ts`.
 
 ## Prerequisites
 
@@ -90,7 +90,7 @@ npm run labels:check
 Or directly:
 
 ```bash
-npx tsx tools/github/sync-labels.ts --check
+npx tsx scripts/github/sync-labels.ts --check
 ```
 
 This will:
@@ -110,7 +110,7 @@ npm run labels:sync
 Or directly:
 
 ```bash
-npx tsx tools/github/sync-labels.ts --sync
+npx tsx scripts/github/sync-labels.ts --sync
 ```
 
 This will:
@@ -123,8 +123,8 @@ This will:
 To sync only specific repositories:
 
 ```bash
-npx tsx tools/github/sync-labels.ts --sync --repo smartem-decisions
-npx tsx tools/github/sync-labels.ts --sync --repo smartem-frontend --repo smartem-devtools
+npx tsx scripts/github/sync-labels.ts --sync --repo smartem-decisions
+npx tsx scripts/github/sync-labels.ts --sync --repo smartem-frontend --repo smartem-devtools
 ```
 
 ### Verbose Output
@@ -132,14 +132,14 @@ npx tsx tools/github/sync-labels.ts --sync --repo smartem-frontend --repo smarte
 For detailed output including conforming labels:
 
 ```bash
-npx tsx tools/github/sync-labels.ts --check --verbose
+npx tsx scripts/github/sync-labels.ts --check --verbose
 ```
 
 ## CI/CD Integration
 
 The `gitflow.yml` workflow automates label management:
 
-- **On push to main**: Runs `--check` mode when `core/github-labels-config.ts` or `tools/github/**` changes
+- **On push to main**: Runs `--check` mode when `core/github-labels-config.ts` or `scripts/github/**` changes
 - **Manual dispatch**: Can trigger `--sync` mode via GitHub Actions UI
 
 ### Running Sync via CI/CD
