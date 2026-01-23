@@ -10,16 +10,16 @@ Transform single-line XML and .dm files into human-readable format with proper i
 
 ```bash
 # Reformat all .xml and .dm files in a directory recursively
-python tools/format_xml.py <directory_path> -r
+uv run python tools/format_xml.py <directory_path> -r
 
 # Process multiple directories
-python tools/format_xml.py -r \
+uv run python tools/format_xml.py -r \
   ../smartem-decisions-test-datasets/metadata_Supervisor_20250114_220855_23_epuBSAd20_GrOxDDM \
   ../smartem-decisions-test-datasets/metadata_Supervisor_20241220_140307_72_et2_gangshun \
   ../smartem-decisions-test-datasets/metadata_Supervisor_20250108_101446_62_cm40593-1_EPU
 
 # Display all available options
-python tools/format_xml.py --help
+uv run python tools/format_xml.py --help
 ```
 
 ## Data Analysis and Debugging Tools
@@ -30,10 +30,10 @@ Identify duplicate foil hole manifests within directory structures to detect dat
 
 ```bash
 # Display help and usage information
-tools/find_foilhole_duplicates.py --help
+uv run tools/find_foilhole_duplicates.py --help
 
 # Example: Search for duplicates in test data
-tools/find_foilhole_duplicates.py ./tests/testdata/bi37708-28
+uv run tools/find_foilhole_duplicates.py ./tests/testdata/bi37708-28
 ```
 
 ### File Size Analysis
@@ -94,21 +94,21 @@ Comprehensive CLI tool for simulating external data processing messages that wou
 
 ```bash
 # List all available message types
-python tools/external_message_simulator.py list-messages
+uv run python tools/external_message_simulator.py list-messages
 
 # Individual message simulation examples
-python tools/external_message_simulator.py motion-correction --foilhole-id "FH_001_001_001" --quality-score 0.85
-python tools/external_message_simulator.py ctf-complete --foilhole-id "FH_001_001_001" --resolution 3.2
-python tools/external_message_simulator.py gridsquare-prediction --gridsquare-id "GS_001_001" --prediction-score 0.85
-python tools/external_message_simulator.py model-update --model-name "ResNet-50"
+uv run python tools/external_message_simulator.py motion-correction --foilhole-id "FH_001_001_001" --quality-score 0.85
+uv run python tools/external_message_simulator.py ctf-complete --foilhole-id "FH_001_001_001" --resolution 3.2
+uv run python tools/external_message_simulator.py gridsquare-prediction --gridsquare-id "GS_001_001" --prediction-score 0.85
+uv run python tools/external_message_simulator.py model-update --model-name "ResNet-50"
 
 # Complete workflow simulation for a single grid square
-python tools/external_message_simulator.py workflow-simulation --gridsquare-id "DEV_001"
+uv run python tools/external_message_simulator.py workflow-simulation --gridsquare-id "DEV_001"
 
 # Batch simulation with different quality scenarios
-python tools/external_message_simulator.py batch-simulation --gridsquare-count 5 --scenario mixed
-python tools/external_message_simulator.py batch-simulation --gridsquare-count 3 --scenario good
-python tools/external_message_simulator.py batch-simulation --gridsquare-count 2 --scenario poor
+uv run python tools/external_message_simulator.py batch-simulation --gridsquare-count 5 --scenario mixed
+uv run python tools/external_message_simulator.py batch-simulation --gridsquare-count 3 --scenario good
+uv run python tools/external_message_simulator.py batch-simulation --gridsquare-count 2 --scenario poor
 ```
 
 **Available Message Types:**
@@ -126,7 +126,7 @@ Example client for testing agent-backend communication via Server-Sent Events:
 
 ```bash
 # Start the SSE client to receive instructions from backend
-python tools/sse_client_example.py
+uv run python tools/sse_client_example.py
 
 # The client will:
 # 1. Auto-create a new session with the backend
@@ -161,12 +161,12 @@ pre-commit run --all-files
 
 ```bash
 # Run comprehensive test suite
-pytest
+uv run pytest
 
 # Type checking with pyright
-pyright src tests
+uv run pyright src tests
 
 # Code formatting and linting
-ruff check
-ruff format
+uv run ruff check
+uv run ruff format
 ```

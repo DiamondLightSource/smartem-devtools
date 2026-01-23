@@ -10,41 +10,61 @@ python3 --version
 
 **Note:** The project specifically requires Python 3.12+ to utilise advanced typing features and maintain compatibility with the latest scientific computing libraries.
 
-## Create a Virtual Environment
+## Install uv (Recommended)
 
-It is strongly recommended that you install SmartEM Decisions within a virtual environment to prevent conflicts with existing Python installations and maintain a clean development environment:
+We recommend using [uv](https://docs.astral.sh/uv/) for Python package management. uv is a fast Python package manager that handles virtual environments and dependencies efficiently.
 
-```bash
-python3 -m venv /path/to/venv
-source /path/to/venv/bin/activate
-```
-
-For development work, consider creating the virtual environment within the project directory:
+### Install uv
 
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
+# On macOS and Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Or with pip
+pip install uv
+
+# Or with Homebrew (macOS)
+brew install uv
 ```
 
 ## Installing the Library
 
-### Standard Installation
+### Development Installation (Recommended)
 
-You can install the library and its core dependencies using `pip`:
+For development work, clone the repository and install using uv:
+
+```bash
+# Clone the repository
+git clone https://github.com/DiamondLightSource/smartem-decisions.git
+cd smartem-decisions
+
+# Install all dependencies (creates virtual environment automatically)
+uv sync --extra all
+```
+
+This will create a `.venv` directory and install all dependencies including development tools.
+
+### Running Commands
+
+With uv, prefix commands with `uv run` to execute them in the virtual environment:
+
+```bash
+# Run tests
+uv run pytest
+
+# Type checking
+uv run pyright src tests
+
+# Linting
+uv run ruff check
+```
+
+### Standard Installation (pip)
+
+You can also install the library using pip:
 
 ```bash
 python3 -m pip install smartem-decisions
-```
-
-### Development Installation
-
-For development work or if you require the latest features, install directly from the source repository:
-
-```bash
-# Clone and install in development mode
-git clone https://github.com/DiamondLightSource/smartem-decisions.git
-cd smartem-decisions
-pip install -e .[all]
 ```
 
 ### Installation with Optional Dependencies
@@ -52,11 +72,13 @@ pip install -e .[all]
 Install with specific feature sets:
 
 ```bash
-# Install with MCP (Model Context Protocol) support
-pip install -e .[mcp]
+# Using uv (recommended)
+uv sync --extra mcp      # Install with MCP support
+uv sync --extra all      # Install with all dependencies
 
-# Install with all optional dependencies (recommended for development)
-pip install -e .[all]
+# Using pip
+pip install -e .[mcp]    # Install with MCP support
+pip install -e .[all]    # Install with all dependencies
 ```
 
 ## Verify Installation
@@ -65,17 +87,17 @@ Verify that all components are correctly installed by running:
 
 ```bash
 # Test core functionality
-python -c "import smartem_backend, smartem_agent, smartem_common; print('Core components imported successfully')"
+uv run python -c "import smartem_backend, smartem_agent, smartem_common; print('Core components imported successfully')"
 
 # Test MCP functionality (if installed with MCP support)
-python -c "import smartem_mcp; print('MCP components available')"
+uv run python -c "import smartem_mcp; print('MCP components available')"
 ```
 
 You can also verify the CLI tools are available:
 
 ```bash
 # Check agent CLI is accessible
-python -m smartem_agent --help
+uv run python -m smartem_agent --help
 ```
 
 ## Next Steps
