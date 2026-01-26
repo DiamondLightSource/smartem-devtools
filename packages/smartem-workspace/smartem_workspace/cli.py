@@ -259,12 +259,20 @@ def sync(
         bool,
         typer.Option("--dry-run", "-n", help="Show what would be done without making changes"),
     ] = False,
+    git_ssh: Annotated[
+        bool,
+        typer.Option("--git-ssh", help="Force SSH URLs for cloning (default: auto-detect)"),
+    ] = False,
+    git_https: Annotated[
+        bool,
+        typer.Option("--git-https", help="Force HTTPS URLs for cloning (default: auto-detect)"),
+    ] = False,
     path: Annotated[
         Path | None,
         typer.Option("--path", "-p", help="Workspace path (auto-detected if not specified)"),
     ] = None,
 ) -> None:
-    """Pull latest changes from all cloned repositories."""
+    """Sync workspace: clone missing repos and pull updates for existing ones."""
     out = get_console()
     workspace_path = path or find_workspace_root()
     if workspace_path is None:
@@ -276,11 +284,17 @@ def sync(
         out.print("[red]Failed to load configuration[/red]")
         raise typer.Exit(1)
 
+    if git_ssh and git_https:
+        out.print("[red]Cannot specify both --git-ssh and --git-https[/red]")
+        raise typer.Exit(1)
+
+    use_ssh: bool | None = True if git_ssh else (False if git_https else None)
+
     out.print("[bold blue]SmartEM Workspace Sync[/bold blue]")
     out.print(f"Workspace: {workspace_path}")
 
-    results = sync_all_repos(workspace_path, config, dry_run=dry_run)
-    print_sync_results(results)
+    results = sync_all_repos(workspace_path, config, out, dry_run=dry_run, use_ssh=use_ssh)
+    print_sync_results(results, out)
 
     errors = sum(1 for r in results if r.status == "error")
     if errors:
