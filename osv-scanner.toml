@@ -1,3 +1,7 @@
+# OSV Scanner configuration
+# https://google.github.io/osv-scanner/configuration/
+
+# Migrated from webui/osv-scanner.toml
 [[IgnoredVulns]]
 id = "GHSA-73rr-hh4g-fpgx"
 reason = "Dev tooling only - diff is used by @tanstack/router-utils for build-time code generation, no user input reaches parsePatch/applyPatch"
