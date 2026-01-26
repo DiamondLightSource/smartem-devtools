@@ -173,19 +173,62 @@ export function Dashboard() {
                 <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                   <SystemComponentContainer heading="SmartEM Services" flex={1}>
                     <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, gap: 0.5 }}>
-                      <Box sx={{ ...itemBoxSx, flex: 1, display: 'flex', alignItems: 'center' }}>
-                        <Typography variant="caption" sx={{ color: '#333' }}>
-                          CTF and Motion Correction
-                        </Typography>
-                      </Box>
-                      <Box sx={{ ...itemBoxSx, flex: 1, display: 'flex', alignItems: 'center' }}>
-                        <Typography variant="caption" sx={{ color: '#333' }}>
+                      <Box
+                        sx={{
+                          ...itemBoxSx,
+                          flex: 1,
+                          display: 'flex',
+                          alignItems: 'center',
+                          flexDirection: 'column',
+                        }}
+                      >
+                        <Typography
+                          variant="caption"
+                          sx={{ color: '#333', fontWeight: 500, mt: 1 }}
+                        >
                           Data Processing
                         </Typography>
+                        <Typography
+                          variant="caption"
+                          component="div"
+                          sx={{ color: '#555', fontSize: '0.65rem', fontFamily: 'monospace' }}
+                        >
+                          Calculate quality metrics which are fed to SmartEM for prediction updates
+                          (includes motion correction, CTF estimation, particle picking, particle
+                          selection)
+                          <br />
+                          <Link href="https://github.com/DiamondLightSource/cryoem-services">
+                            https://github.com/DiamondLightSource/cryoem-services
+                          </Link>
+                        </Typography>
                       </Box>
-                      <Box sx={{ ...itemBoxSx, flex: 1, display: 'flex', alignItems: 'center' }}>
-                        <Typography variant="caption" sx={{ color: '#333' }}>
+                      <Box
+                        sx={{
+                          ...itemBoxSx,
+                          flex: 1,
+                          display: 'flex',
+                          alignItems: 'center',
+                          flexDirection: 'column',
+                        }}
+                      >
+                        <Typography
+                          variant="caption"
+                          sx={{ color: '#333', fontWeight: 500, mt: 1 }}
+                        >
                           ML Recommendations
+                        </Typography>
+                        <Typography
+                          variant="caption"
+                          component="div"
+                          sx={{ color: '#555', fontSize: '0.65rem', fontFamily: 'monospace' }}
+                        >
+                          Quality predictions from a range of models as well as model weight and
+                          parameter updates. Updates are informed by quality metrics produced by
+                          data processing services
+                          <br />
+                          <Link href="https://github.com/DiamondLightSource/smartem-models">
+                            https://github.com/DiamondLightSource/smartem-models
+                          </Link>
                         </Typography>
                       </Box>
                     </Box>
