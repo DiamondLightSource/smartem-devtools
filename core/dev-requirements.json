@@ -68,6 +68,27 @@
       "versionArgs": ["--version"],
       "required": false,
       "description": "GitHub CLI"
+    },
+    {
+      "name": "pre-commit",
+      "command": "pre-commit",
+      "versionArgs": ["--version"],
+      "required": false,
+      "description": "Git hooks framework for code quality checks"
+    },
+    {
+      "name": "detect-secrets",
+      "command": "detect-secrets",
+      "versionArgs": ["--version"],
+      "required": false,
+      "description": "Secrets detection tool for baseline management"
+    },
+    {
+      "name": "osv-scanner",
+      "command": "osv-scanner",
+      "versionArgs": ["--version"],
+      "required": false,
+      "description": "Vulnerability scanner for dependencies"
     }
   ],
   "network": {
