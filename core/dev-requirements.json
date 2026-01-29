@@ -89,6 +89,13 @@
       "versionArgs": ["--version"],
       "required": false,
       "description": "Vulnerability scanner for dependencies"
+    },
+    {
+      "name": "sqlite3",
+      "command": "sqlite3",
+      "versionArgs": ["--version"],
+      "required": false,
+      "description": "SQLite CLI for inspecting local databases (fandanGO, etc.)"
     }
   ],
   "network": {
