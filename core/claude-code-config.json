@@ -10,7 +10,8 @@
       { "name": "git", "path": "claude-code/shared/skills/git" },
       { "name": "github", "path": "claude-code/shared/skills/github" },
       { "name": "ascii-art", "path": "claude-code/shared/skills/ascii-art" },
-      { "name": "playwright-skill", "path": "claude-code/smartem-frontend/skills/playwright-skill" }
+      { "name": "playwright-skill", "path": "claude-code/smartem-frontend/skills/playwright-skill" },
+      { "name": "graphql", "path": "claude-code/fandango-cryoem-dls/skills/graphql" }
     ],
     "defaultPermissions": {
       "allow": [

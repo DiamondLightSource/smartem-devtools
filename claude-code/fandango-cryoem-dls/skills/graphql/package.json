@@ -1,0 +1,25 @@
+{
+  "name": "graphql-skill",
+  "version": "1.0.0",
+  "description": "GraphQL CLI for ARIA API exploration and fandanGO connector development",
+  "author": "SmartEM Team",
+  "main": "run.js",
+  "scripts": {
+    "setup": "npm install"
+  },
+  "keywords": [
+    "graphql",
+    "aria",
+    "fandango",
+    "api",
+    "deposition",
+    "claude-skill"
+  ],
+  "dependencies": {
+    "graphqurl": "^1.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "MIT"
+}
