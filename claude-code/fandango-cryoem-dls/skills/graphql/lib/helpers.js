@@ -6,10 +6,10 @@ const https = require('node:https')
 
 const ENDPOINTS = {
   mock: 'http://localhost:9002/graphql',
-  beta: 'https://beta.aria.structuralbiologycloud.org/data-deposition/graphql',
+  beta: 'https://graphql-beta.aria.services/graphql/',
 }
 
-const KEYCLOAK_URL = 'https://auth.aria.structuralbiologycloud.org/realms/aria/protocol/openid-connect/token'
+const KEYCLOAK_URL = 'https://auth.aria.services/auth/realms/ARIA/protocol/openid-connect/token'
 
 /**
  * Get endpoint URL by name
@@ -61,31 +61,51 @@ async function checkMockServer(port = 9002) {
 
 /**
  * Get OAuth2 access token from Keycloak
- * @param {string} grantType - 'client_credentials' or 'password'
+ * @param {string} grantType - 'client_credentials' or 'password'. If not specified, auto-detects based on env vars.
  * @returns {Promise<string>} Access token
  */
-async function getToken(grantType = 'client_credentials') {
+async function getToken(grantType) {
   const clientId = process.env.ARIA_CLIENT_ID
   const clientSecret = process.env.ARIA_CLIENT_SECRET
+  const username = process.env.ARIA_USERNAME
+  const password = process.env.ARIA_PASSWORD
+  const scope = process.env.ARIA_CONNECTION_SCOPE || 'openid'
 
-  if (!clientId || !clientSecret) {
-    throw new Error('ARIA_CLIENT_ID and ARIA_CLIENT_SECRET environment variables required')
+  // Auto-detect grant type if not specified
+  if (!grantType) {
+    if (username && password) {
+      grantType = 'password'
+    } else if (clientSecret) {
+      grantType = 'client_credentials'
+    } else {
+      throw new Error('Cannot determine grant type. Set ARIA_USERNAME/ARIA_PASSWORD for password grant, or ARIA_CLIENT_SECRET for client_credentials.')
+    }
+  }
+
+  if (!clientId) {
+    throw new Error('ARIA_CLIENT_ID environment variable required')
+  }
+
+  if (grantType === 'client_credentials' && !clientSecret) {
+    throw new Error('ARIA_CLIENT_SECRET required for client_credentials grant')
+  }
+
+  if (grantType === 'password' && (!username || !password)) {
+    throw new Error('ARIA_USERNAME and ARIA_PASSWORD required for password grant')
   }
 
   const params = new URLSearchParams({
     grant_type: grantType,
     client_id: clientId,
-    client_secret: clientSecret,
+    scope: scope,
   })
 
+  // client_secret is optional for public clients with password grant
+  if (clientSecret) {
+    params.append('client_secret', clientSecret)
+  }
+
   if (grantType === 'password') {
-    const username = process.env.ARIA_USERNAME
-    const password = process.env.ARIA_PASSWORD
-
-    if (!username || !password) {
-      throw new Error('ARIA_USERNAME and ARIA_PASSWORD required for password grant')
-    }
-
     params.append('username', username)
     params.append('password', password)
   }

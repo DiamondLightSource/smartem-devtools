@@ -15,7 +15,6 @@
  */
 
 const fs = require('node:fs')
-const path = require('node:path')
 const { execSync, spawn } = require('node:child_process')
 const helpers = require('./lib/helpers')
 
@@ -23,8 +22,7 @@ process.chdir(__dirname)
 
 function checkGraphqurlInstalled() {
   try {
-    const gqPath = path.join(__dirname, 'node_modules', '.bin', 'gq')
-    return fs.existsSync(gqPath)
+    return fs.existsSync(`${__dirname}/node_modules/.bin/gq`)
   } catch (_e) {
     return false
   }
@@ -123,7 +121,6 @@ function parseArgs(args) {
 }
 
 async function executeQuery(options) {
-  const gqPath = path.join(__dirname, 'node_modules', '.bin', 'gq')
   const endpoint = helpers.getEndpoint(options.endpoint)
 
   if (!endpoint) {
@@ -137,7 +134,7 @@ async function executeQuery(options) {
   if (options.introspect) {
     args.push('--introspect')
   } else if (options.query) {
-    args.push('--queryString', options.query)
+    args.push('-q', options.query)
   } else {
     console.error('No query provided')
     console.error('Usage:')
@@ -174,7 +171,7 @@ async function executeQuery(options) {
   console.log(`\nExecuting against: ${endpoint}\n`)
 
   return new Promise((resolve, reject) => {
-    const proc = spawn(gqPath, args, {
+    const proc = spawn('npx', ['--no', 'gq', ...args], {
       stdio: ['inherit', 'inherit', 'inherit'],
       cwd: __dirname,
     })

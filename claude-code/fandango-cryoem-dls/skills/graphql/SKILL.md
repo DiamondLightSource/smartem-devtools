@@ -23,7 +23,9 @@ Query the ARIA GraphQL API from the command line. Supports schema introspection,
 1. **Determine target endpoint** - Ask user which environment to use:
 
    - **aria-mock**: `http://localhost:9002/graphql` (local development)
-   - **ARIA beta**: `https://beta.aria.structuralbiologycloud.org/data-deposition/graphql` (requires auth)
+   - **ARIA beta**: `https://graphql-beta.aria.services/graphql/` (requires auth)
+
+   **API Documentation**: https://beta.api.aria.services/
 
 2. **For ARIA beta, obtain token first** - Use helpers to acquire access token:
 
@@ -49,7 +51,12 @@ This installs graphqurl. Only needed once.
 | Environment | URL | Auth |
 |-------------|-----|------|
 | aria-mock | `http://localhost:9002/graphql` | None |
-| ARIA beta | `https://beta.aria.structuralbiologycloud.org/data-deposition/graphql` | Bearer token |
+| ARIA beta | `https://graphql-beta.aria.services/graphql/` | Bearer token (OAuth2) |
+
+**Related URLs:**
+- API Documentation: https://beta.api.aria.services/
+- Keycloak Token: `https://auth.aria.services/auth/realms/ARIA/protocol/openid-connect/token`
+- User Registration: https://beta.structuralbiology.eu/
 
 ### Starting aria-mock
 
@@ -236,11 +243,38 @@ Variables:
 
 ## Authentication
 
-ARIA beta uses Keycloak with OAuth2. The helpers support two grant types:
+ARIA beta uses Keycloak (OAuth2) at `https://auth.aria.services/auth/realms/ARIA/`.
 
-### Client Credentials (Machine-to-Machine)
+See official docs: https://beta.api.aria.services/
 
-Requires `ARIA_CLIENT_ID` and `ARIA_CLIENT_SECRET` environment variables:
+### Environment Setup
+
+Source the ARIA beta environment file:
+
+```bash
+source /path/to/aria-beta.env
+export ARIA_USERNAME="$ARIA_CONNECTION_USERNAME"
+export ARIA_PASSWORD="$ARIA_CONNECTION_PASSWORD"
+```
+
+### Grant Types
+
+The helpers support two OAuth2 grant types:
+
+**Password Grant (Recommended for user operations):**
+
+For operations that require user-level permissions (querying/creating data):
+
+```bash
+export ARIA_CLIENT_ID="beta-core"
+export ARIA_USERNAME="user@example.com"
+export ARIA_PASSWORD="user-password"
+cd $SKILL_DIR && node -e "require('./lib/helpers').getToken('password').then(t => console.log(t))"
+```
+
+**Client Credentials (Machine-to-Machine):**
+
+For service accounts. Requires `ARIA_CLIENT_SECRET`:
 
 ```bash
 export ARIA_CLIENT_ID="your-client-id"
@@ -248,17 +282,7 @@ export ARIA_CLIENT_SECRET="your-client-secret"
 cd $SKILL_DIR && node -e "require('./lib/helpers').getToken('client_credentials').then(t => console.log(t))"
 ```
 
-### Password Grant (User Context)
-
-Requires `ARIA_USERNAME` and `ARIA_PASSWORD` in addition to client credentials:
-
-```bash
-export ARIA_CLIENT_ID="your-client-id"
-export ARIA_CLIENT_SECRET="your-client-secret"
-export ARIA_USERNAME="user@example.com"
-export ARIA_PASSWORD="user-password"
-cd $SKILL_DIR && node -e "require('./lib/helpers').getToken('password').then(t => console.log(t))"
-```
+**Note:** Schema introspection may work with either grant type, but data queries typically require password grant with user credentials.
 
 ### Using Token in Queries
 
