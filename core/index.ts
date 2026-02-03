@@ -204,6 +204,7 @@ export const searchConfig: SearchConfig = {
     { owner: 'DiamondLightSource', repo: 'smartem-frontend', label: 'smartem-frontend' },
     { owner: 'DiamondLightSource', repo: 'smartem-devtools', label: 'smartem-devtools' },
     { owner: 'DiamondLightSource', repo: 'fandanGO-cryoem-dls', label: 'fandanGO-cryoem-dls' },
+    { owner: 'DiamondLightSource', repo: 'sci-react-ui', label: 'sci-react-ui' },
   ],
   enableGithubSearch: true,
   shortcut: {
