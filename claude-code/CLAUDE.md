@@ -141,6 +141,16 @@ Developer tooling, documentation, and workspace configuration for the SmartEM ec
 
 **Tech**: Python 3.11+, Node.js, React 19, Vite, TypeScript
 
+### sci-react-ui
+
+**Ownership**: Full (DLS GitHub org)
+**Deliverable**: SmartEM (shared UI components)
+**Role**: Theme and component library for React applications at Diamond Light Source
+
+Provides Material UI-based components and theming for consistent UI across DLS web applications. Used by smartem-frontend. Library is actively in development - see repo README for current component list.
+
+**Tech**: React, TypeScript, Material UI, Rollup, Storybook, pnpm
+
 ---
 
 ## repos/FragmentScreen/

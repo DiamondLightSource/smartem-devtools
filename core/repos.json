@@ -108,6 +108,16 @@
           },
           "tags": ["reference", "python", "backend"],
           "ownership": "reference-only"
+        },
+        {
+          "name": "sci-react-ui",
+          "description": "Theme and component library for scientific institution websites",
+          "urls": {
+            "https": "https://github.com/DiamondLightSource/sci-react-ui.git",
+            "ssh": "git@github.com:DiamondLightSource/sci-react-ui.git"
+          },
+          "tags": ["ui", "react", "frontend", "smartem"],
+          "ownership": "full"
         }
       ]
     },
