@@ -18,19 +18,13 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ERIC_ROOT="${SCRIPT_DIR}/../../../.."
 
-DEFAULT_REPOS=(
-    "repos/DiamondLightSource/smartem-decisions"
-    "repos/DiamondLightSource/smartem-frontend"
-    "repos/DiamondLightSource/smartem-devtools"
-    "repos/DiamondLightSource/fandanGO-cryoem-dls"
-    "repos/FragmentScreen/fandanGO-aria"
-    "repos/FragmentScreen/fandanGO-core"
-    "repos/FragmentScreen/fandanGO-cryoem-cnb"
-    "repos/FragmentScreen/fandanGO-nmr-cerm"
-    "repos/FragmentScreen/fandanGO-nmr-guf"
-    "repos/FragmentScreen/ddapi-record-logs"
-    "repos/FragmentScreen/ddapi-record-oscem"
-)
+# Discover all repos in ERIC workspace (repos/*/* directories with .git)
+discover_repos() {
+    local repos_dir="${ERIC_ROOT}/repos"
+    if [[ -d "$repos_dir" ]]; then
+        find "$repos_dir" -mindepth 2 -maxdepth 2 -type d -exec test -d '{}/.git' \; -print | sort
+    fi
+}
 
 OUTPUT_FILE=""
 REPOS=()
@@ -60,11 +54,11 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# Use default repos if none specified
+# Use discovered repos if none specified
 if [[ ${#REPOS[@]} -eq 0 ]]; then
-    for repo in "${DEFAULT_REPOS[@]}"; do
-        REPOS+=("${ERIC_ROOT}/${repo}")
-    done
+    while IFS= read -r repo; do
+        REPOS+=("$repo")
+    done < <(discover_repos)
 fi
 
 scan_repo() {
