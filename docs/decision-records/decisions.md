@@ -15,5 +15,10 @@ Architectural decisions are made throughout a project's lifetime. As a way of ke
 - [ADR-0009: Commit Generated Route Tree](/docs/explanations/decisions/0009-commit-generated-route-tree)
 - [ADR-0010: Use Shiki for Syntax Highlighting](/docs/explanations/decisions/0010-shiki-syntax-highlighting)
 - [ADR-0011: Remove Python Copier Template](/docs/explanations/decisions/0011-remove-python-copier-template)
+- [ADR-0012: Audience-Based Documentation Structure](/docs/explanations/decisions/0012-audience-based-documentation-structure)
+- [ADR-0013: EPUPlayer Release Strategy](/docs/explanations/decisions/0013-epuplayer-release-strategy)
+- [ADR-0014: JSON Config with TypeScript Types](/docs/explanations/decisions/0014-json-config-with-typescript-types)
+- [ADR-0015: SmartEM Release Architecture](/docs/explanations/decisions/0015-smartem-release-architecture)
+- [ADR-0016: Facility Connector Fork Synchronization](/docs/explanations/decisions/0016-facility-connector-fork-sync) (Proposed)
 
 For more information on ADRs see this [blog by Michael Nygard](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions).

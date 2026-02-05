@@ -1,4 +1,4 @@
-# 13. JSON Configuration with Centralised TypeScript Types
+# 14. JSON Configuration with Centralised TypeScript Types
 
 Date: 2025-01-15
 

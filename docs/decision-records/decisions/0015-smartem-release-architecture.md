@@ -1,4 +1,4 @@
-# 14. SmartEM Package Release Architecture
+# 15. SmartEM Package Release Architecture
 
 Date: 2026-01-21
 
