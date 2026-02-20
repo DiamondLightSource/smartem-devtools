@@ -17,6 +17,8 @@ pre-commit:
 
 pre-push:
   commands:
+    gitleaks:
+      run: gitleaks protect --staged --redact
     typecheck:
       root: webui/
       run: npm run typecheck
