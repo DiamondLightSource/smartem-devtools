@@ -8,7 +8,7 @@ Architectural decisions are made throughout a project's lifetime. As a way of ke
 - [ADR-0002: Switched to Python Copier Template (superseded by ADR-0011)](/docs/explanations/decisions/0002-switched-to-python-copier-template)
 - [ADR-0003: Message Queue Message Grouping](/docs/explanations/decisions/0003-message-queue-message-grouping)
 - [ADR-0004: Zocalo Dependency-Free](/docs/explanations/decisions/0004-zocalo-dependency-free)
-- [ADR-0005: Detect Secrets for Secret Scanning](/docs/explanations/decisions/0005-detect-secrets-for-secret-scanning)
+- [ADR-0005: Detect Secrets for Secret Scanning (superseded by ADR-0018)](/docs/explanations/decisions/0005-detect-secrets-for-secret-scanning)
 - [ADR-0006: Sealed Secrets for Kubernetes](/docs/explanations/decisions/0006-sealed-secrets-kubernetes-secrets-management)
 - [ADR-0007: Eliminate SmartEM API Circular Dependency](/docs/explanations/decisions/0007-eliminate-smartem-api-circular-dependency)
 - [ADR-0008: Backend to Agent Communication Architecture](/docs/explanations/decisions/0008-backend-to-agent-communication-architecture)
@@ -20,5 +20,6 @@ Architectural decisions are made throughout a project's lifetime. As a way of ke
 - [ADR-0014: JSON Config with TypeScript Types](/docs/explanations/decisions/0014-json-config-with-typescript-types)
 - [ADR-0015: SmartEM Release Architecture](/docs/explanations/decisions/0015-smartem-release-architecture)
 - [ADR-0016: Facility Connector Fork Synchronization](/docs/explanations/decisions/0016-facility-connector-fork-sync) (Proposed)
+- [ADR-0018: Replace detect-secrets with gitleaks for Secret Scanning](/docs/explanations/decisions/0018-gitleaks-for-secret-scanning)
 
 For more information on ADRs see this [blog by Michael Nygard](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions).

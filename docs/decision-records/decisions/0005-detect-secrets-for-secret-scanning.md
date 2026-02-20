@@ -4,7 +4,7 @@ Date: 21/08/2025
 
 ## Status
 
-Accepted
+Superseded by [ADR-0018](/docs/explanations/decisions/0018-gitleaks-for-secret-scanning)
 
 ## Context
 
