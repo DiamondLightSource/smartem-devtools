@@ -362,7 +362,7 @@ ensure_local_image() {
     if ! docker image inspect "$image_name" &> /dev/null; then
         log_info "Building SmartEM image..."
         cd "$PROJECT_ROOT"
-        docker build -t "$image_name" .
+        docker build -f Dockerfile.dev -t "$image_name" .
     else
         log_info "SmartEM image already exists in Docker"
     fi
