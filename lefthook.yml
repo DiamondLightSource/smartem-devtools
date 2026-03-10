@@ -26,3 +26,5 @@ pre-push:
     format-check:
       root: webui/
       run: npm run format:check
+    gitleaks:
+      run: gitleaks protect --staged --redact
