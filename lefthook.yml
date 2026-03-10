@@ -28,3 +28,5 @@ pre-push:
       run: npm run format:check
     gitleaks:
       run: gitleaks protect --staged --redact
+    trufflehog:
+      run: trufflehog git file://. --only-verified
