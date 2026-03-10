@@ -1,0 +1,6 @@
+[allowlist]
+  paths = [
+    '''docs/''',
+    '''claude-code/''',
+    '''k8s/secret\.example\.yaml''',
+  ]
