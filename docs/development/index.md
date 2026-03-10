@@ -10,7 +10,6 @@ tools
 generate-docs
 e2e-simulation
 github-labels
-mcp-interface
 ```
 
 ## Topics
@@ -23,7 +22,6 @@ mcp-interface
 
 - [Development Tools](tools.md) - Utility tools for development, testing, and maintenance
 - [E2E Simulation](e2e-simulation.md) - End-to-end development simulation setup
-- [MCP Interface](mcp-interface.md) - SmartEM MCP server for Claude Code integration
 
 ### Documentation and CI/CD
 

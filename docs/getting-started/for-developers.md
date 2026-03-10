@@ -73,11 +73,9 @@ Install with specific feature sets:
 
 ```bash
 # Using uv (recommended)
-uv sync --extra mcp      # Install with MCP support
 uv sync --extra all      # Install with all dependencies
 
 # Using pip
-pip install -e .[mcp]    # Install with MCP support
 pip install -e .[all]    # Install with all dependencies
 ```
 
@@ -88,9 +86,6 @@ Verify that all components are correctly installed by running:
 ```bash
 # Test core functionality
 uv run python -c "import smartem_backend, smartem_agent, smartem_common; print('Core components imported successfully')"
-
-# Test MCP functionality (if installed with MCP support)
-uv run python -c "import smartem_mcp; print('MCP components available')"
 ```
 
 You can also verify the CLI tools are available:

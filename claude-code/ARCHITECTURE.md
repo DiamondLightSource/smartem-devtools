@@ -69,7 +69,6 @@ SmartEM is the core system. Everything inside the boundary is in scope; everythi
 | smartem_common | (none - leaf) |
 | smartem_backend | smartem_common |
 | smartem_agent | smartem_common, smartem_backend.api_client |
-| smartem_mcp | smartem_common, smartem_backend, smartem_agent |
 | athena_api | (independent - no smartem imports) |
 
 ### Package Summaries
@@ -80,7 +79,6 @@ SmartEM is the core system. Everything inside the boundary is in scope; everythi
 | `smartem_backend` | API server, DB, MQ consumer | FastAPI, PostgreSQL, RabbitMQ, Alembic |
 | `smartem_agent` | EPU file watcher, parser | Watchdog, lxml, Typer CLI |
 | `athena_api` | Microscope hardware client | HTTP client + mock server |
-| `smartem_mcp` | Natural language querying | FastMCP server |
 
 ## API Client Generation
 
@@ -171,7 +169,6 @@ export ARIA_GQL_LOCAL=http://localhost:9002/graphql
 |----------|-----------------|
 | smartem-backend | Rebuild |
 | smartem-agent | Rebuild |
-| smartem_mcp | Rebuild |
 
 ## CI/CD Overview
 
