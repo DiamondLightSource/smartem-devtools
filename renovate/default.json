@@ -1,0 +1,30 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Default Renovate config for SmartEM repos",
+  "extends": ["config:recommended", "schedule:weekly"],
+  "labels": ["admin", "devops"],
+  "platformAutomerge": true,
+  "packageRules": [
+    {
+      "description": "Auto-merge minor/patch",
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    },
+    {
+      "description": "Group GitHub Actions",
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub Actions",
+      "automerge": true
+    },
+    {
+      "description": "Group Docker updates",
+      "matchManagers": ["dockerfile", "docker-compose"],
+      "groupName": "Docker"
+    }
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on monday"],
+    "automerge": true
+  }
+}

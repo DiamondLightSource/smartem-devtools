@@ -1,0 +1,32 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>DiamondLightSource/smartem-devtools:renovate/default"],
+  "packageRules": [
+    {
+      "description": "Group webui npm minor/patch",
+      "matchManagers": ["npm"],
+      "matchFileNames": ["webui/**"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "webui npm minor/patch"
+    },
+    {
+      "description": "Group vite ecosystem majors in webui",
+      "matchManagers": ["npm"],
+      "matchFileNames": ["webui/**"],
+      "matchUpdateTypes": ["major"],
+      "matchPackagePatterns": ["^vite$", "^@vitejs/", "^@tailwindcss/vite$"],
+      "groupName": "webui vite ecosystem major"
+    },
+    {
+      "description": "Group playwright-skill deps",
+      "matchManagers": ["npm"],
+      "matchFileNames": ["claude-code/smartem-frontend/skills/playwright-skill/**"],
+      "groupName": "playwright-skill dependencies"
+    },
+    {
+      "description": "Group Python deps",
+      "matchManagers": ["pip_requirements", "pip_setup", "pep621"],
+      "groupName": "Python dependencies"
+    }
+  ]
+}
