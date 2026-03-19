@@ -96,6 +96,13 @@
       "versionArgs": ["--version"],
       "required": false,
       "description": "SQLite CLI for inspecting local databases (fandanGO, etc.)"
+    },
+    {
+      "name": "graphqurl",
+      "command": "gq",
+      "versionArgs": ["--version"],
+      "required": false,
+      "description": "GraphQL CLI for ARIA API exploration (npm install -g graphqurl)"
     }
   ],
   "network": {
