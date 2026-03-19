@@ -20,5 +20,6 @@ Architectural decisions are made throughout a project's lifetime. As a way of ke
 - [ADR-0014: JSON Config with TypeScript Types](/docs/explanations/decisions/0014-json-config-with-typescript-types)
 - [ADR-0015: SmartEM Release Architecture](/docs/explanations/decisions/0015-smartem-release-architecture)
 - [ADR-0016: Facility Connector Fork Synchronization](/docs/explanations/decisions/0016-facility-connector-fork-sync) (Proposed)
+- [ADR-0017: SmartEM Frontend Monorepo Restructure](/docs/explanations/decisions/0017-smartem-frontend-monorepo-restructure)
 
 For more information on ADRs see this [blog by Michael Nygard](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions).
