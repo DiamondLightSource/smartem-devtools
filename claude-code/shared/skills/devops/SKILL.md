@@ -21,6 +21,24 @@ Kubernetes deployment, container management, and CI/CD operations for the SmartE
 
 ### Local Development Cluster
 
+**Known issue: k3s kubeconfig permissions**
+
+k3s is installed with tight permissions on the kubeconfig file. After every system reboot, `kubectl` commands will fail with:
+
+```
+error: error loading config file "/etc/rancher/k3s/k3s.yaml": permission denied
+```
+
+Fix by running (requires sudo):
+
+```bash
+sudo chmod 644 /etc/rancher/k3s/k3s.yaml
+```
+
+If you encounter this error, advise the user to run the above command. Other permission-related issues may also surface with k3s (e.g. node token permissions, containerd socket access). These are typically resolved with similar `chmod` or group membership adjustments after reboot.
+
+**Cluster management:**
+
 ```bash
 cd repos/DiamondLightSource/smartem-decisions
 
