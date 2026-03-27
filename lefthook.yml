@@ -6,7 +6,8 @@ pre-commit:
   commands:
     biome:
       root: webui/
-      glob: "*.{ts,tsx,js,jsx,json}"
+      glob: "*.{ts,tsx,js,jsx,json,jsonc}"
+      exclude: "*lock*"
       run: npx @biomejs/biome check --write {staged_files}
       stage_fixed: true
     prettier:
