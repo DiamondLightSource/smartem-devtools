@@ -73,6 +73,7 @@ def setup_claude_config(
     if not settings_path.exists():
         settings = {
             "permissions": config.claudeConfig.defaultPermissions.model_dump(),
+            "enabledMcpjsonServers": ["serena"],
         }
         settings_path.write_text(json.dumps(settings, indent=2))
         console.print(f"  [green]Created {settings_path.name}[/green]")
