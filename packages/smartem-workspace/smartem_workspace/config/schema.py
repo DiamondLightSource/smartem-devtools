@@ -93,7 +93,13 @@ class McpServerConfig(BaseModel):
 
 
 class McpConfig(BaseModel):
-    """MCP servers configuration."""
+    """MCP servers configuration.
+
+    Serena is required; additional servers (e.g. chrome-devtools) are accepted
+    via extra="allow" so the schema doesn't need updating for each new server.
+    """
+
+    model_config = ConfigDict(extra="allow")
 
     serena: McpServerConfig
 

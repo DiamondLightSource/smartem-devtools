@@ -290,7 +290,7 @@ def run_claude_checks(workspace_path: Path, claude_config: ClaudeCodeConfig) -> 
     return CheckReport("claude", results)
 
 
-def run_serena_checks(workspace_path: Path) -> CheckReport:
+def run_serena_checks(workspace_path: Path, claude_config: ClaudeCodeConfig | None = None) -> CheckReport:
     results = []
 
     serena_dir = workspace_path / ".serena"
@@ -305,6 +305,26 @@ def run_serena_checks(workspace_path: Path) -> CheckReport:
     mcp_json = workspace_path / ".mcp.json"
     if mcp_json.exists():
         results.append(check_json_valid(mcp_json, ".mcp.json"))
+
+        if claude_config:
+            try:
+                mcp_data = json.loads(mcp_json.read_text())
+                defined_servers = set(mcp_data.get("mcpServers", {}).keys())
+                expected_servers = set(claude_config.mcpConfig.model_dump().keys())
+                missing = expected_servers - defined_servers
+                if missing:
+                    results.append(
+                        CheckResult(
+                            ".mcp.json servers",
+                            "warning",
+                            f"Missing servers: {', '.join(sorted(missing))}. Re-run setup to add them.",
+                            fixable=False,
+                        )
+                    )
+                else:
+                    results.append(CheckResult(".mcp.json servers", "ok", f"{len(defined_servers)} server(s) configured"))
+            except (json.JSONDecodeError, KeyError):
+                pass
     else:
         results.append(CheckResult(".mcp.json", "warning", "Missing", fixable=False))
 
@@ -357,7 +377,7 @@ def run_checks(
         reports.append(run_claude_checks(workspace_path, claude_config))
 
     if scope in (CheckScope.ALL, CheckScope.SERENA) and workspace_path:
-        reports.append(run_serena_checks(workspace_path))
+        reports.append(run_serena_checks(workspace_path, claude_config))
 
     if scope in (CheckScope.ALL, CheckScope.REPOS) and workspace_path and config:
         reports.append(run_repos_checks(workspace_path, config))
