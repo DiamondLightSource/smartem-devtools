@@ -8,6 +8,10 @@ Architectural Decision Records (ADRs) document significant technical decisions.
 
 - [Decision Records](../decision-records/index.md) - Browse all ADRs
 
+## Authentication
+
+- [Keycloak SPA Authentication](keycloak-spa-authentication.md) - How Keycloak auth works for the SmartEM frontend and backend
+
 ## System Design
 
 Architecture documentation is maintained in the main smartem-decisions repository:
