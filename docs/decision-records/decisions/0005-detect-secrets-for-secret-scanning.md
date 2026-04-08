@@ -4,7 +4,9 @@ Date: 21/08/2025
 
 ## Status
 
-Accepted
+Superseded by gitleaks consolidation
+
+**Note:** detect-secrets was removed in favour of consolidating on gitleaks as the single secret scanning tool across the project. This simplifies the security tool stack and aligns with the organisational preference for gitleaks standardisation.
 
 ## Context
 
