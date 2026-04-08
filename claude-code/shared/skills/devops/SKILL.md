@@ -174,7 +174,7 @@ kubectl get secret db-credentials -n smartem-decisions -o jsonpath='{.data.POSTG
 | ci.yml | Push/PR to main | Tests, lint, type check |
 | _container.yml | Tag push (v*) | Build and push Docker image |
 | _docs.yml | Tag push | Build and publish docs |
-| security-scan.yml | Schedule/manual | detect-secrets scanning |
+| security-scan.yml | Schedule/manual | gitleaks scanning |
 | build_win_smartem_agent.yml | Push to main | Windows .exe build |
 
 ### Debugging CI Failures

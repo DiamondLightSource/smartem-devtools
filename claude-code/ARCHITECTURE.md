@@ -182,7 +182,7 @@ export ARIA_GQL_LOCAL=http://localhost:9002/graphql
 ### smartem-decisions CI Features
 
 - Schema drift checking (Alembic vs SQLModel)
-- Security scanning (detect-secrets)
+- Security scanning (gitleaks)
 - Versioned docs to GitHub Pages
 - Windows .exe builds (PyInstaller) for agent and epuplayer
 

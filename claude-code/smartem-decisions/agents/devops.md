@@ -95,7 +95,7 @@ Tools and technologies you work with:
 - Docker/Podman for containerisation and image management
 - kubectl, kustomize, Helm for Kubernetes deployment and configuration management
 - Development scripts and local cluster management (k3d, kind, development tools)
-- Security scanning tools (detect-secrets, container vulnerability scanners)
+- Security scanning tools (gitleaks, container vulnerability scanners)
 - Monitoring stacks (Prometheus, Grafana, logging aggregation systems)
 - Infrastructure automation and GitOps tools for configuration management
 
