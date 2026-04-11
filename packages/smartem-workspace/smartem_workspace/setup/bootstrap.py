@@ -13,7 +13,7 @@ from smartem_workspace.interactive.prompts import (
 )
 from smartem_workspace.setup.claude import setup_claude_config
 from smartem_workspace.setup.repos import clone_repos
-from smartem_workspace.setup.serena import setup_serena_config
+from smartem_workspace.setup.mcp import setup_mcp_config
 from smartem_workspace.setup.workspace import display_next_steps, setup_workspace_structure
 
 console = Console()
@@ -113,9 +113,9 @@ def bootstrap_workspace(
     if not skip_claude and claude_config:
         setup_claude_config(claude_config, workspace_path)
 
-    if not skip_serena:
+    if not skip_serena and claude_config:
         project_name = workspace_path.name or "smartem-workspace"
-        setup_serena_config(config, workspace_path, project_name)
+        setup_mcp_config(claude_config, workspace_path, project_name)
 
     display_next_steps(workspace_path)
 
