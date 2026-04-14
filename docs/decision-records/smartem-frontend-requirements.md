@@ -41,7 +41,7 @@ Acquisition (session)
 
 Navigation follows the data hierarchy with lateral views at each level.
 
-> **Note**: Route paths are being redesigned as part of the frontend redesign. The paths below reflect the legacy application. The new route structure uses session-anchored nesting (`/sessions/:sessionId/grids/:gridId/...`) — see the [design specification](smartem-frontend-design.md) for the current route plan.
+> **Note**: Route paths are being redesigned as part of the frontend redesign. The paths below reflect the new session-anchored route structure used by `apps/smartem` (see the [design specification](smartem-frontend-design.md) for the current route plan). The legacy application (`apps/legacy`) still uses `/acquisitions/:acqId/...` — see [Appendix B](#appendix-b-frontend-route-summary) for the legacy route inventory.
 
 ```
 Session List (Home)
