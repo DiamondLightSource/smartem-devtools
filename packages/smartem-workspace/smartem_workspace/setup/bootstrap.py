@@ -12,8 +12,8 @@ from smartem_workspace.interactive.prompts import (
     select_repos,
 )
 from smartem_workspace.setup.claude import setup_claude_config
-from smartem_workspace.setup.repos import clone_repos
 from smartem_workspace.setup.mcp import setup_mcp_config
+from smartem_workspace.setup.repos import clone_repos
 from smartem_workspace.setup.workspace import display_next_steps, setup_workspace_structure
 
 console = Console()
