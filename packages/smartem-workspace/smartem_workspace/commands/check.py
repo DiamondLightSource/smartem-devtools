@@ -322,7 +322,9 @@ def run_serena_checks(workspace_path: Path, claude_config: ClaudeCodeConfig | No
                         )
                     )
                 else:
-                    results.append(CheckResult(".mcp.json servers", "ok", f"{len(defined_servers)} server(s) configured"))
+                    results.append(
+                        CheckResult(".mcp.json servers", "ok", f"{len(defined_servers)} server(s) configured")
+                    )
             except (json.JSONDecodeError, KeyError):
                 pass
     else:

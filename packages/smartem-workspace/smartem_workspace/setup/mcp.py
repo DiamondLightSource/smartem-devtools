@@ -6,7 +6,7 @@ from pathlib import Path
 import yaml
 from rich.console import Console
 
-from smartem_workspace.config.schema import ClaudeCodeConfig, McpServerConfig
+from smartem_workspace.config.schema import ClaudeCodeConfig
 
 console = Console()
 
