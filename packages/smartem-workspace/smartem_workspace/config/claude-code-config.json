@@ -4,13 +4,11 @@
   "description": "Claude Code integration configuration for SmartEM workspace",
   "claudeConfig": {
     "skills": [
-      { "name": "database-admin", "path": "claude-code/shared/skills/database-admin" },
+      { "name": "database", "path": "claude-code/shared/skills/database" },
       { "name": "devops", "path": "claude-code/shared/skills/devops" },
-      { "name": "technical-writer", "path": "claude-code/shared/skills/technical-writer" },
+      { "name": "tech-writer", "path": "claude-code/shared/skills/tech-writer" },
       { "name": "git", "path": "claude-code/shared/skills/git" },
-      { "name": "github", "path": "claude-code/shared/skills/github" },
-      { "name": "ascii-art", "path": "claude-code/shared/skills/ascii-art" },
-      { "name": "playwright-skill", "path": "claude-code/smartem-frontend/skills/playwright-skill" }
+      { "name": "playwright", "path": "claude-code/smartem-frontend/skills/playwright" }
     ],
     "defaultPermissions": {
       "allow": [

@@ -276,10 +276,26 @@ def run_claude_checks(workspace_path: Path, claude_config: ClaudeCodeConfig) -> 
     else:
         results.append(CheckResult(".claude/skills directory", "ok", "Present"))
 
+    expected_skill_names = {skill.name for skill in claude_config.claudeConfig.skills}
     for skill in claude_config.claudeConfig.skills:
         skill_link = skills_dir / skill.name
         skill_target = devtools_path / skill.path
         results.append(check_symlink(skill_link, skill_target, f"skill: {skill.name}"))
+
+    if skills_dir.exists():
+        for entry in skills_dir.iterdir():
+            if entry.name in expected_skill_names:
+                continue
+            if entry.is_symlink() and not entry.exists():
+                results.append(
+                    CheckResult(
+                        f"skill: {entry.name}",
+                        "warning",
+                        "Broken symlink (stale)",
+                        fixable=True,
+                        fix_data={"remove_broken_symlink": str(entry)},
+                    )
+                )
 
     settings_path = workspace_path / ".claude" / "settings.local.json"
     if settings_path.exists():
@@ -405,6 +421,20 @@ def apply_fixes(workspace_path: Path, reports: list[CheckReport]) -> tuple[int, 
                     fixed += 1
                 except OSError as e:
                     console.print(f"  [red]Failed to create directory: {e}[/red]")
+                    failed += 1
+
+            elif "remove_broken_symlink" in fix_data:
+                broken_path = Path(fix_data["remove_broken_symlink"])
+                try:
+                    if broken_path.is_symlink() and not broken_path.exists():
+                        broken_path.unlink()
+                        console.print(f"  [green]Removed broken symlink: {broken_path.name}[/green]")
+                        fixed += 1
+                    else:
+                        console.print(f"  [yellow]Skipped (no longer broken): {broken_path.name}[/yellow]")
+                        failed += 1
+                except OSError as e:
+                    console.print(f"  [red]Failed to remove broken symlink: {e}[/red]")
                     failed += 1
 
             elif "link" in fix_data and "target" in fix_data:
