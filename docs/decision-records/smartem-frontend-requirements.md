@@ -415,16 +415,26 @@ These features are not currently implemented but are planned. The backend has th
 ### 6.4 Performance
 
 - Atlas images can be large (4000x4000+ pixels). Use progressive loading and crop parameters where supported.
-- Grids can have hundreds of squares with thousands of foil holes. Virtualise long lists.
+- Atlas and grid square images use `loading="lazy"` and `decoding="async"` so image decoding does not block the main thread.
+- Grids can have hundreds of squares with thousands of foil holes. List and table views with more than ~100 items must use virtualisation (e.g. `@tanstack/react-virtual`) rather than rendering all DOM nodes.
 - Prediction data can be voluminous for time series. Paginate or aggregate server-side.
 - Image conversion (MRC to PNG) happens server-side; cache results.
+- Heavy visualisation components (atlas overlay, latent-space scatter, charts) are code-split and lazy-loaded so the initial bundle stays small. The route-level entry points load synchronously; the expensive rendering surfaces load on demand.
 
-### 6.5 Error States and Offline Behaviour
+### 6.5 Loading, Error, and Empty States
 
-- Show clear error messages when API calls fail (connection refused, 404, 500)
-- Distinguish between "no data yet" (empty state) and "error loading data"
-- Stale data indicator when real-time updates are interrupted
-- Graceful degradation: if prediction endpoints fail, still show structural data (squares, holes)
+Every data-fetching view must handle the same three states consistently: loading, error, and empty. To guarantee uniform UX and avoid re-implementing the pattern per route, the new app provides a shared abstraction (e.g. a `QueryStateHandler` wrapper or render-prop around a React Query result) that all views use.
+
+| State | Requirement |
+|-------|-------------|
+| **Loading** | Spinner or skeleton matching the target layout, with optional inline message. Skeleton is preferred for known-shape content (tables, cards); spinner for small unknown-shape areas. |
+| **Error** | Alert with a readable error message and an explicit retry affordance. Distinguish transport errors (connection refused, 5xx) from application errors (404, 403) where the backend provides enough signal. |
+| **Empty** | Informative empty state with guidance on why the view is empty and what to do next — never a blank page. Distinguish "no data yet" (active session still collecting) from "no data at all" (completed session with no results). |
+
+Additional requirements:
+
+- Stale data indicator when real-time updates are interrupted.
+- Graceful degradation: if prediction endpoints fail, still show structural data (squares, holes).
 
 ---
 
