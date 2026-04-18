@@ -163,7 +163,7 @@ A **spatial context strip** replaces traditional breadcrumbs, showing miniature 
 - Interactive grid square overlays:
   - Circles (or rectangles) positioned at each square's center coordinates
   - Size scaled by grid square physical size and/or prediction value
-  - Colour-coded by quality prediction (green > 0.5, red <= 0.5, purple = no prediction)
+  - Colour-coded by quality prediction (green `> 0.5`, red `<= 0.5`, purple = no prediction)
   - Blue highlight for ML-suggested squares
 - Model selector dropdown to choose which prediction model colours the overlay
 - Toggle button to show/hide prediction overlay
