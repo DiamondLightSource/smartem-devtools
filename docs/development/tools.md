@@ -143,6 +143,57 @@ This tool is particularly useful for:
 
 Both tools work together to simulate the complete external data flow into the SmartEM system, enabling comprehensive testing without requiring actual microscopy equipment or external processing systems.
 
+## Database Tools
+
+### Schema Drift Detection
+
+Detects when SQLModel definitions have changed without corresponding Alembic migrations. Creates a temporary PostgreSQL database, applies existing migrations, then runs autogenerate to check for differences. Also used in CI via the `_schema_drift.yml` workflow.
+
+```bash
+# Requires a running PostgreSQL instance (e.g. from dev-k8s.sh up)
+uv run python tools/check_schema_drift.py
+```
+
+Exit code 0 means the schema is in sync; exit code 1 means drift was detected (or an error occurred).
+
+### Database Table Row Counts
+
+Connects to PostgreSQL and outputs row counts for every SmartEM table. Useful for verifying data after E2E tests or checking the state of a development database.
+
+```bash
+uv run python tools/db_table_totals.py
+```
+
+## API Documentation Generation
+
+### Generate API Docs
+
+Generates API documentation from OpenAPI specs into `docs/api/`. Processes two APIs:
+
+- **Athena API**: copies the original spec from `docs/athena-decision-service-api-spec.json` and adds a local mock server entry
+- **SmartEM API**: imports the FastAPI app and extracts the OpenAPI schema at runtime
+
+```bash
+uv run python tools/generate_api_docs.py
+```
+
+Output is written to `docs/api/athena/swagger.json` and `docs/api/smartem/swagger.json`.
+
+## Miscellaneous Tools
+
+### Create ISO Image
+
+Creates an ISO image from a source directory using `mkisofs` or `genisoimage`.
+
+```bash
+./tools/makeiso.sh <source_directory> [output.iso]
+
+# Example: create an ISO from a test dataset
+./tools/makeiso.sh ./tests/testdata/bi37708-28 dataset.iso
+```
+
+If the output filename is omitted, it defaults to `<source_directory>.iso`.
+
 ## Additional Development Commands
 
 ### Pre-commit Workflow
