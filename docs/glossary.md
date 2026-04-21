@@ -19,9 +19,9 @@ collection strategies.
 
 ## ARIA
 
-Automated Real-time Image Analysis system developed by INSTRUCT-ERIC for real-time processing and quality assessment
-of cryo-electron microscopy data during acquisition. More information available at:
-https://instruct-eric.org/help/about-aria
+Central metadata repository for structural biology data from multiple facilities, managed by INSTRUCT-ERIC. ARIA
+collects and organises acquisition metadata, sample information, and processing results deposited from facilities via
+the FandanGO plugin framework. More information available at: https://instruct-eric.org/help/about-aria
 
 ## Atlas
 

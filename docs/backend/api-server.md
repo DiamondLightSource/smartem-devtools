@@ -5,7 +5,7 @@ The core backend service providing HTTP API, database operations, and message qu
 ## Backend Operations
 
 ```bash
-# create env and launch service stack locally:
+# create env and launch service stack locally (from smartem-devtools checkout):
 ./scripts/k8s/dev-k8s.sh up
 
 # launch RabbitMQ worker (consumer)
@@ -13,9 +13,9 @@ python -m smartem_backend.consumer              # ERROR level (default)
 python -m smartem_backend.consumer -v           # INFO level
 python -m smartem_backend.consumer -vv          # DEBUG level
 
-# simulating an system event:
-python -m smartem_backend.simulate_msg --help # to see a list of options
-./tools/simulate-messages.sh # run a simulation, triggering system events in sequence
+# simulating a system event (see tools.md for full usage):
+uv run python tools/external_message_simulator.py list-messages  # see available message types
+uv run python tools/external_message_simulator.py workflow-simulation --gridsquare-id "DEV_001"  # run a workflow
 
 # run HTTP API (recommended - uses proper module entry point):
 python -m smartem_backend.api_server
