@@ -5,6 +5,8 @@ Cross-cutting operational documentation for deploying and running SmartEM in pro
 ```{toctree}
 :maxdepth: 1
 
+releasing
+publish-smartem-workspace-to-pypi
 kubernetes
 kubernetes-secrets
 containerization
@@ -15,6 +17,11 @@ logging
 ```
 
 ## Topics
+
+### Releases
+
+- [Release Procedure](releasing.md) - How to release smartem-decisions, smartem-epuplayer, and smartem-workspace
+- [PyPI Token Setup](publish-smartem-workspace-to-pypi.md) - First-time PyPI account and token configuration
 
 ### Kubernetes
 

@@ -35,8 +35,10 @@ This will:
 1. Create the Alembic version tracking table
 2. Apply migration 001: Create core SmartEM schema baseline (acquisition, grid, gridsquare, micrograph, foilhole, atlas, etc.)
 3. Apply migration 002: Add performance indexes for acquisition datetime queries
-4. Apply migration 003: Add prediction model tables
-5. Apply remaining migrations for quality metrics, training tables, and schema fixes
+4. Apply migration 003: Add SciFi robot prediction model tables
+5. Apply migration 004: Add quality metric and training tables
+6. Apply migration 005: Fix schema drift and sync indexes
+7. Apply migration 006: Add suggested acquisition index
 
 ### Running Migrations
 
@@ -232,7 +234,7 @@ python -m alembic revision --autogenerate -m "Sync models with database"
 
 **Missing baseline schema**: If you encounter errors like "relation 'gridsquare' does not exist" when running migrations:
 
-This indicates that migration 002 is trying to create indexes on tables that don't exist yet. This happens when the baseline schema migration is missing or not properly applied. The fix is to ensure the baseline migration (6e6302f1ccb6) is applied before migration 002.
+This indicates that migration 002 is trying to create indexes on tables that don't exist yet. This happens when the baseline schema migration is missing or not properly applied. The fix is to ensure migration 001 (`2025_09_18_1042-001_create_core_smartem_schema_baseline.py`) is applied before migration 002.
 
 ```bash
 # Solution: Run the complete migration sequence from scratch
