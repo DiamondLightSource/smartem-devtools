@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>DiamondLightSource/smartem-devtools:renovate/default"],
+  "extends": ["github>DiamondLightSource/smartem-devtools//renovate/default"],
   "packageRules": [
     {
       "description": "Group webui npm minor/patch",
@@ -14,7 +14,7 @@
       "matchManagers": ["npm"],
       "matchFileNames": ["webui/**"],
       "matchUpdateTypes": ["major"],
-      "matchPackagePatterns": ["^vite$", "^@vitejs/", "^@tailwindcss/vite$"],
+      "matchPackageNames": ["vite", "@tailwindcss/vite", "/^@vitejs//"],
       "groupName": "webui vite ecosystem major"
     },
     {
