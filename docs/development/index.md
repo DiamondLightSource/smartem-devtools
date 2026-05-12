@@ -9,6 +9,7 @@ contributing
 tools
 generate-docs
 e2e-simulation
+local-keycloak
 github-labels
 ```
 
@@ -22,6 +23,7 @@ github-labels
 
 - [Development Tools](tools.md) - Utility tools for development, testing, and maintenance
 - [E2E Simulation](e2e-simulation.md) - End-to-end development simulation setup
+- [Local Keycloak](local-keycloak.md) - Self-contained Keycloak mock for frontend auth development
 
 ### Documentation and CI/CD
 

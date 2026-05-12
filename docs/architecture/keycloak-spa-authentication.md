@@ -54,10 +54,16 @@ What the backend needs to add is **token validation** — a FastAPI dependency t
 
 ## Prerequisites
 
-A **Keycloak client registration** is required — someone needs to create a `smartem-frontend` client in the DLS Keycloak realm (`identity.diamond.ac.uk`) with:
+A **Keycloak client registration** is required — someone needs to create a `SmartEM` client in the DLS Keycloak realm (`identity.diamond.ac.uk`) with:
 
 - Client type: public (SPAs can't keep secrets)
 - Valid redirect URIs (the SPA's URL)
 - Web origins (for CORS)
 
 Without this, `keycloak-js` has nowhere to redirect to.
+
+## Local development
+
+For frontend development you do not need access to the DLS identity server. A self-contained Keycloak mock lives under `keycloak-mock/` in this repository and provides a `dls` realm with a pre-configured `SmartEM` client and seeded users.
+
+See [Local Keycloak for SmartEM frontend dev](../development/local-keycloak.md) for setup and integration with the frontend.
