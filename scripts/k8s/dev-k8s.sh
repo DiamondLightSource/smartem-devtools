@@ -302,12 +302,19 @@ ensure_app_configmap() {
     local http_api_port="${HTTP_API_PORT:-}"
     local adminer_port="${ADMINER_PORT:-}"
     local cors_allowed_origins="${CORS_ALLOWED_ORIGINS:-}"
+    local keycloak_auth_required="${KEYCLOAK_AUTH_REQUIRED:-}"
+    local keycloak_url="${KEYCLOAK_URL:-}"
+    local keycloak_realm="${KEYCLOAK_REALM:-}"
+    local keycloak_client_id="${KEYCLOAK_CLIENT_ID:-}"
+    local keycloak_verify_iss="${KEYCLOAK_VERIFY_ISS:-}"
 
     # Check if any env vars are set
     local has_env_overrides=false
     if [[ -n "$postgres_host" ]] || [[ -n "$postgres_port" ]] || [[ -n "$postgres_db" ]] || \
        [[ -n "$rabbitmq_host" ]] || [[ -n "$rabbitmq_port" ]] || \
-       [[ -n "$http_api_port" ]] || [[ -n "$adminer_port" ]] || [[ -n "$cors_allowed_origins" ]]; then
+       [[ -n "$http_api_port" ]] || [[ -n "$adminer_port" ]] || [[ -n "$cors_allowed_origins" ]] || \
+       [[ -n "$keycloak_auth_required" ]] || [[ -n "$keycloak_url" ]] || [[ -n "$keycloak_realm" ]] || \
+       [[ -n "$keycloak_client_id" ]] || [[ -n "$keycloak_verify_iss" ]]; then
         has_env_overrides=true
     fi
 
@@ -331,11 +338,17 @@ ensure_app_configmap() {
     http_api_port="${http_api_port:-8000}"
     adminer_port="${adminer_port:-8080}"
     cors_allowed_origins="${cors_allowed_origins:-*}"
+    keycloak_auth_required="${keycloak_auth_required:-false}"
+    keycloak_url="${keycloak_url:-http://keycloak-service:8080}"
+    keycloak_realm="${keycloak_realm:-dls}"
+    keycloak_client_id="${keycloak_client_id:-SmartEM}"
+    keycloak_verify_iss="${keycloak_verify_iss:-false}"
 
     log_info "Creating application ConfigMap for environment: $DEPLOY_ENV"
     log_info "POSTGRES_HOST=$postgres_host, POSTGRES_PORT=$postgres_port, POSTGRES_DB=$postgres_db"
     log_info "RABBITMQ_HOST=$rabbitmq_host, RABBITMQ_PORT=$rabbitmq_port"
     log_info "HTTP_API_PORT=$http_api_port, CORS_ALLOWED_ORIGINS=$cors_allowed_origins"
+    log_info "KEYCLOAK_AUTH_REQUIRED=$keycloak_auth_required, KEYCLOAK_URL=$keycloak_url, KEYCLOAK_REALM=$keycloak_realm"
 
     kubectl create configmap smartem-config \
         --from-literal=POSTGRES_HOST="$postgres_host" \
@@ -346,6 +359,11 @@ ensure_app_configmap() {
         --from-literal=HTTP_API_PORT="$http_api_port" \
         --from-literal=ADMINER_PORT="$adminer_port" \
         --from-literal=CORS_ALLOWED_ORIGINS="$cors_allowed_origins" \
+        --from-literal=KEYCLOAK_AUTH_REQUIRED="$keycloak_auth_required" \
+        --from-literal=KEYCLOAK_URL="$keycloak_url" \
+        --from-literal=KEYCLOAK_REALM="$keycloak_realm" \
+        --from-literal=KEYCLOAK_CLIENT_ID="$keycloak_client_id" \
+        --from-literal=KEYCLOAK_VERIFY_ISS="$keycloak_verify_iss" \
         --namespace="$NAMESPACE"
 
     log_success "Application ConfigMap created with .env overrides"
