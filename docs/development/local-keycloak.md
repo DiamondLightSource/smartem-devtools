@@ -53,7 +53,7 @@ The `keycloak-mock/kustomization.yaml` is referenced as a base by `k8s/environme
 The Keycloak service is reachable as:
 
 - `http://keycloak-service:8080` inside the cluster (ClusterIP);
-- `http://<node-ip>:30080` from outside (NodePort).
+- `http://<node-ip>:30090` from outside (NodePort).
 
 To deploy Keycloak alone — for example, on an existing cluster not managed by `dev-k8s.sh`:
 
@@ -89,7 +89,7 @@ VITE_KEYCLOAK_CLIENT_ID=SmartEM
 VITE_AUTH_ENABLED=true
 ```
 
-For the k8s form without port-forward, substitute `http://<node-ip>:30080` for the URL. With a single-node k3s cluster, `node-ip` is the host's IP.
+For the k8s form without port-forward, substitute `http://<node-ip>:30090` for the URL. With a single-node k3s cluster, `node-ip` is the host's IP.
 
 After changing `.env.local`, restart the Vite dev server (env values are read at startup).
 
