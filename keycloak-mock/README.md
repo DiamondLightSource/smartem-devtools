@@ -46,7 +46,7 @@ To deploy keycloak alone (e.g. on an existing cluster):
 kubectl apply -k keycloak-mock
 ```
 
-Once running, the Keycloak service is reachable inside the cluster at `http://keycloak-service:8080` (ClusterIP) and from outside at `http://<node-ip>:30080` (NodePort).
+Once running, the Keycloak service is reachable inside the cluster at `http://keycloak-service:8080` (ClusterIP) and from outside at `http://<node-ip>:30090` (NodePort). (30090 not 30080 because the SmartEM HTTP API service already owns 30080 in the dev environment.)
 
 ## Pointing the frontend at it
 
@@ -55,7 +55,7 @@ In `smartem-frontend/apps/smartem/.env.local`:
 ```env
 VITE_KEYCLOAK_URL=http://localhost:8080      # compose / port-forward
 # or
-VITE_KEYCLOAK_URL=http://<node-ip>:30080     # k8s NodePort
+VITE_KEYCLOAK_URL=http://<node-ip>:30090     # k8s NodePort
 VITE_KEYCLOAK_REALM=dls
 VITE_KEYCLOAK_CLIENT_ID=SmartEM
 VITE_AUTH_ENABLED=true
