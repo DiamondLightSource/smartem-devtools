@@ -14,7 +14,7 @@
   "ssoSessionMaxLifespan": 36000,
   "clients": [
     {
-      "clientId": "SmartEM",
+      "clientId": "SmartEM_User",
       "name": "SmartEM Frontend",
       "enabled": true,
       "publicClient": true,
@@ -60,6 +60,24 @@
           }
         }
       ]
+    },
+    {
+      "clientId": "SmartEM_Agent",
+      "name": "SmartEM Agent",
+      "description": "Service account client for SmartEM Agents running on EPU workstations. Uses the OAuth 2.0 client_credentials grant to obtain access tokens for backend API calls.",
+      "enabled": true,
+      "publicClient": false,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "dev-agent-secret",
+      "standardFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "implicitFlowEnabled": false,
+      "serviceAccountsEnabled": true,
+      "defaultClientScopes": [
+        "openid",
+        "profile",
+        "roles"
+      ]
     }
   ],
   "users": [
@@ -77,25 +95,6 @@
         {
           "type": "password",
           "value": "devpass",
-          "temporary": false
-        }
-      ],
-      "realmRoles": ["default-roles-dls"]
-    },
-    {
-      "username": "valuser",
-      "enabled": true,
-      "emailVerified": true,
-      "firstName": "Val",
-      "lastName": "Redchenko",
-      "email": "lazyval@gmail.com",
-      "attributes": {
-        "fedId": ["val99999"]
-      },
-      "credentials": [
-        {
-          "type": "password",
-          "value": "valpass",
           "temporary": false
         }
       ],

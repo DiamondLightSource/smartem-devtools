@@ -12,6 +12,14 @@ data conversion utilities to convert between EPU data models and API request/res
 
 The SmartEM API Client is included with the SmartEM Decisions package, so no additional installation is required.
 
+## Authentication
+
+In deployed environments the SmartEM Decisions backend rejects unauthenticated requests with HTTP 401. Callers of `SmartEMAPIClient` are responsible for ensuring that the underlying `requests.Session` carries a valid Keycloak-issued Bearer token on every request.
+
+For the SmartEM Agent (the primary consumer of this client), token management is handled by an integrated Keycloak helper that fetches tokens via the OAuth 2.0 client_credentials grant, attaches them on every request, and refreshes on 401. See [Agent Authentication](../agent/authentication.md) for the operational details and [ADR 0018](../decision-records/decisions/0018-smartem-agent-keycloak-auth.md) for the architectural decision.
+
+For other callers (scripts, tests, ad-hoc tooling), obtain a token from Keycloak and attach it to the client's session headers before making requests.
+
 ## Basic Usage
 
 ### Importing the Client

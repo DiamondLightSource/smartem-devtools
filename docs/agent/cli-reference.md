@@ -261,6 +261,7 @@ python -m smartem_agent watch [OPTIONS] PATH
 | `--session-id` | str | No | None | Session identifier for SSE connection |
 | `--sse-timeout` | int | No | 30 | SSE connection timeout in seconds |
 | `--heartbeat-interval` | int | No | 60 | Agent heartbeat interval in seconds (0 to disable) |
+| `--config` | str | No | _next to the agent executable_ | Path to the Keycloak authentication configuration file (see [Authentication](authentication.md)) |
 | `--verbose` | count | No | 0 | Verbosity level (see [Global Options](#global-options)) |
 
 ### Core Parameters
@@ -352,6 +353,24 @@ python -m smartem_agent watch /data --agent-id agent-01 --session-id session-123
 
 # Disable heartbeats (not recommended for production)
 python -m smartem_agent watch /data --agent-id agent-01 --session-id session-123 --heartbeat-interval 0
+```
+
+### Authentication Parameters
+
+#### --config
+**Type:** String (optional)
+**Default:** A file named `agent.env` located alongside the agent executable.
+**Description:** Path to the Keycloak authentication configuration file. The file is a dotenv-style file containing `KEYCLOAK_URL`, `KEYCLOAK_REALM`, `KEYCLOAK_CLIENT_ID`, and `KEYCLOAK_CLIENT_SECRET`.
+
+The agent presents a Bearer token issued by Keycloak on every request to the backend. Missing or invalid configuration causes the agent to exit at startup. See [Authentication](authentication.md) for the full configuration, rotation, and troubleshooting guide.
+
+**Examples:**
+```bash
+# Use the default file location (next to the agent executable)
+python -m smartem_agent watch /data/microscopy
+
+# Use a custom configuration location
+python -m smartem_agent watch /data/microscopy --config /opt/smartem/agent.env
 ```
 
 ### Logging Parameters

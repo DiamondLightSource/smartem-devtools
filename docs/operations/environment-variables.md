@@ -313,6 +313,21 @@ set -a && source .env && set +a
 env | grep POSTGRES
 ```
 
+## Agent Keycloak Configuration
+
+The SmartEM Agent uses a separate dotenv-style configuration file for Keycloak authentication, distinct from the backend `.env` files described above. This decoupling reflects that the agent runs on EPU workstations rather than inside the Kubernetes cluster.
+
+| Variable | Purpose |
+|----------|---------|
+| `KEYCLOAK_URL` | Base URL of the Keycloak server |
+| `KEYCLOAK_REALM` | Realm name (e.g. `dls`) |
+| `KEYCLOAK_CLIENT_ID` | Client identifier (`SmartEM_Agent` in normal operation) |
+| `KEYCLOAK_CLIENT_SECRET` | Confidential client secret |
+
+The agent reads these from a configuration file located either alongside the agent executable (default) or at a path passed via `--config`. All four are mandatory; missing or empty values cause the agent to exit at startup.
+
+For configuration, rotation, and troubleshooting, see [Agent Authentication](../agent/authentication.md). For the architectural decision, see [ADR 0018](../decision-records/decisions/0018-smartem-agent-keycloak-auth.md).
+
 ## Related Documentation
 
 - [Run Backend Services](../backend/api-server.md) - Starting backend API and consumer
@@ -320,3 +335,4 @@ env | grep POSTGRES
 - [Deploy to Kubernetes](kubernetes.md) - K8s deployment guide
 - [Manage Kubernetes Secrets](kubernetes-secrets.md) - Sealed Secrets and security
 - [Database Migrations](../backend/database.md) - Alembic migration workflow
+- [Agent Authentication](../agent/authentication.md) - Keycloak configuration for the agent
