@@ -7,6 +7,7 @@ Documentation for the SmartEM Agent - the EPU filesystem watcher that runs on Wi
 
 cli-reference
 deployment
+authentication
 troubleshooting
 ```
 
@@ -20,3 +21,4 @@ troubleshooting
 ### Deployment
 
 - [Agent Deployment](deployment.md) - Running the agent on Windows workstations
+- [Authentication](authentication.md) - Configuring and operating Keycloak authentication

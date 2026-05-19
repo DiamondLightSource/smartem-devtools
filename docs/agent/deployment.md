@@ -25,6 +25,12 @@ The agent operates in several modes depending on the timing of EPU data acquisit
 2. **Mid-acquisition mode**: Watcher launched _after_ EPU starts writing - combines parsing existing files with real-time monitoring
 3. **Post-acquisition mode**: Watcher launched _after_ EPU finishes - parses complete dataset then monitors for changes
 
+## Authentication
+
+The SmartEM Agent authenticates against the backend using Keycloak-issued Bearer tokens. Before deploying, prepare a configuration file with four values (`KEYCLOAK_URL`, `KEYCLOAK_REALM`, `KEYCLOAK_CLIENT_ID`, `KEYCLOAK_CLIENT_SECRET`). The agent reads this file from a default location alongside the executable or from a path provided via `--config`. Missing or invalid configuration causes the agent to exit at startup.
+
+See [Authentication](authentication.md) for the full configuration, rotation, and troubleshooting guide.
+
 ## Quick Start
 
 For comprehensive parameter documentation, see the [CLI Reference](cli-reference.md). For troubleshooting, see the [CLI Troubleshooting Guide](troubleshooting.md).

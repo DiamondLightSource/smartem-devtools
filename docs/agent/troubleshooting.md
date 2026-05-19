@@ -121,7 +121,30 @@ inotifywait -m -r /data
 - Ensure files are completely written before processing
 - Consider filesystem-specific issues (NFS, network drives)
 
-### 3. API Connection Problems
+### 3. Authentication Errors (HTTP 401)
+
+The agent authenticates against the backend using Keycloak-issued Bearer tokens. A 401 from the backend, or a startup failure mentioning Keycloak configuration, points to one of:
+
+- **Missing or unreadable configuration file.** The agent expects a dotenv-style file with `KEYCLOAK_URL`, `KEYCLOAK_REALM`, `KEYCLOAK_CLIENT_ID`, and `KEYCLOAK_CLIENT_SECRET`. Default location is alongside the agent executable; override with `--config`.
+- **Wrong client secret.** Verify against the Keycloak admin console.
+- **Workstation clock skew.** Tokens have a 5-minute lifespan with a small backend leeway. A workstation clock more than ~1 minute off Keycloak's clock will see tokens rejected as expired.
+- **Keycloak unreachable.** EPU workstations sit behind proxy allow-lists; Keycloak must be reachable from the workstation.
+- **`SmartEM_Agent` client disabled or deleted in the realm.**
+
+For full diagnosis and rotation procedures, see [Authentication](authentication.md). For quick checks:
+
+```bash
+# Verify the agent can reach Keycloak
+curl -v ${KEYCLOAK_URL}/realms/${KEYCLOAK_REALM}/.well-known/openid-configuration
+
+# Manually obtain a token to test credentials
+curl -X POST \
+  -d "grant_type=client_credentials" \
+  -u "${KEYCLOAK_CLIENT_ID}:${KEYCLOAK_CLIENT_SECRET}" \
+  ${KEYCLOAK_URL}/realms/${KEYCLOAK_REALM}/protocol/openid-connect/token
+```
+
+### 4. API Connection Problems
 
 #### Error: `API at http://127.0.0.1:8000 is not reachable`
 
@@ -199,7 +222,7 @@ curl -X POST \
    - Verify database connectivity
    - Check for authentication issues
 
-### 4. Parsing and Validation Errors
+### 5. Parsing and Validation Errors
 
 #### Error: `Grid data dir is structurally invalid`
 
@@ -242,7 +265,7 @@ hexdump -C /path/to/EpuSession.dm | head -5
 - Ensure files are in expected format (not binary corrupted)
 - Look for encoding issues or special characters in paths
 
-### 5. Performance and Resource Issues
+### 6. Performance and Resource Issues
 
 #### Issue: High memory usage or slow processing
 
@@ -297,7 +320,7 @@ ulimit -n 4096
 echo "ulimit -n 4096" >> ~/.bashrc
 ```
 
-### 6. Logging and Output Issues
+### 7. Logging and Output Issues
 
 #### Issue: No log output or missing log files
 
@@ -331,7 +354,7 @@ python -m smartem_agent watch /data -vv     # DEBUG level
 python -m smartem_agent watch /data -v 2>&1 | tee output.log
 ```
 
-### 7. Signal Handling and Process Management
+### 8. Signal Handling and Process Management
 
 #### Issue: Process doesn't stop gracefully with Ctrl+C
 
