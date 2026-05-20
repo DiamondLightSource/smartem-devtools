@@ -43,8 +43,8 @@ The workflow triggers on changes to:
 
 ```bash
 # Version is determined by setuptools_scm from the tag
-git tag smartem-decisions-v1.2.0
-git push origin smartem-decisions-v1.2.0
+git tag smartem-decisions-v0.2.0
+git push origin smartem-decisions-v0.2.0
 ```
 
 CI will:
@@ -53,7 +53,7 @@ CI will:
 3. Build Python wheel and Windows exe
 4. Smoke test the Windows exe
 5. Publish wheel to PyPI (trusted publishing via OIDC)
-6. Build and push Docker image to GHCR (`ghcr.io/DiamondLightSource/smartem-decisions:{VERSION}`)
+6. Build and push Docker image to GHCR (`ghcr.io/diamondlightsource/smartem-decisions:{VERSION}`)
 7. Create a GitHub Release with release notes, wheel, and exe attached
 
 ## smartem-epuplayer
@@ -81,10 +81,10 @@ Before tagging, update the version in both places:
 
 ```python
 # packages/smartem-epuplayer/pyproject.toml
-version = "0.3.0"
+version = "1.2.0"
 
 # packages/smartem-epuplayer/smartem_epuplayer/__init__.py
-__version__ = "0.3.0"
+__version__ = "1.2.0"
 ```
 
 The CI will fail if these don't match.
@@ -92,8 +92,8 @@ The CI will fail if these don't match.
 ### Releasing a stable version
 
 ```bash
-git tag epuplayer-v0.3.0
-git push origin epuplayer-v0.3.0
+git tag epuplayer-v1.2.0
+git push origin epuplayer-v1.2.0
 ```
 
 ## smartem-workspace
@@ -120,17 +120,17 @@ Same pattern as epuplayer — update both files:
 
 ```python
 # packages/smartem-workspace/pyproject.toml
-version = "0.4.0"
+version = "0.7.0"
 
 # packages/smartem-workspace/smartem_workspace/__init__.py
-__version__ = "0.4.0"
+__version__ = "0.7.0"
 ```
 
 ### Releasing a stable version
 
 ```bash
-git tag smartem-workspace-v0.4.0
-git push origin smartem-workspace-v0.4.0
+git tag smartem-workspace-v0.7.0
+git push origin smartem-workspace-v0.7.0
 ```
 
 ### uvx cache gotcha
@@ -167,19 +167,19 @@ pre-release).
 
 ```bash
 # smartem-decisions
-pip install smartem-decisions==1.2.0
+pip install smartem-decisions==0.2.0
 
 # smartem-epuplayer
-pip install smartem-epuplayer==0.3.0
+pip install smartem-epuplayer==1.2.0
 
 # smartem-workspace
-pip install smartem-workspace==0.4.0
+pip install smartem-workspace==0.7.0
 ```
 
 ### Docker (smartem-decisions stable only)
 
 ```bash
-docker pull ghcr.io/diamondlightsource/smartem-decisions:1.2.0
+docker pull ghcr.io/diamondlightsource/smartem-decisions:0.2.0
 ```
 
 ### Windows executable
@@ -187,8 +187,8 @@ docker pull ghcr.io/diamondlightsource/smartem-decisions:1.2.0
 Download from the GitHub Release assets and run:
 
 ```bash
-smartem-agent-windows-v1.2.0.exe --help
-epuplayer-windows-v0.3.0.exe --help
+smartem-agent-windows-v0.2.0.exe --help
+epuplayer-windows-v1.2.0.exe --help
 ```
 
 ## First-time PyPI setup
