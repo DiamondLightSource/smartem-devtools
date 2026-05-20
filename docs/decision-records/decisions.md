@@ -21,5 +21,6 @@ Architectural decisions are made throughout a project's lifetime. As a way of ke
 - [ADR-0015: SmartEM Release Architecture](/docs/explanations/decisions/0015-smartem-release-architecture)
 - [ADR-0016: Facility Connector Fork Synchronization](/docs/explanations/decisions/0016-facility-connector-fork-sync) (Proposed)
 - [ADR-0017: SmartEM Frontend Monorepo Restructure](/docs/explanations/decisions/0017-smartem-frontend-monorepo-restructure)
+- [ADR-0019: SmartEM Frontend Release and Deployment Pipeline](/docs/explanations/decisions/0019-smartem-frontend-release-pipeline)
 
 For more information on ADRs see this [blog by Michael Nygard](http://thinkrelevance.com/blog/2011/11/15/documenting-architecture-decisions).
