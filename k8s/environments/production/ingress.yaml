@@ -8,10 +8,9 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-body-size: "10m"
 spec:
   rules:
-  # TODO: replace placeholder with the real production hostname.
   # The SPA pod's nginx reverse-proxies /api/ to smartem-http-api-service
   # internally, so a single route covering / is sufficient.
-  - host: smartem.example.com
+  - host: smartem.diamond.ac.uk
     http:
       paths:
       - path: /

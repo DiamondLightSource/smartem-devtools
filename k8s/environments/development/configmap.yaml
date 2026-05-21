@@ -18,9 +18,9 @@ data:
   # service. KEYCLOAK_VERIFY_ISS=false because tokens are issued with the
   # browser-facing URL (localhost:30090) while the pod fetches JWKS via
   # in-cluster DNS (keycloak-service:8080) - signing key matches but the
-  # iss claim does not.
-  KEYCLOAK_AUTH_REQUIRED: "false"
+  # iss claim does not. To restrict which realm clients can call /api/,
+  # set KEYCLOAK_ALLOWED_AZP (e.g. "SmartEM_User,SmartEM_Agent"); unset
+  # means any valid token from the realm is accepted.
   KEYCLOAK_URL: "http://keycloak-service:8080"
   KEYCLOAK_REALM: "dls"
-  KEYCLOAK_CLIENT_ID: "SmartEM"
   KEYCLOAK_VERIFY_ISS: "false"
