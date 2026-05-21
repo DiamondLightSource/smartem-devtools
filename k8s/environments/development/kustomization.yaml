@@ -11,6 +11,7 @@ resources:
 - adminer.yaml
 - smartem-http-api.yaml
 - smartem-worker.yaml
+- smartem-frontend.yaml
 - ../../../keycloak-mock
 
 namePrefix: ""

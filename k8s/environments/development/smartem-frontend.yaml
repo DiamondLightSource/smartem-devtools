@@ -1,0 +1,91 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: smartem-frontend-config
+  namespace: smartem-decisions
+data:
+  # Fetched at SPA boot from /config.json. The URL must be browser-reachable;
+  # NodePort 30090 maps to the in-cluster keycloak-service:8080. Flip
+  # authEnabled to true to exercise the Keycloak login flow end-to-end.
+  config.json: |
+    {
+      "keycloak": {
+        "url": "http://localhost:30090",
+        "realm": "dls",
+        "clientId": "SmartEM_User"
+      },
+      "authEnabled": false
+    }
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smartem-frontend
+  namespace: smartem-decisions
+  labels:
+    app: smartem-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: smartem-frontend
+  template:
+    metadata:
+      labels:
+        app: smartem-frontend
+    spec:
+      tolerations:
+      - key: node.kubernetes.io/disk-pressure
+        operator: Exists
+        effect: NoSchedule
+      containers:
+      - name: smartem-frontend
+        image: ghcr.io/diamondlightsource/smartem-frontend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        env:
+        # The SPA pod's nginx reverse-proxies /api/ to this in-cluster host.
+        - name: BACKEND_HOST
+          value: "smartem-http-api-service"
+        volumeMounts:
+        # Overrides the placeholder config.json shipped in the image.
+        - name: frontend-config
+          mountPath: /usr/share/nginx/html/config.json
+          subPath: config.json
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+      volumes:
+      - name: frontend-config
+        configMap:
+          name: smartem-frontend-config
+          items:
+          - key: config.json
+            path: config.json
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: smartem-frontend-service
+  namespace: smartem-decisions
+  labels:
+    app: smartem-frontend
+spec:
+  selector:
+    app: smartem-frontend
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+    nodePort: 30100
+    protocol: TCP
+  type: NodePort
