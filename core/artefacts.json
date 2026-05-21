@@ -27,9 +27,13 @@
     {
       "id": "frontend",
       "label": "SmartEM Frontend",
-      "url": "#",
-      "description": "SmartEM Web UI - deployed via backend container, no standalone bundle published",
-      "command": ""
+      "url": "https://github.com/DiamondLightSource/smartem-frontend/pkgs/container/smartem-frontend",
+      "description": "SmartEM Web UI - nginx-served SPA that talks to the smartem-decisions backend API",
+      "command": "docker pull ghcr.io/diamondlightsource/smartem-frontend:latest",
+      "links": [
+        { "label": "GitHub Releases", "url": "https://github.com/DiamondLightSource/smartem-frontend/releases" },
+        { "label": "Docker", "url": "https://github.com/DiamondLightSource/smartem-frontend/pkgs/container/smartem-frontend" }
+      ]
     },
     {
       "id": "workspace",
