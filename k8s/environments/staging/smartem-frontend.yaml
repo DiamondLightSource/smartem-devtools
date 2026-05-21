@@ -1,0 +1,86 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: smartem-frontend-config
+  namespace: smartem-decisions-staging
+data:
+  # Fetched at SPA boot from /config.json. Browser-reachable Keycloak URL
+  # for the DLS test realm. The clientId must match the realm's public
+  # client and the backend's azp allow-list (KEYCLOAK_CLIENT_ID in
+  # smartem-config).
+  config.json: |
+    {
+      "keycloak": {
+        "url": "https://identity-test.diamond.ac.uk",
+        "realm": "dls",
+        "clientId": "SmartEM_User"
+      },
+      "authEnabled": true
+    }
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smartem-frontend
+  namespace: smartem-decisions-staging
+  labels:
+    app: smartem-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: smartem-frontend
+  template:
+    metadata:
+      labels:
+        app: smartem-frontend
+    spec:
+      imagePullSecrets:
+      - name: ghcr-secret
+      containers:
+      - name: smartem-frontend
+        image: ghcr.io/diamondlightsource/smartem-frontend:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: BACKEND_HOST
+          value: "smartem-http-api-service"
+        volumeMounts:
+        - name: frontend-config
+          mountPath: /usr/share/nginx/html/config.json
+          subPath: config.json
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "50m"
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+      volumes:
+      - name: frontend-config
+        configMap:
+          name: smartem-frontend-config
+          items:
+          - key: config.json
+            path: config.json
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: smartem-frontend-service
+  namespace: smartem-decisions-staging
+  labels:
+    app: smartem-frontend
+spec:
+  selector:
+    app: smartem-frontend
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+    protocol: TCP
+  type: ClusterIP

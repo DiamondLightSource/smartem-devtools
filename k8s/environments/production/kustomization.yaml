@@ -10,6 +10,8 @@ resources:
 - elasticsearch.yaml
 - smartem-http-api.yaml
 - smartem-worker.yaml
+- smartem-frontend.yaml
+- ingress.yaml
 
 namePrefix: ""
 namespace: smartem-decisions-production
