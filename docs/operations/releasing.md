@@ -146,6 +146,78 @@ uvx --refresh smartem-workspace --help
 uvx smartem-workspace@latest --help
 ```
 
+## smartem-frontend
+
+**Repository:** [DiamondLightSource/smartem-frontend](https://github.com/DiamondLightSource/smartem-frontend)
+**Workflow:** `release-smartem-frontend.yml`
+**Versioning:** Manual — set in both `apps/smartem/package.json` and `apps/smartem/src/version.ts` (must match)
+**Tag prefix:** `smartem-frontend-v`
+**App directory:** `apps/smartem/`
+
+### Path filters
+
+The workflow triggers on changes to:
+
+- `apps/smartem/**`
+- `packages/api/**`
+- `packages/ui/**`
+- `package.json`, `package-lock.json`
+- `Dockerfile`
+- `scripts/write-version-json.mjs`
+- `.github/workflows/release-smartem-frontend.yml`
+
+`apps/legacy/**` is excluded by design.
+
+### Artifacts produced
+
+- SPA `dist/` (CI artefact, every run)
+- Docker container image (GHCR, stable and RC)
+- GitHub Release with auto-generated notes (stable and RC; RC is marked prerelease)
+
+### Bumping the version
+
+Update both files before tagging:
+
+```jsonc
+// apps/smartem/package.json
+"version": "0.2.0"
+```
+
+```ts
+// apps/smartem/src/version.ts
+export const FRONTEND_VERSION = '0.2.0' as const
+```
+
+The CI `version` job fails if the two values don't match. RCs are skipped if a stable tag already exists for the current
+version — bump the version before merging the next batch of changes to `main` if you want fresh RCs.
+
+### Releasing a stable version
+
+```bash
+git tag smartem-frontend-v0.2.0
+git push origin smartem-frontend-v0.2.0
+```
+
+CI will:
+
+1. Determine the version from the tag and validate it matches `package.json` and `version.ts`
+2. Run `biome check` and `tsc` across the workspace
+3. Generate the API client (`npm run api:generate`), write `version.json`, and run `npm run build:smartem`
+4. Build and push the Docker image to GHCR as `ghcr.io/diamondlightsource/smartem-frontend:{VERSION}` and `:latest`
+5. Create a GitHub Release tagged `smartem-frontend-v{VERSION}`
+
+### Runtime version metadata
+
+The image emits `/version` (aliased to `version.json` by `apps/smartem/nginx.conf`):
+
+```bash
+curl https://<host>/version
+# { "frontend": "0.2.0", "backendApi": "...", "gitSha": "...", "buildTime": "..." }
+```
+
+`frontend` is sourced from the build-time `FRONTEND_VERSION` arg, `backendApi` from the bundled OpenAPI spec, `gitSha`
+and `buildTime` from `git` at build time — see `scripts/write-version-json.mjs`.
+
 ## Manual / emergency releases
 
 All three workflows support `workflow_dispatch`. Go to the Actions tab of the relevant repository, select the release
@@ -176,10 +248,15 @@ pip install smartem-epuplayer==1.2.0
 pip install smartem-workspace==0.7.0
 ```
 
-### Docker (smartem-decisions stable only)
+### Docker
 
 ```bash
+# smartem-decisions (stable only)
 docker pull ghcr.io/diamondlightsource/smartem-decisions:0.2.0
+
+# smartem-frontend (stable and RC)
+docker pull ghcr.io/diamondlightsource/smartem-frontend:0.2.0
+docker pull ghcr.io/diamondlightsource/smartem-frontend:0.2.0rc1
 ```
 
 ### Windows executable
