@@ -146,8 +146,9 @@ export const dashboardConnections: Connection[] = [
     arrow: 'target',
   },
   // C6: Auth — SmartEM Agent -> DLS Keycloak (client_credentials grant)
-  // Both live in the left column with Keycloak below the microscope grid;
-  // a short vertical edge keeps the diagram clean.
+  // Both live in the left column with Keycloak below the microscope grid.
+  // Endpoints are nudged right of column-centre so the line runs alongside
+  // the "+N more microscopes" stack without overlapping its centred text+icon.
   {
     id: 'agent-to-keycloak',
     sourceId: 'smartem-agent',
@@ -158,7 +159,8 @@ export const dashboardConnections: Connection[] = [
     tooltip:
       'SmartEM Agent obtains service-account tokens from DLS Keycloak via OAuth 2.0 client_credentials grant (SmartEM_Agent client). See ADR 0018.',
     strokeDasharray: '6 4',
-    sourceDotOffset: 20,
+    sourceDotOffset: 30,
+    targetDotOffset: 90,
     arrow: 'target',
   },
   // C6: Auth — SmartEM Backend API -> DLS Keycloak (JWKS for Bearer-token validation)
