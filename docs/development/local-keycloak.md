@@ -67,35 +67,46 @@ The kustomization generates a ConfigMap from `dls-realm.json` and mounts it at `
 
 The realm export at `keycloak-mock/dls-realm.json` defines:
 
-- **Realm**: `dls` — matches `VITE_KEYCLOAK_REALM` defaults so no env change needed.
-- **Client**: `SmartEM` — public client, standard flow, PKCE S256.
-- **Valid redirect URIs**: `http://localhost:5173/*` and `http://localhost:5174/*` (the smartem app and legacy app dev ports).
+- **Realm**: `dls` — matches the value the SPA's runtime `config.json` ships with by default.
+- **Clients**:
+  - `SmartEM_User` — public client for the browser SPA (standard flow, PKCE S256). This is what the SPA sends in `client_id` and what tokens carry in their `azp` claim.
+  - `SmartEM_Agent` — confidential client for the Windows agent (client-credentials grant). Service-to-service, not user-facing.
+- **Valid redirect URIs** (`SmartEM_User`): `http://localhost:5173/*`, `http://localhost:5174/*`, and `http://localhost:30100/*` — the Vite dev ports (smartem app and legacy app) plus the k3s NodePort the SPA pod is exposed on.
 - **Web origins**: same hosts (required for silent SSO iframe checks once that's enabled in the frontend).
 - **Custom claim mapper**: `fedId` — the AuthProvider in the SmartEM frontend reads `idTokenParsed.fedId`. The mapper picks up the user attribute and emits it as an ID-token claim.
 - **Seeded users**:
   - `devuser` / `devpass` — generic, fedId `dev12345`.
-  - `valuser` / `valpass` — for Val Redchenko, fedId `val99999`.
 
 The mock does not implement the full DLS user model (groups, roles, federated identity). Add more users or roles by editing `dls-realm.json` directly.
 
 ## Pointing the frontend at it
 
-In `smartem-frontend/apps/smartem/.env.local`:
+The SPA loads its Keycloak config at boot from a runtime `/config.json`, not from `VITE_*` env vars. For `npm run dev:smartem` Vite serves the file from `apps/smartem/public/config.json`; in k8s deploys the SPA pod's nginx serves the file from the `smartem-frontend-config` ConfigMap mount (overriding the one baked into the image). Either way the SPA reads the same shape.
 
-```env
-VITE_KEYCLOAK_URL=http://localhost:8080      # compose, or k8s with port-forward
-VITE_KEYCLOAK_REALM=dls
-VITE_KEYCLOAK_CLIENT_ID=SmartEM
-VITE_AUTH_ENABLED=true
+Edit `smartem-frontend/apps/smartem/public/config.json`:
+
+```json
+{
+  "keycloak": {
+    "url": "http://localhost:30090",
+    "realm": "dls",
+    "clientId": "SmartEM_User"
+  },
+  "authEnabled": true
+}
 ```
 
-For the k8s form without port-forward, substitute `http://<node-ip>:30090` for the URL. With a single-node k3s cluster, `node-ip` is the host's IP.
+Use `http://localhost:30090` for the k3s NodePort. For docker-compose Keycloak or a port-forwarded pod, use `http://localhost:8080`. If Vite runs on a host other than the one with the cluster, use `http://<node-ip>:30090`.
 
-After changing `.env.local`, restart the Vite dev server (env values are read at startup).
+The config is fetched with `cache: 'no-store'` and applied before the SPA mounts, so a browser reload picks up edits without restarting Vite.
 
-## Disabling auth entirely
+## Disabling auth entirely (Vite dev only, with caveat)
 
-For UI work that doesn't need to exercise auth, set `VITE_AUTH_ENABLED=false`. The `AuthGate` short-circuits and the SPA renders without contacting Keycloak at all. This is a deliberately separate path from "Keycloak is unavailable" — the latter is an error state to recover from, the former is a development convenience.
+Set `authEnabled: false` in `apps/smartem/public/config.json` and the `AuthGate` (`apps/smartem/src/auth/AuthGate.tsx`) short-circuits — the SPA renders without contacting Keycloak at all. Useful for pure UI iteration.
+
+**Caveat:** the backend (`smartem-decisions`) always enforces Bearer-token validation on non-exempt requests since smartem-decisions#285 — there is no opt-out. With `authEnabled: false` the SPA renders, but every `/api/` call returns 401. This mode is only useful when paired with MSW (`VITE_ENABLE_MOCKS=true` in `apps/smartem/.env.local`), or for views that don't fetch from the backend.
+
+This is a deliberately separate path from "Keycloak is unavailable" — the latter is an error state to recover from, the former is a dev convenience for offline/mocked UI work.
 
 ## Editing the realm
 
