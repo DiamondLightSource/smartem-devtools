@@ -16,7 +16,6 @@ export function MicroscopeGrid() {
         display: 'flex',
         flexDirection: 'column',
         gap: 7,
-        flex: 1,
       }}
     >
       {detailed.map((instrument) => (
