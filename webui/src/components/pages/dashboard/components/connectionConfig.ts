@@ -10,6 +10,9 @@ export interface Connection {
   sourceDotOffset?: number // Offset along the edge for source dot (positive = right/down)
   targetDotOffset?: number // Offset along the edge for target dot (positive = right/down)
   arrow?: 'source' | 'target' | 'both' | 'none' // Arrow direction (default: 'none')
+  // Trust/identity edges (e.g. auth flows) use a dashed stroke so they read
+  // as a different kind of edge from data/RPC paths.
+  strokeDasharray?: string
 }
 
 // Color palette for connections
@@ -21,6 +24,7 @@ const colors = {
   purple: '#9c27b0', // C3: Agent -> Athena API (microscope control)
   teal: '#009688', // C4: ARIA Connector flows
   pink: '#e91e63', // C5: Web UI -> Backend API
+  gold: '#b8860b', // Auth: Keycloak trust/identity edges (rendered dashed)
 }
 
 export const dashboardConnections: Connection[] = [
@@ -124,5 +128,45 @@ export const dashboardConnections: Connection[] = [
     targetDotOffset: 12, // Move dot down on left edge (bottom position)
     curveOffset: 90, // More curvature for pink connection
     arrow: 'source', // Arrow pointing to Web UI (data flows from API to UI)
+  },
+  // C6: Auth — SmartEM Web UI -> DLS Keycloak (OIDC authorization code + PKCE)
+  {
+    id: 'webui-to-keycloak',
+    sourceId: 'smartem-webui',
+    targetId: 'dls-keycloak',
+    sourceAnchor: 'right',
+    targetAnchor: 'left',
+    color: colors.gold,
+    tooltip:
+      'SmartEM Web UI authenticates users against DLS Keycloak via OIDC authorization code flow with PKCE (SmartEM_User client)',
+    strokeDasharray: '6 4',
+    arrow: 'target',
+  },
+  // C6: Auth — SmartEM Agent -> DLS Keycloak (client_credentials grant)
+  {
+    id: 'agent-to-keycloak',
+    sourceId: 'smartem-agent',
+    targetId: 'dls-keycloak',
+    sourceAnchor: 'right',
+    targetAnchor: 'left',
+    color: colors.gold,
+    tooltip:
+      'SmartEM Agent obtains service-account tokens from DLS Keycloak via OAuth 2.0 client_credentials grant (SmartEM_Agent client). See ADR 0018.',
+    strokeDasharray: '6 4',
+    curveOffset: 120,
+    arrow: 'target',
+  },
+  // C6: Auth — SmartEM Backend API -> DLS Keycloak (JWKS for Bearer-token validation)
+  {
+    id: 'backend-to-keycloak',
+    sourceId: 'smartem-backend-api',
+    targetId: 'dls-keycloak',
+    sourceAnchor: 'right',
+    targetAnchor: 'left',
+    color: colors.gold,
+    tooltip:
+      'SmartEM Backend validates incoming Bearer tokens (from Web UI and Agent) against the DLS Keycloak JWKS endpoint',
+    strokeDasharray: '6 4',
+    arrow: 'target',
   },
 ]
