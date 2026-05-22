@@ -50,8 +50,11 @@ spec:
         - containerPort: 80
         env:
         # The SPA pod's nginx reverse-proxies /api/ to this in-cluster host.
+        # FQDN required: nginx's explicit `resolver` directive in the SPA image
+        # doesn't consult /etc/resolv.conf's search list, so the short name
+        # `smartem-http-api-service` returns NXDOMAIN.
         - name: BACKEND_HOST
-          value: "smartem-http-api-service"
+          value: "smartem-http-api-service.smartem-decisions.svc.cluster.local"
         volumeMounts:
         # Overrides the placeholder config.json shipped in the image.
         - name: frontend-config

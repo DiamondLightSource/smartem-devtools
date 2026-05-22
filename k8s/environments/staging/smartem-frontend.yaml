@@ -45,8 +45,11 @@ spec:
         ports:
         - containerPort: 80
         env:
+        # FQDN required: nginx's explicit `resolver` directive in the SPA image
+        # doesn't consult /etc/resolv.conf's search list, so the short name
+        # `smartem-http-api-service` returns NXDOMAIN.
         - name: BACKEND_HOST
-          value: "smartem-http-api-service"
+          value: "smartem-http-api-service.smartem-decisions-staging.svc.cluster.local"
         volumeMounts:
         - name: frontend-config
           mountPath: /usr/share/nginx/html/config.json
