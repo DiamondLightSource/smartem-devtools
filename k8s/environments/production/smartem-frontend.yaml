@@ -6,8 +6,8 @@ metadata:
 data:
   # Fetched at SPA boot from /config.json. Browser-reachable Keycloak URL
   # for the DLS production realm. The clientId must match the realm's
-  # public client and the backend's azp allow-list (KEYCLOAK_CLIENT_ID in
-  # smartem-config).
+  # public client and appear in the backend's KEYCLOAK_ALLOWED_AZP
+  # allow-list (set in smartem-config).
   config.json: |
     {
       "keycloak": {
