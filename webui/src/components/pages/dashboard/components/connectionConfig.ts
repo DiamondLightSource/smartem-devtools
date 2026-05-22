@@ -159,8 +159,8 @@ export const dashboardConnections: Connection[] = [
     tooltip:
       'SmartEM Agent obtains service-account tokens from DLS Keycloak via OAuth 2.0 client_credentials grant (SmartEM_Agent client). See ADR 0018.',
     strokeDasharray: '6 4',
-    sourceDotOffset: 30,
-    targetDotOffset: 90,
+    sourceDotOffset: 60,
+    targetDotOffset: 130,
     arrow: 'target',
   },
   // C6: Auth — SmartEM Backend API -> DLS Keycloak (JWKS for Bearer-token validation)
