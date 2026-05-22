@@ -241,6 +241,7 @@ export function ConnectionsOverlay({ connections, containerRef }: ConnectionsOve
               d={pathD}
               stroke={conn.color}
               strokeWidth={2}
+              strokeDasharray={conn.strokeDasharray}
               fill="none"
               style={{ pointerEvents: 'none' }}
             />
