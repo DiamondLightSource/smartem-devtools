@@ -67,7 +67,7 @@ export function Dashboard() {
           {/* Two equal columns: CryoEM Facilities and SmartEM Application */}
           <Box sx={{ display: 'flex', flexDirection: 'row', flex: 1, gap: 3 }}>
             {/* CryoEM Facilities */}
-            <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2.5 }}>
               <MicroscopeGrid />
               <Box
                 data-connection-id="dls-keycloak"
@@ -83,8 +83,30 @@ export function Dashboard() {
                       component="div"
                       sx={{ color: '#555', fontSize: '0.65rem', fontFamily: 'monospace' }}
                     >
-                      Clients:
-                      <br />- SmartEM_User (public, OIDC authorization code + PKCE)
+                      Production:{' '}
+                      <Link href="https://identity.diamond.ac.uk" target="_blank" rel="noopener">
+                        https://identity.diamond.ac.uk
+                      </Link>
+                      <br />
+                      Test:{' '}
+                      <Link
+                        href="https://identity-test.diamond.ac.uk"
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        https://identity-test.diamond.ac.uk
+                      </Link>
+                    </Typography>
+
+                    <Typography variant="caption" sx={{ color: '#333', fontWeight: 500, mt: 1 }}>
+                      Clients
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      component="div"
+                      sx={{ color: '#555', fontSize: '0.65rem', fontFamily: 'monospace' }}
+                    >
+                      - SmartEM_User (public, OIDC authorization code + PKCE)
                       <br />- SmartEM_Agent (confidential, OAuth 2.0 client_credentials)
                       <br />
                       Backend validates Bearer tokens against JWKS.
