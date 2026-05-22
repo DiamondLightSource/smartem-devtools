@@ -130,30 +130,35 @@ export const dashboardConnections: Connection[] = [
     arrow: 'source', // Arrow pointing to Web UI (data flows from API to UI)
   },
   // C6: Auth — SmartEM Web UI -> DLS Keycloak (OIDC authorization code + PKCE)
+  // Keycloak sits in the left column under the microscope grid; UI is in the
+  // middle column, so the edge runs leftward.
   {
     id: 'webui-to-keycloak',
     sourceId: 'smartem-webui',
     targetId: 'dls-keycloak',
-    sourceAnchor: 'right',
-    targetAnchor: 'left',
+    sourceAnchor: 'left',
+    targetAnchor: 'right',
     color: colors.gold,
     tooltip:
       'SmartEM Web UI authenticates users against DLS Keycloak via OIDC authorization code flow with PKCE (SmartEM_User client)',
     strokeDasharray: '6 4',
+    sourceDotOffset: -10,
     arrow: 'target',
   },
   // C6: Auth — SmartEM Agent -> DLS Keycloak (client_credentials grant)
+  // Both live in the left column with Keycloak below the microscope grid;
+  // a short vertical edge keeps the diagram clean.
   {
     id: 'agent-to-keycloak',
     sourceId: 'smartem-agent',
     targetId: 'dls-keycloak',
-    sourceAnchor: 'right',
-    targetAnchor: 'left',
+    sourceAnchor: 'bottom',
+    targetAnchor: 'top',
     color: colors.gold,
     tooltip:
       'SmartEM Agent obtains service-account tokens from DLS Keycloak via OAuth 2.0 client_credentials grant (SmartEM_Agent client). See ADR 0018.',
     strokeDasharray: '6 4',
-    curveOffset: 120,
+    sourceDotOffset: 20,
     arrow: 'target',
   },
   // C6: Auth — SmartEM Backend API -> DLS Keycloak (JWKS for Bearer-token validation)
@@ -161,12 +166,13 @@ export const dashboardConnections: Connection[] = [
     id: 'backend-to-keycloak',
     sourceId: 'smartem-backend-api',
     targetId: 'dls-keycloak',
-    sourceAnchor: 'right',
-    targetAnchor: 'left',
+    sourceAnchor: 'left',
+    targetAnchor: 'right',
     color: colors.gold,
     tooltip:
       'SmartEM Backend validates incoming Bearer tokens (from Web UI and Agent) against the DLS Keycloak JWKS endpoint',
     strokeDasharray: '6 4',
+    sourceDotOffset: -10,
     arrow: 'target',
   },
 ]

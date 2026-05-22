@@ -69,6 +69,31 @@ export function Dashboard() {
             {/* CryoEM Facilities */}
             <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
               <MicroscopeGrid />
+              <Box
+                data-connection-id="dls-keycloak"
+                sx={{ display: 'flex', flexDirection: 'column' }}
+              >
+                <SystemComponentContainer heading="DLS Keycloak">
+                  <Box sx={{ ...itemBoxSx, display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                    <Typography variant="caption" sx={{ color: '#333', fontWeight: 500 }}>
+                      Realm: dls
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      component="div"
+                      sx={{ color: '#555', fontSize: '0.65rem', fontFamily: 'monospace' }}
+                    >
+                      Clients:
+                      <br />- SmartEM_User (public, OIDC authorization code + PKCE)
+                      <br />- SmartEM_Agent (confidential, OAuth 2.0 client_credentials)
+                      <br />
+                      Backend validates Bearer tokens against JWKS.
+                      <br />
+                      See ADR 0018 for the agent auth design.
+                    </Typography>
+                  </Box>
+                </SystemComponentContainer>
+              </Box>
             </Box>
 
             {/* SmartEM Application */}
@@ -241,28 +266,6 @@ export function Dashboard() {
 
         {/* External Systems */}
         <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
-          <Box data-connection-id="dls-keycloak" sx={{ display: 'flex', flexDirection: 'column' }}>
-            <SystemComponentContainer heading="DLS Keycloak">
-              <Box sx={{ ...itemBoxSx, display: 'flex', flexDirection: 'column', gap: 0.5 }}>
-                <Typography variant="caption" sx={{ color: '#333', fontWeight: 500 }}>
-                  Realm: dls
-                </Typography>
-                <Typography
-                  variant="caption"
-                  component="div"
-                  sx={{ color: '#555', fontSize: '0.65rem', fontFamily: 'monospace' }}
-                >
-                  Clients:
-                  <br />- SmartEM_User (public, OIDC authorization code + PKCE)
-                  <br />- SmartEM_Agent (confidential, OAuth 2.0 client_credentials)
-                  <br />
-                  Backend validates Bearer tokens against JWKS.
-                  <br />
-                  See ADR 0018 for the agent auth design.
-                </Typography>
-              </Box>
-            </SystemComponentContainer>
-          </Box>
           <SystemComponentContainer heading="ARIA Depositions Backend">
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
               <Box
