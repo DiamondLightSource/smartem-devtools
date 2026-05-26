@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="10" fill="#1a1a1a"/>
+
+  <!-- ears (big, pointy, bat-like) -->
+  <path d="M6 18 L18 28 L14 36 Z" fill="#3a8a3a"/>
+  <path d="M58 18 L46 28 L50 36 Z" fill="#3a8a3a"/>
+  <path d="M9 20 L17 27 L15 32 Z" fill="#1f5a1f"/>
+  <path d="M55 20 L47 27 L49 32 Z" fill="#1f5a1f"/>
+
+  <!-- head -->
+  <path d="M14 28 Q14 14 32 14 Q50 14 50 28 L50 42 Q50 56 32 56 Q14 56 14 42 Z" fill="#4ea84e"/>
+
+  <!-- cheek shading -->
+  <path d="M14 36 Q18 50 32 56 Q46 50 50 36 L50 42 Q50 56 32 56 Q14 56 14 42 Z" fill="#3a8a3a"/>
+
+  <!-- small horns / tufts on top -->
+  <path d="M22 14 L24 8 L27 14 Z" fill="#3a8a3a"/>
+  <path d="M37 14 L40 8 L42 14 Z" fill="#3a8a3a"/>
+
+  <!-- silly asymmetric brows: one high arch (surprised) + one low (puzzled) -->
+  <path d="M16 22 Q23 17 30 22" stroke="#0a0a0a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M34 27 Q40 25 48 27" stroke="#0a0a0a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+
+  <!-- googly eyes: big white sclera, pupils looking in different directions -->
+  <circle cx="24" cy="32" r="6" fill="#ffffff"/>
+  <circle cx="40" cy="32" r="6" fill="#ffffff"/>
+  <!-- pupils: cross-eyed / wandering for max silly -->
+  <circle cx="27" cy="33" r="2.4" fill="#0a0a0a"/>
+  <circle cx="37" cy="31" r="2.4" fill="#0a0a0a"/>
+  <!-- pupil highlights -->
+  <circle cx="26.4" cy="32.3" r="0.8" fill="#ffffff"/>
+  <circle cx="36.4" cy="30.3" r="0.8" fill="#ffffff"/>
+
+  <!-- nose (small snout) -->
+  <path d="M30 39 Q32 41 34 39 Q34 42 32 43 Q30 42 30 39 Z" fill="#1f5a1f"/>
+
+  <!-- goofy lopsided open mouth -->
+  <path d="M22 45 Q32 53 43 46 Q41 50 32 51 Q24 51 22 45 Z" fill="#0a0a0a"/>
+  <!-- tongue sticking out the side -->
+  <path d="M34 50 Q38 52 41 55 Q42 57 39 57 Q35 56 33 53 Z" fill="#ff7aa8"/>
+  <!-- single goofy fang -->
+  <path d="M27 45 L28.5 49 L30 45 Z" fill="#ffffff"/>
+</svg>
