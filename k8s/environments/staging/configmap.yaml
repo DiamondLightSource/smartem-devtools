@@ -6,14 +6,18 @@ metadata:
 data:
   # These are fallback values used if ./scripts/k8s/dev-k8s.sh is not used
   # The script will dynamically override these with values from .env.staging
-  POSTGRES_HOST: "postgres-service"
+  #
+  # PostgreSQL, RabbitMQ, MongoDB, Elasticsearch and Keycloak are externally
+  # managed services in this environment (provided by DLS infra). Host values
+  # below are placeholders and MUST be overridden via .env.staging before
+  # deploying.
+  POSTGRES_HOST: "OVERRIDE-FROM-ENV"
   POSTGRES_PORT: "5432"
   POSTGRES_DB: "smartem_db"
-  RABBITMQ_HOST: "rabbitmq-service"
+  RABBITMQ_HOST: "OVERRIDE-FROM-ENV"
   RABBITMQ_PORT: "5672"
   HTTP_API_PORT: "8000"
-  ADMINER_PORT: "8080"
-  CORS_ALLOWED_ORIGINS: "https://staging.example.com"
+  CORS_ALLOWED_ORIGINS: "https://smartem-staging.diamond.ac.uk"
   # Keycloak OIDC integration. The backend rejects every non-exempt
   # request that doesn't carry a valid Bearer token (always-on since
   # smartem-decisions#285). Defaults below target the DLS test realm;

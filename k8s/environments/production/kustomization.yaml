@@ -4,10 +4,6 @@ kind: Kustomization
 resources:
 - namespace.yaml
 - configmap.yaml
-- postgres.yaml
-- rabbitmq.yaml
-- mongodb.yaml
-- elasticsearch.yaml
 - smartem-http-api.yaml
 - smartem-worker.yaml
 - smartem-frontend.yaml
