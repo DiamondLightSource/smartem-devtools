@@ -13,6 +13,13 @@ interface RepoStatsDisplayProps {
   isGitHub: boolean
 }
 
+const SECURITY_TRACKED_REPOS = new Set([
+  'DiamondLightSource/smartem-decisions',
+  'DiamondLightSource/smartem-frontend',
+  'DiamondLightSource/smartem-devtools',
+  'DiamondLightSource/fandanGO-cryoem-dls',
+])
+
 function formatRelativeTime(dateString: string): string {
   if (!dateString) return ''
 
@@ -59,6 +66,7 @@ export function RepoStatsDisplay({ owner, repo, isGitHub }: RepoStatsDisplayProp
   }
 
   const repoUrl = `https://github.com/${owner}/${repo}`
+  const showSecurityLink = isGitHub && SECURITY_TRACKED_REPOS.has(`${owner}/${repo}`)
 
   if (!isGitHub || !statsEnabled) {
     return (
@@ -131,6 +139,24 @@ export function RepoStatsDisplay({ owner, repo, isGitHub }: RepoStatsDisplayProp
         </Box>
       </Box>
       <span>|</span>
+      {showSecurityLink && (
+        <>
+          <Box
+            component="a"
+            href={`${repoUrl}/security`}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e: React.MouseEvent) => e.stopPropagation()}
+            title="Open the Security tab on GitHub"
+            sx={linkStyle}
+          >
+            <Box component="span" sx={numberStyle}>
+              Security
+            </Box>
+          </Box>
+          <span>|</span>
+        </>
+      )}
       <Box
         component="a"
         href={`${repoUrl}/commit/${data.lastCommitFullSha}`}
