@@ -23,7 +23,6 @@ data:
   # smartem-decisions#285). KEYCLOAK_ALLOWED_AZP is the comma-separated
   # azp allow-list; unset means any valid token from the realm is accepted.
   KEYCLOAK_URL: "https://identity.diamond.ac.uk"
+  KEYCLOAK_REALM: "dls"
+  KEYCLOAK_VERIFY_ISS: "true"
   KEYCLOAK_ALLOWED_AZP: "SmartEM_User,SmartEM_Agent"
-  # TODO: confirm with DLS Keycloak admins before go-live
-  #   KEYCLOAK_REALM
-  #   KEYCLOAK_VERIFY_ISS  (set "true" once realm is known so the issuer URL can be validated)
