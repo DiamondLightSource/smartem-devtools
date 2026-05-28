@@ -6,6 +6,9 @@ NAMESPACE="smartem-decisions"
 K8S_ENV_PATH="k8s/environments/development"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+# smartem-decisions repo holds Dockerfile.dev for the local backend image build.
+# Override SMARTEM_DECISIONS_PATH if your checkout layout is not the conventional sibling.
+SMARTEM_DECISIONS_PATH="${SMARTEM_DECISIONS_PATH:-$PROJECT_ROOT/../smartem-decisions}"
 DEPLOY_ENV="${DEPLOY_ENV:-development}"
 
 # Colors for output
@@ -380,9 +383,16 @@ ensure_local_image() {
 
     # Check if image exists in Docker
     if ! docker image inspect "$image_name" &> /dev/null; then
-        log_info "Building SmartEM image..."
-        cd "$PROJECT_ROOT"
+        if [[ ! -f "$SMARTEM_DECISIONS_PATH/Dockerfile.dev" ]]; then
+            log_error "Dockerfile.dev not found at: $SMARTEM_DECISIONS_PATH/Dockerfile.dev"
+            log_error "Set SMARTEM_DECISIONS_PATH to the smartem-decisions repo checkout, or"
+            log_error "clone it as a sibling of smartem-devtools."
+            exit 1
+        fi
+        log_info "Building SmartEM image from $SMARTEM_DECISIONS_PATH..."
+        cd "$SMARTEM_DECISIONS_PATH"
         docker build -f Dockerfile.dev -t "$image_name" .
+        cd "$PROJECT_ROOT"
     else
         log_info "SmartEM image already exists in Docker"
     fi
