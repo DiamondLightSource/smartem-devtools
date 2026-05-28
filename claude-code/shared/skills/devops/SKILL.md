@@ -39,10 +39,12 @@ If you encounter this error, advise the user to run the above command. Other per
 
 **Cluster management:**
 
-```bash
-cd repos/DiamondLightSource/smartem-decisions
+The `dev-k8s.sh` orchestration script lives in **smartem-devtools** (it used to live in smartem-decisions). It needs a sibling checkout of `smartem-decisions` to build the backend image from `Dockerfile.dev`; override `SMARTEM_DECISIONS_PATH` if your layout differs.
 
-# Start local k3s cluster with all services
+```bash
+cd repos/DiamondLightSource/smartem-devtools
+
+# Start local k3s cluster with all services (backend, postgres, rabbitmq, mongo, es, keycloak mock, FE)
 ./scripts/k8s/dev-k8s.sh up
 
 # Stop and cleanup
@@ -52,6 +54,12 @@ cd repos/DiamondLightSource/smartem-decisions
 kubectl get pods -n smartem-decisions
 kubectl get services -n smartem-decisions
 ```
+
+**Keycloak in the dev stack:**
+
+The in-cluster Keycloak mock (`keycloak-mock/keycloak.yaml`, pulled in via the development kustomization) is the primary local auth provider. It is brought up automatically by `dev-k8s.sh up` and reachable at `http://localhost:30090`.
+
+The `keycloak-mock/docker-compose.yml` in the same directory is a **fallback for FE-only development** — use it when working inside `smartem-frontend` in isolation without the rest of the k3s stack. Do not run both at once or the NodePort/host-port mapping will collide.
 
 ### Services (smartem-decisions namespace)
 
@@ -77,7 +85,10 @@ k8s/
 ```bash
 cd repos/DiamondLightSource/smartem-decisions
 
-# Build backend image
+# Build local dev backend image (matches what dev-k8s.sh expects)
+docker build -f Dockerfile.dev -t smartem-decisions:latest .
+
+# Build production image
 docker build -t smartem-backend:dev .
 
 # Build with specific Python version (from Dockerfile)
@@ -86,6 +97,8 @@ docker build --build-arg PYTHON_VERSION=3.12 -t smartem-backend:dev .
 # Multi-stage build (production)
 docker build --target production -t smartem-backend:prod .
 ```
+
+`dev-k8s.sh up` will build `smartem-decisions:latest` automatically if it is missing, loading it into k3s containerd. Pre-build it manually only if you want to iterate without re-running `up`.
 
 ### Push to Registry
 
