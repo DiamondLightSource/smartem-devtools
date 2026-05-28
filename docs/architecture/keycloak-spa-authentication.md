@@ -64,6 +64,12 @@ Without this, `keycloak-js` has nowhere to redirect to.
 
 ## Local development
 
-For frontend development you do not need access to the DLS identity server. A self-contained Keycloak mock lives under `keycloak-mock/` in this repository and provides a `dls` realm with a pre-configured `SmartEM` client and seeded users.
+For frontend development you do not need access to the DLS identity server. A self-contained Keycloak mock lives under `keycloak-mock/` in this repository and provides a `dls` realm with a pre-configured `SmartEM_User` client and seeded users.
 
 See [Local Keycloak for SmartEM frontend dev](../development/local-keycloak.md) for setup and integration with the frontend.
+
+### Mock mode
+
+There is also a second local-dev path that bypasses Keycloak entirely: `npm run dev:smartem:mock` (which sets `VITE_ENABLE_MOCKS=true`) swaps the real `KeycloakAuthProvider` for a `MockAuthProvider` that emits a hardcoded user identity and a synthetic `Bearer mock-token`. MSW intercepts every `/api/` request in the browser, so neither Keycloak nor the backend is contacted. `/config.json` is not fetched either.
+
+This mode is for visual UI demo only — `login()` and `logout()` are no-ops, the mock identity is fixed, and the synthetic token is never validated. Anything that needs a real session lifecycle has to use the full Keycloak path (with the local mock or DLS realm). Mock mode is distinct from the "Keycloak is unreachable" error state, which the real provider handles by rendering the sign-in screen with a connection-error message.

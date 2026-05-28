@@ -5,18 +5,17 @@ metadata:
   namespace: smartem-decisions
 data:
   # Fetched at SPA boot from /config.json. The URL must be browser-reachable;
-  # NodePort 30090 maps to the in-cluster keycloak-service:8080. authEnabled
-  # is true because the backend always enforces Bearer-token validation
-  # (smartem-decisions#285 removed the KEYCLOAK_AUTH_REQUIRED escape hatch);
-  # the SPA must complete the login ceremony to talk to /api/.
+  # NodePort 30090 maps to the in-cluster keycloak-service:8080. Auth is
+  # always on at the SPA level (smartem-frontend#101 dropped the authEnabled
+  # toggle); the backend likewise enforces Bearer-token validation
+  # unconditionally (smartem-decisions#285).
   config.json: |
     {
       "keycloak": {
         "url": "http://localhost:30090",
         "realm": "dls",
         "clientId": "SmartEM_User"
-      },
-      "authEnabled": true
+      }
     }
 
 ---
