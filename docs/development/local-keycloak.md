@@ -91,8 +91,7 @@ Edit `smartem-frontend/apps/smartem/public/config.json`:
     "url": "http://localhost:30090",
     "realm": "dls",
     "clientId": "SmartEM_User"
-  },
-  "authEnabled": true
+  }
 }
 ```
 
@@ -100,13 +99,23 @@ Use `http://localhost:30090` for the k3s NodePort. For docker-compose Keycloak o
 
 The config is fetched with `cache: 'no-store'` and applied before the SPA mounts, so a browser reload picks up edits without restarting Vite.
 
-## Disabling auth entirely (Vite dev only, with caveat)
+## Mock mode (no Keycloak, no backend)
 
-Set `authEnabled: false` in `apps/smartem/public/config.json` and the `AuthGate` (`apps/smartem/src/auth/AuthGate.tsx`) short-circuits — the SPA renders without contacting Keycloak at all. Useful for pure UI iteration.
+For pure UI iteration without bringing up Keycloak or the backend, run the SPA in mock mode:
 
-**Caveat:** the backend (`smartem-decisions`) always enforces Bearer-token validation on non-exempt requests since smartem-decisions#285 — there is no opt-out. With `authEnabled: false` the SPA renders, but every `/api/` call returns 401. This mode is only useful when paired with MSW (`VITE_ENABLE_MOCKS=true` in `apps/smartem/.env.local`), or for views that don't fetch from the backend.
+```bash
+cd smartem-frontend
+npm run dev:smartem:mock
+```
 
-This is a deliberately separate path from "Keycloak is unavailable" — the latter is an error state to recover from, the former is a dev convenience for offline/mocked UI work.
+This sets `VITE_ENABLE_MOCKS=true` at build time, which has two effects:
+
+- MSW intercepts every `/api/` request in the browser and answers from generated faker fixtures (`packages/api/src/generated/default/default.msw.ts`).
+- The `AuthGate` swaps `KeycloakAuthProvider` for a `MockAuthProvider` that emits a hardcoded user identity (`Mock User`, `mock@example.diamond.ac.uk`, fedId `mock001`) and a synthetic `Bearer mock-token`. Keycloak is never contacted; `/config.json` is not fetched.
+
+`login()` and `logout()` are no-ops in mock mode — there is no session to end. The mock provider is intentionally narrow: it lets the dashboard and any auth-conditional UI render in a logged-in state for visual demo, nothing more. Anything that needs a real token, real claims, or real session lifecycle has to use the full Keycloak path above.
+
+The mock mode is a separate, parallel path from "Keycloak is unreachable" — the latter is an error state the SPA recovers from by showing the sign-in screen with a connection-error message.
 
 ## Editing the realm
 

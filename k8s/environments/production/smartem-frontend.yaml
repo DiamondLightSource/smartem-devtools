@@ -14,8 +14,7 @@ data:
         "url": "https://identity.diamond.ac.uk",
         "realm": "dls",
         "clientId": "SmartEM_User"
-      },
-      "authEnabled": true
+      }
     }
 
 ---

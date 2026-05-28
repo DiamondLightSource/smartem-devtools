@@ -61,8 +61,7 @@ Edit `smartem-frontend/apps/smartem/public/config.json`:
     "url": "http://localhost:30090",
     "realm": "dls",
     "clientId": "SmartEM_User"
-  },
-  "authEnabled": true
+  }
 }
 ```
 
