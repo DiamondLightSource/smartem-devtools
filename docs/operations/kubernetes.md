@@ -35,6 +35,15 @@ Once the environment is running, you can access:
 
 > **Note**: The script automatically handles GitHub Container Registry authentication and waits for all pods to be ready.
 
+### Pointing the SmartEM frontend dev server at this stack
+
+The Vite dev server in `smartem-frontend` proxies `/api` to `http://localhost:8000` by default — the conventional port for a standalone backend (`uvicorn` directly, or a `kubectl port-forward`). When the backend is in the dev k3s stack, two options:
+
+- **No port-forward** (simplest) — set `VITE_API_PROXY_TARGET=http://localhost:30080` in `apps/smartem/.env.local`. Vite proxies straight to the NodePort.
+- **Port-forward to 8000** — `kubectl port-forward -n smartem-decisions svc/smartem-http-api-service 8000:80` keeps the default proxy target working. Useful if you also want CLI tools that hit `http://localhost:8000` to keep working unchanged.
+
+Keycloak is reachable on `http://localhost:30090` regardless; see [Local Keycloak](../development/local-keycloak.md) for the SPA's runtime auth config.
+
 ## Kubernetes Structure
 
 ```
