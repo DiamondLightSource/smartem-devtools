@@ -82,7 +82,7 @@ The primary repo of the workspace. Originally the only repo, now the hub of a mu
 
 Pure SPA that talks to smartem-decisions backend API. Hosted in proximity to backend.
 
-- Auto-generated API client from backend OpenAPI spec
+- API client auto-generated from a cached copy of the canonical backend OpenAPI spec (ADR 0020)
 - Models route for viewing ML prediction models
 
 **Tech**: React 19, TanStack Router, Material-UI, Node.js 22+, Biome, Lefthook

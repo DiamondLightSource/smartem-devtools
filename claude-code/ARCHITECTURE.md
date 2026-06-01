@@ -90,6 +90,10 @@ smartem-backend API serves multiple consumers with different needs:
 | Frontend client | TBD | smartem-frontend | May need SSE for live updates |
 | Deposition client | No | fandanGO-cryoem-dls | REST only |
 
+### OpenAPI spec flow (ADR 0020)
+
+smartem-decisions is the **canonical OpenAPI spec publisher**. On push to main, when the API surface changes, it regenerates and commits the spec at `docs/api/openapi.json`, then fires a `repository_dispatch` to smartem-devtools. The receiver there refreshes its committed swagger copies under `docs/api/smartem/` and `webui/public/api/smartem/` and rebuilds GitHub Pages. smartem-frontend's `packages/api/src/openapi.json` is a downstream cache refreshed from the canonical backend spec (`npm run api:fetch`); both downstream copies are caches, never hand-maintained. The backend exposes a `/version` endpoint; the frontend runs an observe-only, semantic version check against it at boot. The agent ships from the same repo/tag as the backend, so it is version-locked by construction.
+
 ## Mocking Requirements for E2E Testing
 
 | External Dependency | Mock Strategy | Status |
@@ -150,10 +154,10 @@ export ARIA_GQL_LOCAL=http://localhost:9002/graphql
 
 | Affected | Action Required |
 |----------|-----------------|
-| smartem-frontend | Regenerate OpenAPI client |
+| smartem-frontend | Refresh cached spec from the canonical backend (`npm run api:update`) + regenerate client |
 | smartem-agent | Update api_client imports |
 | fandanGO-cryoem-dls | Update SmartEMAPIClient |
-| Docs | Regenerate OpenAPI spec |
+| Docs (smartem-devtools) | Auto-refreshed — backend `repository_dispatch` updates the swagger caches and redeploys Pages (no manual step; ADR 0020) |
 | Containers | Rebuild images |
 
 ### When smartem-backend MQ schema changes
