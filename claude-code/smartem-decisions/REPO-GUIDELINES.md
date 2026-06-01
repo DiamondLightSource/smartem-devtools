@@ -92,7 +92,7 @@ uv run alembic revision --autogenerate -m "Description"
 
 ## Documentation
 - **Markdown**: Documentation in `docs/` synced to smartem-devtools webui as MDX
-- **API documentation**: Swagger/OpenAPI specs auto-generated
+- **API documentation**: this repo is the canonical OpenAPI spec publisher (ADR 0020). On push to main, when the API surface changes, CI regenerates and commits the spec at `docs/api/openapi.json` and fires a `repository_dispatch` to smartem-devtools, which refreshes its downstream swagger caches and redeploys Pages. The backend also exposes a `/version` endpoint consumed by the frontend's observe-only version check.
 - **Live development**: Run `npm run dev` in smartem-devtools/webui for hot-reload
 
 ## Available Skills

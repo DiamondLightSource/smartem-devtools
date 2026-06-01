@@ -83,7 +83,7 @@ You can download the raw OpenAPI specifications:
 
 - [Athena API Spec](../api/athena/swagger.json) - Official external specification
 - [Athena Source Spec](../athena-decision-service-api-spec.json) - Original specification file
-- [SmartEM API Spec](../api/smartem/swagger.json) - Generated from our implementation
+- [SmartEM API Spec](../api/smartem/swagger.json) - Published by the smartem-decisions backend and cached here automatically (ADR 0020)
 
 ### Using Specifications
 

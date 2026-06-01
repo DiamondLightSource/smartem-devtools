@@ -168,16 +168,20 @@ uv run python tools/db_table_totals.py
 
 ### Generate API Docs
 
-Generates API documentation from OpenAPI specs into `docs/api/`. Processes two APIs:
+Generates API documentation from OpenAPI specs into `docs/api/`:
 
-- **Athena API**: copies the original spec from `docs/athena-decision-service-api-spec.json` and adds a local mock server entry
-- **SmartEM API**: imports the FastAPI app and extracts the OpenAPI schema at runtime
+- **Athena API**: copies the original spec from `docs/athena-decision-service-api-spec.json` and adds a local mock server entry.
 
 ```bash
 uv run python tools/generate_api_docs.py
 ```
 
-Output is written to `docs/api/athena/swagger.json` and `docs/api/smartem/swagger.json`.
+Output is written to `docs/api/athena/swagger.json`.
+
+The **SmartEM API** spec is no longer generated here. smartem-decisions is the canonical
+publisher (ADR 0020): `docs/api/smartem/swagger.json` and `webui/public/api/smartem/swagger.json`
+are downstream caches, refreshed automatically by the `Sync OpenAPI spec from backend` workflow
+when smartem-decisions publishes a changed spec (which then rebuilds GitHub Pages). Do not hand-edit them.
 
 ## Miscellaneous Tools
 

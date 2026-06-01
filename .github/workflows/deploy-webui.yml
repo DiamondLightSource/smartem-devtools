@@ -1,6 +1,13 @@
 name: Deploy WebUI to GitHub Pages
 
 on:
+  workflow_call:
+    inputs:
+      ref:
+        description: 'Git ref to build (defaults to the triggering ref)'
+        required: false
+        type: string
+        default: ''
   workflow_dispatch:
   push:
     branches: [main]
@@ -23,6 +30,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.ref }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v6

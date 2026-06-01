@@ -40,7 +40,7 @@ smartem-frontend/
 │   │   │   ├── mutator.ts     # Axios configuration
 │   │   │   ├── stubs.ts       # Development stubs
 │   │   │   └── index.ts       # Barrel export
-│   │   ├── openapi.json       # OpenAPI spec (version controlled)
+│   │   ├── openapi.json       # Cached copy of the canonical backend spec (committed; refreshed via api:fetch)
 │   │   └── orval.config.ts
 │   └── ui/                    # Shared UI component library (@smartem/ui)
 │       └── src/
@@ -62,9 +62,11 @@ npm run dev:smartem            # New app dev server
 npm run dev:smartem:mock       # New app with mock API data
 
 # API Client
-npm run api:update             # Fetch OpenAPI spec + regenerate client
+npm run api:update             # Refresh cached spec from the canonical backend, then regenerate client
 npm run api:fetch:local        # Fetch from local backend (localhost:8000)
-npm run api:generate           # Regenerate client from current spec
+npm run api:generate           # Regenerate client from the committed spec cache
+# api:fetch pulls the canonical spec published by smartem-decisions (the backend),
+# NOT the devtools GitHub Pages copy. See ADR 0020.
 
 # Code Quality
 npm run check                  # Biome lint + format (recommended)
@@ -80,7 +82,7 @@ npm run build:smartem          # Build new app
 
 ## API Client Workflow
 
-The frontend uses Orval to generate a type-safe API client from the backend OpenAPI spec. The client lives in `packages/api/` and is shared across both apps as `@smartem/api`.
+The frontend uses Orval to generate a type-safe API client from the backend OpenAPI spec. The client lives in `packages/api/` and is shared across both apps as `@smartem/api`. The committed `openapi.json` is a downstream cache of the canonical spec published by smartem-decisions; `npm run api:fetch` refreshes it from the backend (ADR 0020).
 
 ### When Backend API Changes
 
@@ -109,12 +111,14 @@ function MyComponent() {
 }
 ```
 
-### Version Mismatch Warning
+### API Version Check (observe-only)
 
-If console shows API version mismatch, regenerate the client:
-```bash
-npm run api:update
-```
+On boot the app compares the backend API version its client was built against to
+the live backend `/version` endpoint, using a semantic comparison (release portion
+only; the `dev`/`+sha` suffix is ignored). A difference is logged as an advisory and,
+in development, shown as a non-blocking banner — it is **observed, not enforced**, so
+rolling deploys where the two momentarily differ never break the app. If you want the
+client rebuilt against the current backend contract, run `npm run api:update`. See ADR 0020.
 
 ## Code Quality Tools
 

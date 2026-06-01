@@ -1,0 +1,70 @@
+name: Sync OpenAPI spec from backend
+
+# Downstream cache of the canonical SmartEM OpenAPI spec (ADR 0020). smartem-decisions
+# fires a repository_dispatch (openapi-spec-updated) when it publishes a changed spec;
+# we pull it, refresh both committed swagger.json copies, and rebuild GitHub Pages.
+# workflow_dispatch (manual) and a daily schedule act as fallbacks if a dispatch is missed.
+
+on:
+  repository_dispatch:
+    types: [openapi-spec-updated]
+  workflow_dispatch:
+  schedule:
+    - cron: '17 4 * * *'
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: sync-openapi-spec
+  cancel-in-progress: false
+
+env:
+  CANONICAL_SPEC_URL: https://raw.githubusercontent.com/DiamondLightSource/smartem-decisions/main/docs/api/openapi.json
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.write.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Download canonical spec
+        run: |
+          curl -fsSL "$CANONICAL_SPEC_URL" -o /tmp/openapi.json
+          python3 -c "import json; json.load(open('/tmp/openapi.json'))"  # validate JSON
+
+      - name: Refresh committed copies + detect change
+        id: write
+        run: |
+          changed=false
+          for dest in docs/api/smartem/swagger.json webui/public/api/smartem/swagger.json; do
+            mkdir -p "$(dirname "$dest")"
+            if ! cmp -s /tmp/openapi.json "$dest"; then changed=true; fi
+            cp /tmp/openapi.json "$dest"
+          done
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+          echo "Spec changed: $changed"
+
+      - name: Commit refreshed copies
+        if: steps.write.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/api/smartem/swagger.json webui/public/api/smartem/swagger.json
+          git commit -m "chore(api): sync OpenAPI spec from smartem-decisions [skip ci]"
+          git push origin HEAD:main
+
+  deploy:
+    needs: sync
+    if: needs.sync.outputs.changed == 'true'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/deploy-webui.yml
+    with:
+      ref: main
