@@ -55,6 +55,25 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "200m"
+        # --- DLS filesystem mount (PLACEHOLDER - configure before enabling) ---
+        # The image-serving API endpoints (atlas_image, gridsquare_image) read microscopy
+        # files off disk using the absolute /dls/... paths stored in the DB. Mount the real
+        # Diamond /dls shared filesystem read-only at /dls so they resolve. API service only:
+        # the worker does not read image files. Set the source to the actual DLS NFS export
+        # or a PVC bound to it for this cluster, then uncomment both blocks.
+        # volumeMounts:
+        # - name: dls-filesystem
+        #   mountPath: /dls
+        #   readOnly: true
+      # volumes:
+      # - name: dls-filesystem
+      #   nfs:
+      #     server: <dls-nfs-server>   # DLS NFS/GPFS export host
+      #     path: /dls                 # export containing <scope>/data/<year>/<visit>/...
+      #     readOnly: true
+      #   # or bind to a PersistentVolumeClaim instead of nfs:
+      #   # persistentVolumeClaim:
+      #   #   claimName: dls-filesystem
 
 ---
 
