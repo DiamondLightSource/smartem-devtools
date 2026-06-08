@@ -15,6 +15,9 @@ def setup_workspace_structure(workspace_path: Path) -> bool:
     - repos/
     - tmp/
     - testdata/
+    - testdata/dls-filesystem/  (local mirror of Diamond's /dls shared filesystem;
+      populated by hand with microscopy imagery and mounted into the dev backend
+      pod at /dls so image-serving endpoints can resolve DB /dls/... paths)
 
     Returns:
         True if successful
@@ -26,6 +29,8 @@ def setup_workspace_structure(workspace_path: Path) -> bool:
         "repos",
         "tmp",
         "testdata",
+        # Mirrors Diamond's /dls DFS root; mounted into the dev backend at /dls.
+        "testdata/dls-filesystem",
     ]
 
     for dir_name in directories:
