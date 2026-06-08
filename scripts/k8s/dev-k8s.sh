@@ -419,6 +419,46 @@ ensure_local_image() {
     fi
 }
 
+# Mount the local DLS-filesystem mirror into the API pod so image-serving endpoints can
+# read atlas/grid-square files that the DB references by absolute /dls/... paths. hostPath
+# must be absolute and kustomize can't template, so (like the configmap/secret steps) we
+# patch the live deployment here. API service only: the worker never reads image files.
+# The mirror lives at <workspace>/testdata/dls-filesystem by convention; override with
+# SMARTEM_DLS_FILESYSTEM_DIR. Skipped silently when absent (images show placeholders).
+ensure_image_mount() {
+    local workspace_root dls_dir
+    workspace_root="$(cd "$PROJECT_ROOT/../../.." 2>/dev/null && pwd)"
+    dls_dir="${SMARTEM_DLS_FILESYSTEM_DIR:-$workspace_root/testdata/dls-filesystem}"
+
+    if [[ ! -d "$dls_dir" ]]; then
+        log_info "No DLS-filesystem mirror at $dls_dir - skipping image mount (atlas/grid-square images will show placeholders)"
+        return 0
+    fi
+
+    log_info "Mounting DLS-filesystem mirror into smartem-http-api: $dls_dir -> /dls"
+    if kubectl patch deployment smartem-http-api -n "$NAMESPACE" --type strategic --patch "$(cat <<PATCH
+spec:
+  template:
+    spec:
+      containers:
+        - name: smartem-http-api
+          volumeMounts:
+            - name: dls-filesystem
+              mountPath: /dls
+              readOnly: true
+      volumes:
+        - name: dls-filesystem
+          hostPath:
+            path: $dls_dir
+            type: Directory
+PATCH
+)" &> /dev/null; then
+        log_success "DLS-filesystem mount applied to smartem-http-api"
+    else
+        log_warning "Could not apply DLS-filesystem mount (non-fatal; images will show placeholders)"
+    fi
+}
+
 # Deploy the environment
 deploy_environment() {
     log_info "Deploying development environment..."
@@ -439,6 +479,9 @@ deploy_environment() {
 
     # Ensure local image is built and available for development
     ensure_local_image
+
+    # Mount the local DLS-filesystem mirror so the API can serve atlas/grid-square images
+    ensure_image_mount
 
     log_success "Deployment initiated"
 }
