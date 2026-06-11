@@ -55,9 +55,12 @@ spec:
           requests:
             memory: "128Mi"
             cpu: "100m"
+          # Image endpoints decode 31MB+ MRC/TIFF files to PNG; under a grid/atlas page's
+          # request fan-out this overruns a 256Mi/200m pod (OOMKill + slow encodes). Give the
+          # dev API headroom so local image-serving stays stable.
           limits:
-            memory: "256Mi"
-            cpu: "200m"
+            memory: "1Gi"
+            cpu: "1"
 
 ---
 
