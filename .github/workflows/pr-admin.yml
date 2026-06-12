@@ -32,7 +32,7 @@ jobs:
 
     steps:
       - name: Add PR to SmartEM project
-        uses: actions/add-to-project@v1.0.2
+        uses: actions/add-to-project@v2.0.0
         with:
           project-url: https://github.com/orgs/DiamondLightSource/projects/51
           github-token: ${{ secrets.PROJECT_TOKEN }}
