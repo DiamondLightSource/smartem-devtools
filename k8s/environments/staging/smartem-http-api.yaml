@@ -35,6 +35,21 @@ spec:
             secretKeyRef:
               name: smartem-secrets
               key: POSTGRES_PASSWORD
+        - name: POSTGRES_HOST
+          valueFrom:
+            secretKeyRef:
+              name: smartem-secrets
+              key: POSTGRES_HOST
+        - name: POSTGRES_PORT
+          valueFrom:
+            secretKeyRef:
+              name: smartem-secrets
+              key: POSTGRES_PORT
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: smartem-secrets
+              key: POSTGRES_DB
         - name: RABBITMQ_USER
           valueFrom:
             secretKeyRef:
@@ -45,6 +60,16 @@ spec:
             secretKeyRef:
               name: smartem-secrets
               key: RABBITMQ_PASSWORD
+        - name: RABBITMQ_HOST
+          valueFrom:
+            secretKeyRef:
+              name: smartem-secrets
+              key: RABBITMQ_HOST
+        - name: RABBITMQ_EXCHANGE
+          valueFrom:
+            secretKeyRef:
+              name: smartem-secrets
+              key: RABBITMQ_EXCHANGE
         envFrom:
         - configMapRef:
             name: smartem-config
