@@ -68,6 +68,11 @@ spec:
             secretKeyRef:
               name: smartem-secrets
               key: RABBITMQ_HOST
+        - name: RABBITMQ_PORT
+          valueFrom:
+            secretKeyRef:
+              name: smartem-secrets
+              key: RABBITMQ_PORT
         - name: RABBITMQ_EXCHANGE
           valueFrom:
             secretKeyRef:
