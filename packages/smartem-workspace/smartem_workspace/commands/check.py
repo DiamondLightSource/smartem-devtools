@@ -6,7 +6,7 @@ import re
 import shutil
 import subprocess
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 from importlib import resources
 from pathlib import Path
 from typing import Literal
@@ -24,7 +24,7 @@ DEV_REQUIREMENTS_URL = (
 )
 
 
-class CheckScope(str, Enum):
+class CheckScope(StrEnum):
     ALL = "all"
     CLAUDE = "claude"
     REPOS = "repos"
