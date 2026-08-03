@@ -1,0 +1,403 @@
+[
+  {
+    "file": "docs/agent/authentication.md",
+    "slug": "agent-authentication",
+    "atoms_path": "tmp/doc-atoms/by-file/agent-authentication.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/agent-authentication.json",
+    "n_atoms": 42,
+    "n_prose": 35,
+    "target_repos": [
+      "smartem-decisions (src/smartem_agent)",
+      "smartem-devtools"
+    ]
+  },
+  {
+    "file": "docs/agent/cli-reference.md",
+    "slug": "agent-cli-reference",
+    "atoms_path": "tmp/doc-atoms/by-file/agent-cli-reference.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/agent-cli-reference.json",
+    "n_atoms": 129,
+    "n_prose": 81,
+    "target_repos": [
+      "smartem-decisions (src/smartem_agent)",
+      "smartem-devtools"
+    ]
+  },
+  {
+    "file": "docs/agent/deployment.md",
+    "slug": "agent-deployment",
+    "atoms_path": "tmp/doc-atoms/by-file/agent-deployment.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/agent-deployment.json",
+    "n_atoms": 50,
+    "n_prose": 33,
+    "target_repos": [
+      "smartem-decisions (src/smartem_agent)",
+      "smartem-devtools"
+    ]
+  },
+  {
+    "file": "docs/agent/index.md",
+    "slug": "agent-index",
+    "atoms_path": "tmp/doc-atoms/by-file/agent-index.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/agent-index.json",
+    "n_atoms": 5,
+    "n_prose": 3,
+    "target_repos": [
+      "smartem-decisions (src/smartem_agent)",
+      "smartem-devtools"
+    ]
+  },
+  {
+    "file": "docs/agent/troubleshooting.md",
+    "slug": "agent-troubleshooting",
+    "atoms_path": "tmp/doc-atoms/by-file/agent-troubleshooting.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/agent-troubleshooting.json",
+    "n_atoms": 107,
+    "n_prose": 57,
+    "target_repos": [
+      "smartem-decisions (src/smartem_agent)",
+      "smartem-devtools"
+    ]
+  },
+  {
+    "file": "docs/athena-decision-service-api-spec.README.md",
+    "slug": "athena-decision-service-api-spec-readme",
+    "atoms_path": "tmp/doc-atoms/by-file/athena-decision-service-api-spec-readme.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/athena-decision-service-api-spec-readme.json",
+    "n_atoms": 12,
+    "n_prose": 10,
+    "target_repos": [
+      "smartem-decisions (athena_api)"
+    ]
+  },
+  {
+    "file": "docs/athena/index.md",
+    "slug": "athena-index",
+    "atoms_path": "tmp/doc-atoms/by-file/athena-index.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/athena-index.json",
+    "n_atoms": 6,
+    "n_prose": 5,
+    "target_repos": [
+      "smartem-decisions (athena_api)"
+    ]
+  },
+  {
+    "file": "docs/backend/api-documentation.md",
+    "slug": "backend-api-documentation",
+    "atoms_path": "tmp/doc-atoms/by-file/backend-api-documentation.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/backend-api-documentation.json",
+    "n_atoms": 44,
+    "n_prose": 29,
+    "target_repos": [
+      "smartem-decisions (src/smartem_backend)"
+    ]
+  },
+  {
+    "file": "docs/backend/api-server.md",
+    "slug": "backend-api-server",
+    "atoms_path": "tmp/doc-atoms/by-file/backend-api-server.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/backend-api-server.json",
+    "n_atoms": 2,
+    "n_prose": 1,
+    "target_repos": [
+      "smartem-decisions (src/smartem_backend)"
+    ]
+  },
+  {
+    "file": "docs/backend/database.md",
+    "slug": "backend-database",
+    "atoms_path": "tmp/doc-atoms/by-file/backend-database.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/backend-database.json",
+    "n_atoms": 56,
+    "n_prose": 30,
+    "target_repos": [
+      "smartem-decisions (src/smartem_backend)"
+    ]
+  },
+  {
+    "file": "docs/backend/http-api-client.md",
+    "slug": "backend-http-api-client",
+    "atoms_path": "tmp/doc-atoms/by-file/backend-http-api-client.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/backend-http-api-client.json",
+    "n_atoms": 35,
+    "n_prose": 17,
+    "target_repos": [
+      "smartem-decisions (src/smartem_backend)"
+    ]
+  },
+  {
+    "file": "docs/backend/index.md",
+    "slug": "backend-index",
+    "atoms_path": "tmp/doc-atoms/by-file/backend-index.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/backend-index.json",
+    "n_atoms": 5,
+    "n_prose": 3,
+    "target_repos": [
+      "smartem-decisions (src/smartem_backend)"
+    ]
+  },
+  {
+    "file": "docs/database-schema-drift-prevention.md",
+    "slug": "database-schema-drift-prevention",
+    "atoms_path": "tmp/doc-atoms/by-file/database-schema-drift-prevention.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/database-schema-drift-prevention.json",
+    "n_atoms": 42,
+    "n_prose": 31,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools"
+    ]
+  },
+  {
+    "file": "docs/development/contributing.md",
+    "slug": "development-contributing",
+    "atoms_path": "tmp/doc-atoms/by-file/development-contributing.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/development-contributing.json",
+    "n_atoms": 1,
+    "n_prose": 0,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools (tests/e2e, scripts, packages/smartem-epuplayer)"
+    ]
+  },
+  {
+    "file": "docs/development/e2e-simulation.md",
+    "slug": "development-e2e-simulation",
+    "atoms_path": "tmp/doc-atoms/by-file/development-e2e-simulation.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/development-e2e-simulation.json",
+    "n_atoms": 111,
+    "n_prose": 72,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools (tests/e2e, scripts, packages/smartem-epuplayer)"
+    ]
+  },
+  {
+    "file": "docs/development/generate-docs.md",
+    "slug": "development-generate-docs",
+    "atoms_path": "tmp/doc-atoms/by-file/development-generate-docs.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/development-generate-docs.json",
+    "n_atoms": 9,
+    "n_prose": 6,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools (tests/e2e, scripts, packages/smartem-epuplayer)"
+    ]
+  },
+  {
+    "file": "docs/development/github-labels.md",
+    "slug": "development-github-labels",
+    "atoms_path": "tmp/doc-atoms/by-file/development-github-labels.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/development-github-labels.json",
+    "n_atoms": 50,
+    "n_prose": 33,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools (tests/e2e, scripts, packages/smartem-epuplayer)"
+    ]
+  },
+  {
+    "file": "docs/development/index.md",
+    "slug": "development-index",
+    "atoms_path": "tmp/doc-atoms/by-file/development-index.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/development-index.json",
+    "n_atoms": 6,
+    "n_prose": 4,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools (tests/e2e, scripts, packages/smartem-epuplayer)"
+    ]
+  },
+  {
+    "file": "docs/development/local-keycloak.md",
+    "slug": "development-local-keycloak",
+    "atoms_path": "tmp/doc-atoms/by-file/development-local-keycloak.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/development-local-keycloak.json",
+    "n_atoms": 39,
+    "n_prose": 32,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools (tests/e2e, scripts, packages/smartem-epuplayer)"
+    ]
+  },
+  {
+    "file": "docs/development/tools.md",
+    "slug": "development-tools",
+    "atoms_path": "tmp/doc-atoms/by-file/development-tools.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/development-tools.json",
+    "n_atoms": 47,
+    "n_prose": 24,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools (tests/e2e, scripts, packages/smartem-epuplayer)"
+    ]
+  },
+  {
+    "file": "docs/getting-started/for-developers.md",
+    "slug": "getting-started-for-developers",
+    "atoms_path": "tmp/doc-atoms/by-file/getting-started-for-developers.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/getting-started-for-developers.json",
+    "n_atoms": 22,
+    "n_prose": 12,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools"
+    ]
+  },
+  {
+    "file": "docs/getting-started/index.md",
+    "slug": "getting-started-index",
+    "atoms_path": "tmp/doc-atoms/by-file/getting-started-index.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/getting-started-index.json",
+    "n_atoms": 8,
+    "n_prose": 7,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools"
+    ]
+  },
+  {
+    "file": "docs/glossary.md",
+    "slug": "glossary",
+    "atoms_path": "tmp/doc-atoms/by-file/glossary.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/glossary.json",
+    "n_atoms": 9,
+    "n_prose": 8,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools"
+    ]
+  },
+  {
+    "file": "docs/operations/container-user-configuration.md",
+    "slug": "operations-container-user-configuration",
+    "atoms_path": "tmp/doc-atoms/by-file/operations-container-user-configuration.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/operations-container-user-configuration.json",
+    "n_atoms": 68,
+    "n_prose": 48,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools (scripts/k8s, k8s/, env-examples, tests/e2e)"
+    ]
+  },
+  {
+    "file": "docs/operations/containerization.md",
+    "slug": "operations-containerization",
+    "atoms_path": "tmp/doc-atoms/by-file/operations-containerization.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/operations-containerization.json",
+    "n_atoms": 18,
+    "n_prose": 9,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools (scripts/k8s, k8s/, env-examples, tests/e2e)"
+    ]
+  },
+  {
+    "file": "docs/operations/environment-variables.md",
+    "slug": "operations-environment-variables",
+    "atoms_path": "tmp/doc-atoms/by-file/operations-environment-variables.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/operations-environment-variables.json",
+    "n_atoms": 61,
+    "n_prose": 39,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools (scripts/k8s, k8s/, env-examples, tests/e2e)"
+    ]
+  },
+  {
+    "file": "docs/operations/index.md",
+    "slug": "operations-index",
+    "atoms_path": "tmp/doc-atoms/by-file/operations-index.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/operations-index.json",
+    "n_atoms": 7,
+    "n_prose": 5,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools (scripts/k8s, k8s/, env-examples, tests/e2e)"
+    ]
+  },
+  {
+    "file": "docs/operations/kubernetes-secrets.md",
+    "slug": "operations-kubernetes-secrets",
+    "atoms_path": "tmp/doc-atoms/by-file/operations-kubernetes-secrets.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/operations-kubernetes-secrets.json",
+    "n_atoms": 59,
+    "n_prose": 31,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools (scripts/k8s, k8s/, env-examples, tests/e2e)"
+    ]
+  },
+  {
+    "file": "docs/operations/kubernetes.md",
+    "slug": "operations-kubernetes",
+    "atoms_path": "tmp/doc-atoms/by-file/operations-kubernetes.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/operations-kubernetes.json",
+    "n_atoms": 16,
+    "n_prose": 12,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools (scripts/k8s, k8s/, env-examples, tests/e2e)"
+    ]
+  },
+  {
+    "file": "docs/operations/logging.md",
+    "slug": "operations-logging",
+    "atoms_path": "tmp/doc-atoms/by-file/operations-logging.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/operations-logging.json",
+    "n_atoms": 26,
+    "n_prose": 14,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools (scripts/k8s, k8s/, env-examples, tests/e2e)"
+    ]
+  },
+  {
+    "file": "docs/operations/publish-smartem-workspace-to-pypi.md",
+    "slug": "operations-publish-smartem-workspace-to-pypi",
+    "atoms_path": "tmp/doc-atoms/by-file/operations-publish-smartem-workspace-to-pypi.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/operations-publish-smartem-workspace-to-pypi.json",
+    "n_atoms": 167,
+    "n_prose": 120,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools (scripts/k8s, k8s/, env-examples, tests/e2e)"
+    ]
+  },
+  {
+    "file": "docs/operations/releasing.md",
+    "slug": "operations-releasing",
+    "atoms_path": "tmp/doc-atoms/by-file/operations-releasing.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/operations-releasing.json",
+    "n_atoms": 47,
+    "n_prose": 32,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools (scripts/k8s, k8s/, env-examples, tests/e2e)"
+    ]
+  },
+  {
+    "file": "docs/operations/run-container.md",
+    "slug": "operations-run-container",
+    "atoms_path": "tmp/doc-atoms/by-file/operations-run-container.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/operations-run-container.json",
+    "n_atoms": 12,
+    "n_prose": 7,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools (scripts/k8s, k8s/, env-examples, tests/e2e)"
+    ]
+  },
+  {
+    "file": "docs/operations/setup-smartem-workspace.md",
+    "slug": "operations-setup-smartem-workspace",
+    "atoms_path": "tmp/doc-atoms/by-file/operations-setup-smartem-workspace.json",
+    "verdict_path": "tmp/doc-atoms/verdicts/operations-setup-smartem-workspace.json",
+    "n_atoms": 188,
+    "n_prose": 128,
+    "target_repos": [
+      "smartem-decisions",
+      "smartem-devtools (scripts/k8s, k8s/, env-examples, tests/e2e)"
+    ]
+  }
+]
